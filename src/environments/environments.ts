@@ -1,4 +1,4 @@
 export const environment = {
-  apiBaseUrl: 'https://localhost:3000',
-  //   apiBaseUrl: 'https://threads-be-production.up.railway.app',
+  apiBaseUrl: 'http://localhost:3000',
+  //   apiBaseUrl: 'https://nestor-b7eb2f7c8808.herokuapp.com/comments/top',
 };
