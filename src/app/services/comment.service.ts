@@ -43,7 +43,8 @@ export class CommentService {
   //     comment
   //   );
   // }
-  url = 'http://localhost:3000/comments/top';
+  url = 'https://nestor-b7eb2f7c8808.herokuapp.com/comments/top';
+  // url = 'http://localhost:3000/comments/top';
 
   async getAllComments(): Promise<Comment[]> {
     const data = await fetch(this.url);

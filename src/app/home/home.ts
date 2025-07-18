@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { Comment } from '../components/comment/comment';
 import { CommentService } from '../services/comment.service';
-import { UserService } from '../services/user.service';
+// import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-home',
