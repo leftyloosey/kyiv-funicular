@@ -26,7 +26,8 @@ export class CommentFormComponent {
   @Output() formSubmitted = new EventEmitter<{
     text: string;
   }>();
-  commentService = inject(CommentService);
+  // commentService = inject(CommentService);
+
   formSubmit(event: SubmitEvent) {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
@@ -36,14 +37,28 @@ export class CommentFormComponent {
     const commentText = textAreaElement.value;
     form.reset();
     console.log({ commentText });
-    this.commentService.createComment({
-      text: commentText,
-
-      userId: '687a4bd8145a3fcf49d332c6',
-    });
-
     this.formSubmitted.emit({
       text: commentText,
     });
   }
+
+  // formSubmit(event: SubmitEvent) {
+  //   event.preventDefault();
+  //   const form = event.target as HTMLFormElement;
+  //   const textAreaElement = form.elements.namedItem(
+  //     'commentText'
+  //   ) as HTMLTextAreaElement;
+  //   const commentText = textAreaElement.value;
+  //   form.reset();
+  //   console.log({ commentText });
+  //   this.commentService.createComment({
+  //     text: commentText,
+
+  //     userId: '687a4bd8145a3fcf49d332c6',
+  //   });
+
+  //   this.formSubmitted.emit({
+  //     text: commentText,
+  //   });
+  // }
 }

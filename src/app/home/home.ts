@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
   userService = inject(UserService);
   ngOnInit(): void {
     this.getComments();
-    const autoRefreshRate = 1000;
   }
 
   getComments() {
@@ -29,46 +28,24 @@ export class HomeComponent implements OnInit {
   }
 
   createComment(formValues: { text: string }) {
+    console.log('home trigggered');
     const { text } = formValues;
     const user = this.userService.getUserFromStorage();
-    if (!user) {
-      return;
-    }
-    this.commentService.createComment({
-      text,
-      userId: user._id,
-    });
-    // .subscribe((createdComment) => {
-    //   this.comments.set([createdComment, ...this.comments()]);
-    // });
+    // if (!user) {
+    //   return;
+    // }
+    this.commentService
+      .createComment({
+        text,
+        userId: '687a4bd8145a3fcf49d332c6',
+        // userId: user._id,
+      })
+      .subscribe((createdComment) => {
+        this.comments.set([createdComment, ...this.comments()]);
+      });
   }
 
   commentTrackBy(_index: number, comment: Comment) {
     return comment._id;
   }
 }
-
-// import { Component, inject, signal } from '@angular/core';
-// import { Comment } from '../components/comment/comment';
-// import { CommentService } from '../services/comment.service';
-// import { UserService } from '../services/user.service';
-
-// @Component({
-//   selector: 'app-home',
-//   imports: [Comment],
-//   templateUrl: './home.html',
-//   styleUrl: './home.scss',
-// })
-// export class Home {
-//   commentService = inject(CommentService);
-//   comments = signal<Comment[]>([]);
-//   userService = inject(UserService);
-//   ngOnInit(): void {
-//     this.getAllComments();
-//   }
-
-//   getAllComments() {
-//     this.commentService.getAllComments().then((data) => console.log(data));
-//   }
-
-// }
