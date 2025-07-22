@@ -8,7 +8,6 @@ import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-home',
-  standalone: true,
   imports: [CommonModule, CommentComponent, CommentFormComponent],
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
@@ -37,7 +36,8 @@ export class HomeComponent implements OnInit {
     this.commentService
       .createComment({
         text,
-        userId: '687a4bd8145a3fcf49d332c6',
+        user: '687a4bd8145a3fcf49d332c6',
+        // userId: '687a4bd8145a3fcf49d332c6',
         // userId: user._id,
       })
       .subscribe((createdComment) => {

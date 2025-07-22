@@ -16,7 +16,9 @@
 // ];
 
 import { Routes } from '@angular/router';
-
+import { HomeComponent } from './home/home';
+import { About } from './about/about';
+import { ActorFormComponent } from './actor/actor-form-component';
 export const routes: Routes = [
   {
     path: '',
@@ -25,10 +27,22 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    loadComponent: () => import('./home/home').then((m) => m.HomeComponent),
+    component: HomeComponent,
   },
   {
     path: 'about',
-    loadComponent: () => import('./about/about').then((m) => m.About),
+    component: About,
   },
+  {
+    path: 'actor',
+    component: ActorFormComponent,
+  },
+  // {
+  //   path: 'home',
+  //   loadComponent: () => import('./home/home').then((m) => m.HomeComponent),
+  // },
+  // {
+  //   path: 'about',
+  //   loadComponent: () => import('./about/about').then((m) => m.About),
+  // },
 ];

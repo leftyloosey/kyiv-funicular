@@ -8,7 +8,8 @@ import { environment } from '../../environments/environments';
 type CreateCommentDto = {
   parentId?: string;
   text: string;
-  userId: string;
+  user: string;
+  // userId: string;
 };
 
 @Injectable({
@@ -18,8 +19,8 @@ export class CommentService {
   http = inject(HttpClient);
 
   getComments(parentId: string = '') {
-    // let url = `http://localhost:3000/comments/top`;
-    let url = `${environment.apiBaseUrl}/comments/awl`;
+    let url = `${environment.apiBaseUrl}/comments`;
+    // let url = `${environment.apiBaseUrl}/comments/awl`;
     if (parentId) {
       url += `?parentId=${parentId}`;
     }
