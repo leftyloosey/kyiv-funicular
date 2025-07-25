@@ -28,7 +28,7 @@ export class UserService {
   }
 
   getUserFromStorage() {
-    const user = localStorage.getItem(this.localStorageKey);
-    return user ? (JSON.parse(user) as User) : null;
+    // const user = localStorage.getItem(this.localStorageKey);
+    // return user ? (JSON.parse(user) as User) : null;
   }
 }
