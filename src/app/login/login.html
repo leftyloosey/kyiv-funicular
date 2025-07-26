@@ -1,0 +1,66 @@
+<div class="container ml-2">
+  <div [hidden]="submitted">
+    <h1 class="mb-8 text-2xl">Login</h1>
+    <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+      <div class="form-group flex flex-col w-64">
+        <label for="name">Name</label>
+        <input
+          autocomplete="off"
+          type="text"
+          class="bg-gray-100"
+          id="name"
+          required
+          [(ngModel)]="model.name"
+          name="name"
+          #name="ngModel"
+        />
+        <label for="password">Password</label>
+        <input
+          autocomplete="off"
+          type="text"
+          class="bg-gray-100"
+          id="password"
+          required
+          [(ngModel)]="model.password"
+          name="password"
+          #password="ngModel"
+        />
+        <div [hidden]="name.valid || name.pristine" class="">
+          Name is required
+        </div>
+      </div>
+      <div class="flex flex-row space-x-2 mt-2">
+        <button
+          type="submit"
+          class="bg-green-200 p-1"
+          [disabled]="!loginForm.form.valid"
+        >
+          Login
+        </button>
+        <button type="button" class="" (click)="loginForm.reset()">
+          <!-- <button type="button" class="" (click)="newActor(); loginForm.reset()"> -->
+          Reset
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- <div [hidden]="!submitted">
+    <h2>You submitted the following:</h2>
+    <div class="row">
+      <div class="col-xs-3">Name</div>
+      <div class="col-xs-9">{{ model.name }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Studio</div>
+      <div class="col-xs-9">{{ model.studio }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Skill</div>
+      <div class="col-xs-9">{{ model.skill }}</div>
+    </div>
+    <br />
+    <button type="button" class="btn btn-primary" (click)="submitted = false">
+      Edit
+    </button>
+  </div> -->
+</div>

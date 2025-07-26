@@ -1,4 +1,5 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CommentComponent } from '../components/comment/comment';
 import { CommentService } from '../services/comment.service';
@@ -16,6 +17,8 @@ export class HomeComponent implements OnInit {
   commentService = inject(CommentService);
   comments = signal<Comment[]>([]);
   userService = inject(UserService);
+  initialCount = 18;
+
   ngOnInit(): void {
     this.getComments();
   }
@@ -33,16 +36,15 @@ export class HomeComponent implements OnInit {
     // if (!user) {
     //   return;
     // }
-    this.commentService
-      .createComment({
-        text,
-        user: '687a4bd8145a3fcf49d332c6',
-        // userId: '687a4bd8145a3fcf49d332c6',
-        // userId: user._id,
-      })
-      .subscribe((createdComment) => {
-        this.comments.set([createdComment, ...this.comments()]);
-      });
+    this.commentService.createComment({
+      text,
+      user: '687a4bd8145a3fcf49d332c6',
+      // userId: '687a4bd8145a3fcf49d332c6',
+      // userId: user._id,
+    });
+    // .subscribe((createdComment) => {
+    //   this.comments.set([createdComment, ...this.comments()]);
+    // });
   }
 
   commentTrackBy(_index: number, comment: Comment) {

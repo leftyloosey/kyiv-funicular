@@ -16,7 +16,7 @@ import { environment } from '../../environments/environments';
 })
 export class UserService {
   http = inject(HttpClient);
-  localStorageKey = 'threads_user';
+  localStorageKey = 'frontend_user';
   createUser(name: string) {
     return this.http.post<User>(`${environment.apiBaseUrl}/users`, {
       name,
@@ -28,7 +28,7 @@ export class UserService {
   }
 
   getUserFromStorage() {
-    // const user = localStorage.getItem(this.localStorageKey);
-    // return user ? (JSON.parse(user) as User) : null;
+    const user = localStorage.getItem(this.localStorageKey);
+    return user ? (JSON.parse(user) as User) : null;
   }
 }
