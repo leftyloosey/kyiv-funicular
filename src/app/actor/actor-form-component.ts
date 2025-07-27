@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Actor } from '../classes/actor';
 import { FormsModule, NgForm } from '@angular/forms';
-// import {NgForm}
 // import { JsonPipe } from '@angular/common';
 
 @Component({
