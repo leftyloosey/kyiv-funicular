@@ -36,15 +36,16 @@ export class HomeComponent implements OnInit {
     // if (!user) {
     //   return;
     // }
-    this.commentService.createComment({
-      text,
-      user: '687a4bd8145a3fcf49d332c6',
-      // userId: '687a4bd8145a3fcf49d332c6',
-      // userId: user._id,
-    });
-    // .subscribe((createdComment) => {
-    //   this.comments.set([createdComment, ...this.comments()]);
-    // });
+    this.commentService
+      .createComment({
+        text,
+        user: '687a4bd8145a3fcf49d332c6',
+        // userId: '687a4bd8145a3fcf49d332c6',
+        // userId: user._id,
+      })
+      .subscribe((createdComment) => {
+        this.comments.set([createdComment, ...this.comments()]);
+      });
   }
 
   commentTrackBy(_index: number, comment: Comment) {

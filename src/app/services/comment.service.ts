@@ -28,10 +28,12 @@ export class CommentService {
   }
 
   createComment(comment: CreateCommentDto) {
-    return this.http
-      .post<Comment>(`${environment.apiBaseUrl}/comments`, comment)
-      .subscribe((data) => {
-        console.log('data:', data);
-      });
+    return this.http.post<Comment>(
+      `${environment.apiBaseUrl}/comments`,
+      comment
+    );
+    // .subscribe((data) => {
+    //   console.log('data:', data);
+    // });
   }
 }
