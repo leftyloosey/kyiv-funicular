@@ -38,10 +38,10 @@ export const routes: Routes = [
     component: About,
     // },
   },
-  // {
-  //   path: 'actor',
-  //   component: ActorFormComponent,
-  // },
+  {
+    path: 'actor',
+    component: ActorFormComponent,
+  },
   {
     path: 'login',
 

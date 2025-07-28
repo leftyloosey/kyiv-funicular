@@ -7,7 +7,7 @@ import {
   model,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule, NgForm, PristineChangeEvent } from '@angular/forms';
 import { Attempt } from '../../classes/attempt';
 import { AuthService } from '../../services/auth.service';
 
@@ -18,7 +18,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./comment-form.css'],
 })
 export class CommentFormComponent {
-  @Input() placeholder = 'Write something...';
+  // @Input() placeholder = 'Write something...';
   @Input() buttonText = 'Create';
   @Output() formSubmitted = new EventEmitter<{
     text: string;
@@ -26,8 +26,8 @@ export class CommentFormComponent {
   count = model<number>(0);
   auth = inject(AuthService);
   logged = this.auth.checkAuthentication();
-  model = new Attempt('');
 
+  model = new Attempt('');
   constructor() {
     console.log('auth', this.logged);
   }

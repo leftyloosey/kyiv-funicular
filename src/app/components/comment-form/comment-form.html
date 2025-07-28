@@ -15,7 +15,7 @@
   ></textarea>
   <div class="flex flex-row">
     <div
-      [hidden]="logged || entry.pristine"
+      [hidden]="logged || !entry.value"
       class="bg-red-400 p-0.5 text-white mr-4 rounded"
     >
       Log in to comment
