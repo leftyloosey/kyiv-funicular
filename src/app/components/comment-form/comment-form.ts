@@ -45,6 +45,8 @@ export class CommentFormComponent {
   //   });
   // }
   formSubmit(form: NgForm) {
+    //   event.preventDefault();
+
     console.log(form.value);
   }
 
