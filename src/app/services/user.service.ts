@@ -16,7 +16,7 @@ import { environment } from '../../environments/environments';
 })
 export class UserService {
   http = inject(HttpClient);
-  localStorageKey = 'frontend_user';
+  localStorageKey = 'user';
   createUser(name: string) {
     return this.http.post<User>(`${environment.apiBaseUrl}/users`, {
       name,
@@ -29,6 +29,7 @@ export class UserService {
 
   getUserFromStorage() {
     const user = localStorage.getItem(this.localStorageKey);
-    return user ? (JSON.parse(user) as User) : null;
+    return user ? JSON.parse(user) : null;
+    // return user ? (JSON.parse(user) as User) : null;
   }
 }

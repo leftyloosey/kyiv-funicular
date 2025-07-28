@@ -30,16 +30,18 @@ export class HomeComponent implements OnInit {
   }
 
   createComment(formValues: { text: string }) {
-    console.log('home trigggered');
+    console.log('home triggered');
     const { text } = formValues;
     const user = this.userService.getUserFromStorage();
+    console.log('user!', user.id);
     // if (!user) {
     //   return;
     // }
     this.commentService
       .createComment({
         text,
-        user: '687a4bd8145a3fcf49d332c6',
+        user: user?.id,
+        // user: '687a4bd8145a3fcf49d332c6',
         // userId: '687a4bd8145a3fcf49d332c6',
         // userId: user._id,
       })

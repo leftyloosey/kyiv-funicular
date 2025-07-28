@@ -26,6 +26,7 @@ export class AuthService {
       data.forEach((user) => {
         if (user.name === name && user.password === password) {
           this.saveJWT();
+          this.user.saveUserToStorage(user);
           this.authenticated.set(true);
           this.router.navigate(['/about']);
         } else {

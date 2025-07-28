@@ -20,7 +20,6 @@ export class CommentService {
 
   getComments(parentId: string = '') {
     let url = `${environment.apiBaseUrl}/comments`;
-    // let url = `${environment.apiBaseUrl}/comments/awl`;
     if (parentId) {
       url += `?parentId=${parentId}`;
     }
