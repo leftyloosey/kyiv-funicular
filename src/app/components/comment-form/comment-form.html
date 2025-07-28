@@ -1,14 +1,30 @@
-<form class="flex flex-col items-end gap-4" (submit)="formSubmit($event)">
+<form
+  class="flex flex-col items-end gap-4"
+  #commentForm="ngForm"
+  (ngSubmit)="formSubmit(commentForm)"
+>
   <textarea
-    name="commentText"
-    [placeholder]="placeholder"
+    name="entry"
+    type="text"
+    [(ngModel)]="model.entry"
+    id="entry"
+    entry="entry"
+    #entry="ngModel"
     rows="3"
     class="px-3 py-1.5 w-full border border-slate-900 rounded-md"
   ></textarea>
-  <button
-    type="submit"
-    class="inline-block rounded border border-current px-4 py-1 text-sm font-medium hover:border-white"
-  >
-    {{ buttonText }}
-  </button>
+  <div class="flex flex-row">
+    <div
+      [hidden]="logged || entry.pristine"
+      class="bg-red-400 p-0.5 text-white mr-4 rounded"
+    >
+      Log in to comment
+    </div>
+    <button
+      type="submit"
+      class="inline-block rounded border border-current px-4 py-1 text-sm font-medium hover:border-white"
+    >
+      {{ buttonText }}
+    </button>
+  </div>
 </form>

@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
     console.log('home triggered');
     const { text } = formValues;
     const user = this.userService.getUserFromStorage();
-    console.log('user!', user.id);
+    // console.log('user!', user.id);
     // if (!user) {
     //   return;
     // }
