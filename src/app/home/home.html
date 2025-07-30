@@ -6,12 +6,15 @@
  -->
 <section class="max-w-md mx-auto flex flex-col gap-4 mb-4">
   <app-comment-form
-    [(count)]="initialCount"
-    (formSubmitted)="createComment($event)"
+    [(formVal)]="initialFormVal"
+    (formSubmitted)="funko($event)"
   ></app-comment-form>
-  <!-- {{ initialCount }} -->
+  <!-- <app-comment-form
+    [(formVal)]="initialFormVal"
+    (formSubmitted)="createComment($event)"
+  ></app-comment-form> -->
 </section>
-
+{{ initialFormVal() }}
 <!-- <section class="max-w-md mx-auto flex flex-col gap-4 mb-4">
   <app-comment-form (formSubmitted)="createComment($event)"></app-comment-form>
 </section> -->

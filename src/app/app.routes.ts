@@ -1,5 +1,8 @@
 import { RedirectCommand, Router, Routes } from '@angular/router';
 import { HomeComponent } from './home/home';
+import { SenderComponent } from './sender/sender';
+import { ReceiverComponent } from './receiver/receiver';
+import { Obsoiver } from './obsoiver/obsoiver';
 import { Login } from './login/login';
 import { About } from './about/about';
 import { ActorFormComponent } from './actor/actor-form-component';
@@ -46,6 +49,21 @@ export const routes: Routes = [
     path: 'login',
 
     component: Login,
+  },
+  {
+    path: 'obsoiver',
+
+    component: Obsoiver,
+  },
+  {
+    path: 'receiver',
+
+    component: ReceiverComponent,
+  },
+  {
+    path: 'sender',
+
+    component: SenderComponent,
   },
   {
     path: 'relogin',

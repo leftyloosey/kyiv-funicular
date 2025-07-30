@@ -1,0 +1,9 @@
+<p>book works!</p>
+<div>{{ book().synopsis }} {{ book().title }}</div>
+{{ this.bookLength() }}
+<button
+  class="inline-block rounded border border-current px-4 py-1 text-sm font-medium hover:border-white"
+  (click)="onDelete()"
+>
+  deleteBook
+</button>

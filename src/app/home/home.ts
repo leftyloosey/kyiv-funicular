@@ -1,4 +1,11 @@
-import { Component, OnInit, inject, signal, input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  signal,
+  input,
+  effect,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CommentComponent } from '../components/comment/comment';
@@ -6,6 +13,7 @@ import { CommentService } from '../services/comment.service';
 import { Comment } from '../interfaces/comment';
 import { CommentFormComponent } from '../components/comment-form/comment-form';
 import { UserService } from '../services/user.service';
+import { globalSignal } from '../signals';
 
 @Component({
   selector: 'app-home',
@@ -18,11 +26,22 @@ export class HomeComponent implements OnInit {
   comments = signal<Comment[]>([]);
   userService = inject(UserService);
   initialCount = 18;
+  // initialFormVal = 'homevalue';
+  initialFormVal = signal<string>('homevalue');
+  constructor() {
+    effect(() => {
+      console.log('Global signal value changed:', globalSignal());
+    });
+  }
 
   ngOnInit(): void {
     this.getComments();
   }
-
+  funko(formValues: { text: string }) {
+    console.log('UPPER constructor hit');
+    console.log(`Upper value: ${this.initialFormVal}`);
+    console.log('FUNKO', typeof this.initialFormVal);
+  }
   getComments() {
     this.commentService.getComments().subscribe((comments) => {
       this.comments.set(comments);
@@ -30,7 +49,7 @@ export class HomeComponent implements OnInit {
   }
 
   createComment(formValues: { text: string }) {
-    console.log('home triggered');
+    console.log('home triggered', typeof formValues);
     const { text } = formValues;
     const user = this.userService.getUserFromStorage();
     // console.log('user!', user.id);

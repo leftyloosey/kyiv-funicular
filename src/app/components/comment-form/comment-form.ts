@@ -3,14 +3,16 @@ import {
   EventEmitter,
   Input,
   Output,
+  effect,
   inject,
+  input,
   model,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm, PristineChangeEvent } from '@angular/forms';
 import { Attempt } from '../../classes/attempt';
 import { AuthService } from '../../services/auth.service';
-
+import { globalSignal } from '../../signals';
 @Component({
   selector: 'app-comment-form',
   imports: [CommonModule, FormsModule],
@@ -26,9 +28,14 @@ export class CommentFormComponent {
   count = model<number>(0);
   auth = inject(AuthService);
   logged = this.auth.checkAuthentication();
-
+  formVal = model<string>('');
+  // formVal = model<string>('');
   model = new Attempt('');
   constructor() {
+    effect(() => {
+      console.log('constructor hit');
+      console.log(`initial lower value: ${this.formVal()}`);
+    });
     console.log('auth', this.logged);
   }
   // formSubmit(event: SubmitEvent) {
@@ -44,10 +51,18 @@ export class CommentFormComponent {
   //     text: commentText,
   //   });
   // }
-  formSubmit(form: NgForm) {
-    //   event.preventDefault();
+  toggleValue() {
+    globalSignal.set(!globalSignal());
+  }
+  updateField(event: KeyboardEvent): void {
+    // console.log(`The user pressed: ${event.key}`);
+  }
 
+  onSubmit(form: NgForm) {
     console.log(form.value);
+    // this.formVal.set(form.value.entry);
+    this.formVal.update((oldValue) => (oldValue = form.value.entry));
+    console.log('lowerVal', this.formVal());
   }
 
   // updateCount(amount: number): void {

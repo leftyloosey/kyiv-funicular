@@ -1,13 +1,14 @@
 <form
   class="flex flex-col items-end gap-4"
   #commentForm="ngForm"
-  (ngSubmit)="formSubmit(commentForm)"
+  (ngSubmit)="onSubmit(commentForm)"
 >
   <textarea
     name="entry"
     type="text"
     [(ngModel)]="model.entry"
     id="entry"
+    (keyup)="updateField($event)"
     entry="entry"
     #entry="ngModel"
     rows="3"
@@ -25,6 +26,12 @@
       class="inline-block rounded border border-current px-4 py-1 text-sm font-medium hover:border-white"
     >
       {{ buttonText }}
+    </button>
+    <button
+      class="inline-block rounded border border-current px-4 py-1 text-sm font-medium hover:border-white"
+      (click)="toggleValue()"
+    >
+      globalSignal
     </button>
   </div>
 </form>
