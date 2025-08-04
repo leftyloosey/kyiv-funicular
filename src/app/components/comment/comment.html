@@ -1,9 +1,33 @@
-<article
-  class="shadow-md relative block overflow-hidden rounded-lg border border-gray-200 p-4 sm:p-6 lg:p-8"
->
-  <div class="mt-4">
-    <p class="text-sm text-gray-500">
-      {{ comment.usersId }} says: {{ comment.text }}
-    </p>
+<article class="form-control rounded-xl border border-gray-700 bg-gray-800 p-4">
+  <div class="flex items-center gap-4">
+    <img alt="" src="man.jpeg" class="size-16 rounded-full object-cover" />
+
+    <div>
+      <h3 class="text-lg font-medium text-white">
+        {{ comment().user?.name }}
+      </h3>
+    </div>
   </div>
+
+  <ul class="mt-4 space-y-2">
+    <li>
+      <a
+        href="#"
+        class="block h-full rounded-lg border border-gray-700 p-4 hover:border-white"
+      >
+        <strong class="font-medium text-white">{{ comment().text }}</strong>
+
+        <p class="mt-1 text-xs font-medium text-gray-300">
+          {{ comment().timestamp | date }}
+        </p>
+      </a>
+    </li>
+  </ul>
+  <button (click)="clickReply()">reply</button>
 </article>
+@if(hasClickedReply) {<app-comment-form
+  [smallReplyBox]="true"
+></app-comment-form
+>}
+
+<!-- </div> -->

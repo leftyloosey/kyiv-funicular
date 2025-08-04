@@ -12,64 +12,75 @@ import { CommentComponent } from '../components/comment/comment';
 import { CommentService } from '../services/comment.service';
 import { Comment } from '../interfaces/comment';
 import { CommentFormComponent } from '../components/comment-form/comment-form';
-import { UserService } from '../services/user.service';
-import { globalSignal } from '../signals';
+import { AuthService } from '../services/auth.service';
+import { Book } from '../interfaces/book';
+import { commentSignal } from '../signals';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, CommentComponent, CommentFormComponent],
+  imports: [CommonModule, CommentComponent, CommentFormComponent, FormsModule],
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   commentService = inject(CommentService);
+  authService = inject(AuthService);
+  // comments = <Comment[]>[];
   comments = signal<Comment[]>([]);
-  userService = inject(UserService);
-  initialCount = 18;
-  // initialFormVal = 'homevalue';
-  initialFormVal = signal<string>('homevalue');
+
   constructor() {
+    this.getComments();
     effect(() => {
-      console.log('Global signal value changed:', globalSignal());
+      console.log('Global signal value changed:', commentSignal());
+      if (commentSignal().entry.length)
+        this.createComment(commentSignal().entry);
     });
   }
 
-  ngOnInit(): void {
-    this.getComments();
-  }
-  funko(formValues: { text: string }) {
-    console.log('UPPER constructor hit');
-    console.log(`Upper value: ${this.initialFormVal}`);
-    console.log('FUNKO', typeof this.initialFormVal);
-  }
   getComments() {
     this.commentService.getComments().subscribe((comments) => {
       this.comments.set(comments);
     });
   }
+  createComment(text: string) {
+    const userId = this.authService.token.getUserId();
+    console.log('text', text, 'user: ', userId);
 
-  createComment(formValues: { text: string }) {
-    console.log('home triggered', typeof formValues);
-    const { text } = formValues;
-    const user = this.userService.getUserFromStorage();
-    // console.log('user!', user.id);
-    // if (!user) {
-    //   return;
-    // }
     this.commentService
       .createComment({
         text,
-        user: user?.id,
-        // user: '687a4bd8145a3fcf49d332c6',
-        // userId: '687a4bd8145a3fcf49d332c6',
-        // userId: user._id,
+        user: userId,
       })
       .subscribe((createdComment) => {
         this.comments.set([createdComment, ...this.comments()]);
       });
   }
 
-  commentTrackBy(_index: number, comment: Comment) {
-    return comment._id;
-  }
+  // angularBook = {
+  //   title: 'Angular Core Deep Dive',
+  //   synopsis: 'A deep dive into Angular core concepts',
+  // };
+  // deleteBookEvent(book: Book) {
+  //   console.log(book);
+  //   console.log('and do other stuff as well');
+  //   this.angularBook.title = '';
+  //   this.angularBook.synopsis = '';
+  // }
+  // createComment(formValues: { text: string }) {
+  //   console.log('home triggered', typeof formValues);
+  //   const { text } = formValues;
+  //   const user = this.authService.getUserFromStorage();
+  //   this.commentService
+  //     .createComment({
+  //       text,
+  //       user: user?.id,
+  //     })
+  //     .subscribe((createdComment) => {
+  //       this.comments.set([createdComment, ...this.comments()]);
+  //     });
+  // }
+
+  // commentTrackBy(_index: number, comment: Comment) {
+  //   return { _index, comment };
+  // }
 }

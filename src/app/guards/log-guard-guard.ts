@@ -6,30 +6,23 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { AuthService } from './services/auth.service';
+import { AuthService } from '../services/auth.service';
+import { globalRedirect } from '../signals';
 
-export const logGuardGuard: CanActivateFn = (
+export const loginGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  // console.log('route and state!', route, state);
-  if (!authService.checkAuthentication()) {
-    console.log(
-      'did it hit the guard? - auth false branch',
-      authService.checkAuthentication()
-    );
 
+  if (authService.token.isExpired()) {
+    globalRedirect.set(state.url);
+    authService.whereTo = state.url;
     const loginPath = router.parseUrl('/login');
     return new RedirectCommand(loginPath, {
       skipLocationChange: true,
     });
   }
-
-  console.log(
-    'did it hit the guard? - auth true branch',
-    authService.checkAuthentication()
-  );
   return true;
 };

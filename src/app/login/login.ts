@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { LoginUser } from '../classes/login';
-import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,13 +11,15 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './login.css',
 })
 export class Login {
-  authService = inject(AuthService);
+  router = inject(Router);
+
+  userService = inject(UserService);
   submitted: boolean = false;
   model = new LoginUser('', '');
 
   onSubmit(form: NgForm) {
     console.log(form.value);
-    this.authService.getAuthentication(form.value.name, form.value.password);
+    this.userService.loginUser(form.value.name, form.value.password);
     this.submitted = true;
   }
 }

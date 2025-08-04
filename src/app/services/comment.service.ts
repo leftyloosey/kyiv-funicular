@@ -1,5 +1,3 @@
-// import { Observable, of, ReplaySubject } from 'rxjs';
-// import { switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Comment } from '../interfaces/comment';
@@ -19,10 +17,10 @@ export class CommentService {
   http = inject(HttpClient);
 
   getComments(parentId: string = '') {
-    let url = `${environment.apiBaseUrl}/comments`;
-    if (parentId) {
-      url += `?parentId=${parentId}`;
-    }
+    let url = `${environment.apiBaseUrl}/comments/topwithuser`;
+    // if (parentId) {
+    //   url += `?parentId=${parentId}`;
+    // }
     return this.http.get<Comment[]>(url);
   }
 
@@ -31,8 +29,5 @@ export class CommentService {
       `${environment.apiBaseUrl}/comments`,
       comment
     );
-    // .subscribe((data) => {
-    //   console.log('data:', data);
-    // });
   }
 }

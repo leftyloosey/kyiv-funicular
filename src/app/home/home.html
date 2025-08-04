@@ -1,27 +1,35 @@
-<!-- <section>
-    <p>home works!</p>
-    <div class="w-64"><app-comment></app-comment></div>
-    
-</section>
- -->
 <section class="max-w-md mx-auto flex flex-col gap-4 mb-4">
-  <app-comment-form
-    [(formVal)]="initialFormVal"
-    (formSubmitted)="funko($event)"
-  ></app-comment-form>
-  <!-- <app-comment-form
-    [(formVal)]="initialFormVal"
-    (formSubmitted)="createComment($event)"
-  ></app-comment-form> -->
+  <app-comment-form [smallReplyBox]="false"></app-comment-form>
 </section>
-{{ initialFormVal() }}
-<!-- <section class="max-w-md mx-auto flex flex-col gap-4 mb-4">
-  <app-comment-form (formSubmitted)="createComment($event)"></app-comment-form>
-</section> -->
 
-<section class="max-w-md mx-auto flex flex-col gap-4">
-  <app-comment
-    [comment]="comment"
-    *ngFor="let comment of comments(); trackBy: commentTrackBy"
-  ></app-comment>
-</section>
+<div class="form-group">
+  <section class="max-w-md mx-auto flex flex-col gap-4">
+    @for(comment of comments(); track comment.timestamp) {<app-comment
+      [comment]="comment"
+    ></app-comment>
+    }
+  </section>
+</div>
+
+<!-- <div class="container">
+  <form #actorForm="ngForm">
+    <section class="max-w-md mx-auto flex flex-col gap-4 mb-4">
+      <app-comment-form></app-comment-form>
+    </section>
+    <div class="form-group z-50">
+      <div class="form-control">
+        @defer {
+        <section class="max-w-md mx-auto flex flex-col gap-4">
+          @if (comments) { @for (comment of comments; track comment.timestamp) {
+          <app-comment [comment]="comment"></app-comment>
+          }}
+        </section>
+        } @loading {
+        <p>lewwwwwddingg</p>
+        } @placeholder {
+        <p>Placeholder content</p>
+        }
+      </div>
+    </div>
+  </form>
+</div> -->

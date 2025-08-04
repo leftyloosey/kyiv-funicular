@@ -1,17 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SenderComponent as Sender } from './sender';
+import { Redirector } from './redirector';
 
-describe('Sender', () => {
-  let component: Sender;
-  let fixture: ComponentFixture<Sender>;
+describe('Redirector', () => {
+  let component: Redirector;
+  let fixture: ComponentFixture<Redirector>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Sender],
-    }).compileComponents();
+      imports: [Redirector]
+    })
+    .compileComponents();
 
-    fixture = TestBed.createComponent(Sender);
+    fixture = TestBed.createComponent(Redirector);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
