@@ -1,0 +1,59 @@
+<div class="flex justify-center">
+  <article class="rounded-xl border border-gray-700 bg-gray-800 p-4 w-96">
+    <div class="flex items-center gap-4"></div>
+    <div class="container ml-2">
+      <div [hidden]="submitted">
+        <h1 class="mb-8 text-2xl text-white">Login</h1>
+        <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+          <div class="form-group flex flex-col w-64 rounded">
+            <label class="text-white" for="name">Name</label>
+            <input
+              autocomplete="off"
+              type="text"
+              class="bg-gray-100"
+              id="name"
+              required
+              [(ngModel)]="model.name"
+              name="name"
+              #name="ngModel"
+            />
+            <label class="text-white" for="password">Password</label>
+            <input
+              autocomplete="off"
+              type="password"
+              class="bg-gray-100"
+              id="password"
+              required
+              [(ngModel)]="model.password"
+              name="password"
+              #password="ngModel"
+            />
+            <div
+              [hidden]="name.valid || name.pristine"
+              class="text-white bg-red-400 mt-0.5"
+            >
+              Name is required
+            </div>
+          </div>
+          <div class="flex flex-row space-x-2 mt-2">
+            <button
+              type="submit"
+              class="bg-green-200 p-1 text-slate-700"
+              [disabled]="!loginForm.form.valid"
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              class="text-gray-600"
+              (click)="loginForm.reset()"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <ul class="mt-4 space-y-2"></ul>
+  </article>
+</div>
