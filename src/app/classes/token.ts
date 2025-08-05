@@ -11,17 +11,13 @@ export class Token {
   private userId = '';
 
   public constructor(value: object) {
-    console.log('new token');
     this.jwtValue = value;
     this.saveJWT(value);
     const toDecode = JSON.stringify(this.jwtValue);
     this.decodeJWT(toDecode);
-    console.log('name is: ', this.getUsername());
-    console.log('user is: ', this.getUserId());
+
     userNameSignal.set(this.userName);
 
-    // effect(() => {
-    // });
     if (this.isExpired()) this.decoded = {};
   }
 

@@ -4,8 +4,7 @@ export interface Comment {
   text: string;
   parentId: Comment | null;
   user: User | null;
-
   usersId: string;
-  _id: string;
+  id: string;
   timestamp: Date;
 }

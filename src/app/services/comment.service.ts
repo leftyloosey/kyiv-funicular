@@ -17,10 +17,12 @@ export class CommentService {
   http = inject(HttpClient);
 
   getComments(parentId: string = '') {
-    let url = `${environment.apiBaseUrl}/comments/topwithuser`;
-    // if (parentId) {
-    //   url += `?parentId=${parentId}`;
-    // }
+    let url = `${environment.apiBaseUrl}/comments`;
+    console.log(parentId);
+    if (parentId.length > 0) {
+      url += '/' + parentId;
+    }
+    console.log(url);
     return this.http.get<Comment[]>(url);
   }
 

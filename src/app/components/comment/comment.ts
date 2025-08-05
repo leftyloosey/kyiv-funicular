@@ -1,54 +1,31 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  inject,
-  input,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Comment } from '../../interfaces/comment';
 import { CommentService } from '../../services/comment.service';
-import { AuthService } from '../../services/auth.service';
-import { FormsModule } from '@angular/forms';
-import { Book } from '../../interfaces/book';
-import { CommentFormComponent } from '../comment-form/comment-form';
-// import { placeholder } from '../../assets/images/placeholder.png';
+import { ReplyComment } from '../reply-comment/reply-comment';
 @Component({
   selector: 'app-comment',
-  imports: [CommonModule, CommentFormComponent],
+  imports: [CommonModule, ReplyComment],
   templateUrl: './comment.html',
   styleUrls: ['./comment.css'],
 })
-export class CommentComponent implements OnInit {
+export class CommentComponent {
   comment = input.required<Comment>();
-  deleteBook = output<Book>();
+
   hasClickedReply: boolean = false;
-  smallReplyBox: boolean = false;
-  // commentService = inject(CommentService);
-  // authService = inject(AuthService);
+  replySize = signal<boolean>(false);
+  // smallReplyBox: boolean = false;
+  commentService = inject(CommentService);
   nestedComments = signal<Comment[]>([]);
-  constructor() {
-    // console.log(this.comment());
-  }
-  ngOnInit(): void {
-    // console.log(this.comment());
+
+  setComments() {
+    this.commentService.getComments(this.comment().id).subscribe((comments) => {
+      this.nestedComments.set(comments);
+    });
   }
 
   clickReply() {
     this.hasClickedReply = !this.hasClickedReply;
+    this.setComments();
   }
-  // imgSrc = placeholder;
-  // createComment(formValues: { text: string }) {
-  //   const { text } = formValues;
-  //   const user = this.authService.getUserFromStorage();
-  //   if (!user) {
-  //     return;
-  //   }
-  //   this.commentService.createComment({
-  //     text,
-  //     user: user._id,
-  //   });
-  // }
 }

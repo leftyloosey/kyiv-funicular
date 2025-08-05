@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home';
-import { Login } from './login/login';
-import { About } from './about/about';
-import { Profile } from './profile/profile';
+import { HomeComponent } from './pages/home/home';
+import { Login } from './pages/login/login';
+import { Profile } from './pages/profile/profile';
 import { loginGuard } from './guards/log-guard-guard';
 import { Redirector } from './components/redirector/redirector';
 

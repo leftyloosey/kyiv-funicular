@@ -1,9 +1,20 @@
-<article class="form-control rounded-xl border border-gray-700 bg-gray-800 p-4">
+<article
+  [class]="comment().parentId ? 'w-96 ml-16 h-32 p-2' : 'p-4'"
+  class="form-control rounded-xl border border-gray-700 bg-gray-800"
+>
   <div class="flex items-center gap-4">
-    <img alt="" src="man.jpeg" class="size-16 rounded-full object-cover" />
+    <img
+      alt=""
+      src="man.jpeg"
+      [class]="comment().parentId ? 'hidden' : ''"
+      class="size-16 rounded-full object-cover"
+    />
 
     <div>
-      <h3 class="text-lg font-medium text-white">
+      <h3
+        class="text-lg font-medium text-white"
+        [class]="comment().parentId ? 'hidden' : ''"
+      >
         {{ comment().user?.name }}
       </h3>
     </div>
@@ -18,16 +29,30 @@
         <strong class="font-medium text-white">{{ comment().text }}</strong>
 
         <p class="mt-1 text-xs font-medium text-gray-300">
+          <span [class]="comment().parentId ? '' : 'hidden'"
+            >[{{ comment().user?.name }}] -
+          </span>
           {{ comment().timestamp | date }}
         </p>
       </a>
     </li>
   </ul>
-  <button (click)="clickReply()">reply</button>
+  <button
+    [class]="comment().parentId ? 'hidden' : 'inline-block'"
+    class="rounded border border-current px-4 py-1 text-sm font-medium text-gray-400 hover:border-white justify-end"
+    (click)="clickReply()"
+  >
+    Reply
+  </button>
 </article>
-@if(hasClickedReply) {<app-comment-form
-  [smallReplyBox]="true"
-></app-comment-form
->}
-
-<!-- </div> -->
+@if(hasClickedReply) { @for(comment of nestedComments(); track $index) {
+<app-comment [comment]="comment"></app-comment> }
+<p>
+  @if(comment().id) {<app-reply-comment
+    [parentId]="comment().id"
+  ></app-reply-comment
+  >}
+</p>
+} @else {
+<p></p>
+}

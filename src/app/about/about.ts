@@ -1,10 +1,9 @@
 import { Component, effect } from '@angular/core';
-import { Counter } from '../counter/counter';
 import { BookComponent } from '../book/book';
 import { Book } from '../interfaces/book';
 @Component({
   selector: 'app-about',
-  imports: [Counter, BookComponent],
+  imports: [BookComponent],
   templateUrl: './about.html',
   styleUrl: './about.scss',
 })

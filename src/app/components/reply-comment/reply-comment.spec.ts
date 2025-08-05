@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Counter } from './counter';
+import { ReplyComment } from './reply-comment';
 
-describe('Counter', () => {
-  let component: Counter;
-  let fixture: ComponentFixture<Counter>;
+describe('ReplyComment', () => {
+  let component: ReplyComment;
+  let fixture: ComponentFixture<ReplyComment>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Counter]
+      imports: [ReplyComment]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Counter);
+    fixture = TestBed.createComponent(ReplyComment);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

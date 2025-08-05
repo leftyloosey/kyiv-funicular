@@ -1,16 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  Output,
-  inject,
-  input,
-  output,
-} from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Attempt } from '../../classes/attempt';
 import { AuthService } from '../../services/auth.service';
-import { commentSignal } from '../../signals';
 @Component({
   selector: 'app-comment-form',
   imports: [CommonModule, FormsModule],
@@ -19,21 +11,20 @@ import { commentSignal } from '../../signals';
 })
 export class CommentFormComponent {
   auth = inject(AuthService);
-  smallReplyBox = input.required<boolean>();
-  // attemptFromForm = output<string>();
+  smallReplyBox = input<boolean>();
+  parentId = input<any>();
 
   logged = !this.auth.isAuthenticated();
 
-  model = new Attempt('');
+  model: Attempt;
 
-  updateField(event: KeyboardEvent): void {
-    // console.log(`The user pressed: ${event.key}`);
+  constructor() {
+    this.model = Attempt.noParentId('');
   }
 
   onSubmit(form: NgForm) {
     console.log(form.value);
-    commentSignal.set(form.value);
-    // this.attemptFromForm.emit(form.value);
-    // this.formVal.set(form.value.entry);
+    console.log(this.model);
+    // commentSignal.set(form.value);
   }
 }
