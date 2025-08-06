@@ -1,24 +1,11 @@
-// import { Routes } from '@angular/router';
-// import { Home } from './home/home';
-// import { About } from './about/about';
-
-// export const routes: Routes = [
-//   {
-//     path: '',
-//     component: Home,
-//     title: 'Home page',
-//   },
-//   {
-//     path: 'about',
-//     component: About,
-//     title: 'About page',
-//   },
-// ];
-
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home';
-import { About } from './about/about';
-import { ActorFormComponent } from './actor/actor-form-component';
+import { HomeComponent } from './pages/home/home';
+import { Login } from './pages/login/login';
+import { Profile } from './pages/profile/profile';
+import { loginGuard } from './guards/log-guard-guard';
+import { Redirector } from './components/redirector/redirector';
+import { commentResolver } from './resolvers/user.resolver';
+
 export const routes: Routes = [
   {
     path: '',
@@ -26,21 +13,31 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: '*',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
+    path: 'redirector',
+    component: Redirector,
+  },
+  {
     path: 'home',
     component: HomeComponent,
   },
   {
-    path: 'about',
-    component: About,
+    path: 'login',
+    component: Login,
   },
   {
-    path: 'actor',
-    component: ActorFormComponent,
+    path: 'profile',
+    canActivate: [loginGuard],
+    resolve: {
+      user: commentResolver,
+    },
+    // runGuardsAndResolvers: 'always',
+    component: Profile,
   },
-  // {
-  //   path: 'home',
-  //   loadComponent: () => import('./home/home').then((m) => m.HomeComponent),
-  // },
   // {
   //   path: 'about',
   //   loadComponent: () => import('./about/about').then((m) => m.About),

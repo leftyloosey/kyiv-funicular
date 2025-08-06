@@ -1,37 +1,37 @@
-import { Component, Input, effect, inject, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { CommentFormComponent } from '../comment-form/comment-form';
 import { Comment } from '../../interfaces/comment';
 import { CommentService } from '../../services/comment.service';
-import { UserService } from '../../services/user.service';
-
+import { ReplyComment } from '../reply-comment/reply-comment';
+import { CommentFormComponent } from '../comment-form/comment-form';
 @Component({
   selector: 'app-comment',
-  imports: [CommonModule],
-  // imports: [CommonModule, CommentFormComponent],
+  imports: [CommonModule, ReplyComment],
   templateUrl: './comment.html',
   styleUrls: ['./comment.css'],
 })
 export class CommentComponent {
-  @Input() comment!: Comment;
+  comment = input.required<Comment>();
+  isProfileComment = input.required<boolean>();
+
+  hasClickedReply: boolean = false;
+  replySize = signal<boolean>(false);
+
   commentService = inject(CommentService);
-  userService = inject(UserService);
   nestedComments = signal<Comment[]>([]);
 
-  createComment(formValues: { text: string }) {
-    const { text } = formValues;
-    const user = this.userService.getUserFromStorage();
-    if (!user) {
-      return;
-    }
-    this.commentService.createComment({
-      text,
-      user: user._id,
+  setComments() {
+    this.commentService.getComments(this.comment().id).subscribe((comments) => {
+      this.nestedComments.set(comments);
     });
-    // this.commentService.createComment({
-    //   text,
-    //   userId: user._id,
-    //   parentId: this.comment._id,
-    // });
+  }
+
+  clickReply() {
+    this.hasClickedReply = !this.hasClickedReply;
+    this.setComments();
+  }
+  clickDelete(id: string) {
+    console.log(id);
+    this.commentService.deleteComment(id);
   }
 }

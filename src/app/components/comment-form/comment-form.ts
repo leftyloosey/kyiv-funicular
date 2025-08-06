@@ -1,32 +1,31 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { CommentService } from '../../services/comment.service';
-
+import { FormsModule, NgForm } from '@angular/forms';
+import { Attempt } from '../../classes/attempt';
+import { AuthService } from '../../services/auth.service';
+import { commentSignal } from '../../signals';
 @Component({
   selector: 'app-comment-form',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './comment-form.html',
   styleUrls: ['./comment-form.css'],
 })
 export class CommentFormComponent {
-  @Input() placeholder = 'Write something...';
-  @Input() buttonText = 'Create';
-  @Output() formSubmitted = new EventEmitter<{
-    text: string;
-  }>();
-  // commentService = inject(CommentService);
+  auth = inject(AuthService);
+  smallReplyBox = input<boolean>();
+  // parentId = input<any>();
+  commentSignal = input;
+  logged = !this.auth.isAuthenticated();
 
-  formSubmit(event: SubmitEvent) {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const textAreaElement = form.elements.namedItem(
-      'commentText'
-    ) as HTMLTextAreaElement;
-    const commentText = textAreaElement.value;
-    form.reset();
-    console.log({ commentText });
-    this.formSubmitted.emit({
-      text: commentText,
-    });
+  model: Attempt;
+
+  constructor() {
+    this.model = Attempt.noParentId('');
+  }
+
+  onSubmit(form: NgForm) {
+    console.log(form.value);
+    console.log(this.model);
+    commentSignal.set(form.value);
   }
 }

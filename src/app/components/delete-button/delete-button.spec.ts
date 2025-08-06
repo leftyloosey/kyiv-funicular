@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ActorFormComponent } from './actor-form-component';
+import { DeleteButton } from './delete-button';
 
-describe('ActorFormComponent', () => {
-  let component: ActorFormComponent;
-  let fixture: ComponentFixture<ActorFormComponent>;
+describe('DeleteButton', () => {
+  let component: DeleteButton;
+  let fixture: ComponentFixture<DeleteButton>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ActorFormComponent]
+      imports: [DeleteButton]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ActorFormComponent);
+    fixture = TestBed.createComponent(DeleteButton);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -2,7 +2,9 @@ import { User } from './user';
 
 export interface Comment {
   text: string;
-  parent: Comment | null;
+  parentId: Comment | null;
   user: User | null;
-  _id: string;
+  usersId: string;
+  id: string;
+  timestamp: Date;
 }

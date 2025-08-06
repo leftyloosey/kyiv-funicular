@@ -1,34 +1,30 @@
-// import { Injectable } from '@angular/core';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class UserService {
-
-// }
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { User } from '../interfaces/user';
 import { environment } from '../../environments/environments';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   http = inject(HttpClient);
-  localStorageKey = 'threads_user';
-  createUser(name: string) {
-    return this.http.post<User>(`${environment.apiBaseUrl}/users`, {
-      name,
-    });
+  auth = inject(AuthService);
+  router = inject(Router);
+  createUser(name: string, password: string) {
+    this.http
+      .post<User>(`${environment.apiBaseUrl}/users`, {
+        name: name,
+        password: password,
+      })
+      .subscribe(() => console.log(`${name} + ${password}`));
+    this.auth.acquireJWT(name, password);
+    this.router.navigate(['/redirector']);
   }
+  loginUser(name: string, password: string) {
+    this.auth.acquireJWT(name, password);
 
-  saveUserToStorage(user: User) {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(user));
-  }
-
-  getUserFromStorage() {
-    const user = localStorage.getItem(this.localStorageKey);
-    return user ? (JSON.parse(user) as User) : null;
+    this.router.navigate(['/redirector']);
   }
 }
