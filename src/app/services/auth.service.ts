@@ -8,14 +8,10 @@ import { Token } from '../classes/token';
   providedIn: 'root',
 })
 export class AuthService {
-  // token: Token = new Token({});
   token: Token = new Token(this.feedToken());
   http = inject(HttpClient);
 
   whereTo: string = '';
-  // constructor() {
-  //   this.token = new Token(this.feedToken());
-  // }
 
   acquireJWT(name: string, password: string) {
     let url = `${environment.apiBaseUrl}/auth/login`;
@@ -43,17 +39,6 @@ export class AuthService {
       console.log(error);
     }
   }
-  // checkAuthentication() {
-  //   try {
-  //     const hoo = Token.getJwtKey() as string;
-  //     const rturn = this.getJWT(hoo);
-  //     let data;
-  //     if (rturn) data = JSON.parse(rturn);
-  //     return data;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
   getJWT(key: string) {
     return localStorage.getItem(key);

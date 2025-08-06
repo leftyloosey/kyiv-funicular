@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Attempt } from '../../classes/attempt';
 import { AuthService } from '../../services/auth.service';
+import { commentSignal } from '../../signals';
 @Component({
   selector: 'app-comment-form',
   imports: [CommonModule, FormsModule],
@@ -12,8 +13,8 @@ import { AuthService } from '../../services/auth.service';
 export class CommentFormComponent {
   auth = inject(AuthService);
   smallReplyBox = input<boolean>();
-  parentId = input<any>();
-
+  // parentId = input<any>();
+  commentSignal = input;
   logged = !this.auth.isAuthenticated();
 
   model: Attempt;
@@ -25,6 +26,6 @@ export class CommentFormComponent {
   onSubmit(form: NgForm) {
     console.log(form.value);
     console.log(this.model);
-    // commentSignal.set(form.value);
+    commentSignal.set(form.value);
   }
 }

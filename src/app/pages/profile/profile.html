@@ -1,1 +1,7 @@
-<p>profile works!</p>
+<section class="max-w-md mx-auto flex flex-col gap-4">
+  @for(comment of this.display(); track comment.timestamp) {<app-comment
+    [isProfileComment]="true"
+    [comment]="comment"
+  ></app-comment>
+  }
+</section>

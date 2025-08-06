@@ -4,6 +4,7 @@ import { Login } from './pages/login/login';
 import { Profile } from './pages/profile/profile';
 import { loginGuard } from './guards/log-guard-guard';
 import { Redirector } from './components/redirector/redirector';
+import { commentResolver } from './resolvers/user.resolver';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,9 @@ export const routes: Routes = [
   {
     path: 'profile',
     canActivate: [loginGuard],
+    resolve: {
+      user: commentResolver,
+    },
     // runGuardsAndResolvers: 'always',
     component: Profile,
   },

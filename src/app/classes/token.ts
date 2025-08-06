@@ -21,15 +21,15 @@ export class Token {
     if (this.isExpired()) this.decoded = {};
   }
 
+  static getJwtKey(): {} {
+    return this.jwtKey;
+  }
+
   public getUsername(): {} {
     return this.userName;
   }
   private setUsername(name: string) {
     this.userName = name;
-  }
-
-  static getJwtKey(): {} {
-    return this.jwtKey;
   }
 
   private setUserId(userId: string) {
@@ -44,7 +44,6 @@ export class Token {
       this.setUsername('');
       return true;
     }
-
     try {
       const currentTime = Date.now() / 1000;
       if (this.decoded.exp) return this.decoded.exp < currentTime;
@@ -54,6 +53,7 @@ export class Token {
     }
     return true;
   }
+
   private decodeJWT(jwtValue: string) {
     try {
       this.decoded = jwtDecode(jwtValue);

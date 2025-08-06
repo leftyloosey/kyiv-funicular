@@ -12,9 +12,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class Redirector implements OnInit {
   private readonly router = inject(Router);
 
-  constructor() {
-    // setTimeout(() => this.router.navigate([`${globalRedirect()}`]), 1000);
-  }
   ngOnInit(): void {
     setTimeout(() => this.router.navigate([`${globalRedirect()}`]), 1000);
   }

@@ -4,7 +4,6 @@ import { User } from '../interfaces/user';
 import { environment } from '../../environments/environments';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
-import { userNameSignal } from '../signals';
 
 @Injectable({
   providedIn: 'root',

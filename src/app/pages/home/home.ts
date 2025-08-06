@@ -1,4 +1,4 @@
-import { Component, inject, signal, effect } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 // import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CommentComponent } from '../../components/comment/comment';
@@ -22,14 +22,8 @@ export class HomeComponent {
   constructor() {
     this.getComments();
     effect(() => {
-      if (commentSignal().entry.length && commentSignal().parentId?.length)
-        this.createReplyComment(
-          commentSignal().entry,
-          commentSignal().parentId
-        );
-      else if (commentSignal().entry.length) {
-        this.createComment(commentSignal().entry);
-      } else return;
+      if (commentSignal().entry.length)
+        this.createComment(commentSignal().entry, commentSignal().parentId);
     });
   }
 
@@ -38,26 +32,19 @@ export class HomeComponent {
       this.comments.set(comments);
     });
   }
-  createComment(text: string) {
-    const userId = this.authService.token.getUserId();
 
+  createComment(text: string, parentId: string) {
+    const userId = this.authService.token.getUserId();
+    console.log('OBJECT ABOUT TO BE SUBMITTED', {
+      text: text,
+      userId: userId,
+      parentId: parentId,
+    });
     this.commentService
       .createComment({
         text,
         user: userId,
-      })
-      .subscribe((createdComment) => {
-        this.comments.set([createdComment, ...this.comments()]);
-      });
-  }
-  createReplyComment(text: string, parentId: string) {
-    const userId = this.authService.token.getUserId();
-
-    this.commentService
-      .createComment({
-        text,
-        user: userId,
-        parentId,
+        parentId: parentId,
       })
       .subscribe((createdComment) => {
         this.comments.set([createdComment, ...this.comments()]);

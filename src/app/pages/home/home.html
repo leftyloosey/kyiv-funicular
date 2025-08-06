@@ -5,6 +5,7 @@
 <div class="form-group">
   <section class="max-w-md mx-auto flex flex-col gap-4">
     @for(comment of comments(); track comment.timestamp) {<app-comment
+      [isProfileComment]="false"
       [comment]="comment"
     ></app-comment>
     }

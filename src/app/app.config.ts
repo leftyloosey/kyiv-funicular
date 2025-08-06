@@ -4,21 +4,24 @@ import {
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter, withRouterConfig } from '@angular/router';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
+import { basicInterceptor } from './interceptors/basic.interceptor';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    // provideRouter(routes),
     provideRouter(
       routes,
       withRouterConfig({
         onSameUrlNavigation: 'reload',
       })
     ),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([basicInterceptor])),
   ],
 };
