@@ -12,10 +12,15 @@ export class UserService {
   http = inject(HttpClient);
   auth = inject(AuthService);
   router = inject(Router);
-  createUser(name: string) {
-    return this.http.post<User>(`${environment.apiBaseUrl}/users`, {
-      name,
-    });
+  createUser(name: string, password: string) {
+    this.http
+      .post<User>(`${environment.apiBaseUrl}/users`, {
+        name: name,
+        password: password,
+      })
+      .subscribe(() => console.log(`${name} + ${password}`));
+    this.auth.acquireJWT(name, password);
+    this.router.navigate(['/redirector']);
   }
   loginUser(name: string, password: string) {
     this.auth.acquireJWT(name, password);

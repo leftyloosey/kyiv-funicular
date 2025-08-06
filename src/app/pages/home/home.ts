@@ -1,5 +1,11 @@
-import { Component, effect, inject, signal } from '@angular/core';
-// import { FormsModule } from '@angular/forms';
+import {
+  Component,
+  effect,
+  inject,
+  OnChanges,
+  signal,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommentComponent } from '../../components/comment/comment';
 import { CommentService } from '../../services/comment.service';
@@ -14,7 +20,7 @@ import { commentSignal } from '../../signals';
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnChanges {
   commentService = inject(CommentService);
   authService = inject(AuthService);
   comments = signal<Comment[]>([]);
@@ -22,9 +28,14 @@ export class HomeComponent {
   constructor() {
     this.getComments();
     effect(() => {
+      this.getComments();
+
       if (commentSignal().entry.length)
         this.createComment(commentSignal().entry, commentSignal().parentId);
     });
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.getComments();
   }
 
   getComments() {
@@ -47,7 +58,7 @@ export class HomeComponent {
         parentId: parentId,
       })
       .subscribe((createdComment) => {
-        this.comments.set([createdComment, ...this.comments()]);
+        this.comments.set([...this.comments(), createdComment]);
       });
   }
 }

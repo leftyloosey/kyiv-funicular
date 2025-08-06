@@ -41,14 +41,15 @@
               class="bg-green-200 p-1 text-slate-700"
               [disabled]="!loginForm.form.valid"
             >
-              Login
+              @if(loginMode) {Login} @else {Create New User }
             </button>
+            <span class="text-gray-500 mt-1">or</span>
             <button
               type="button"
-              class="text-gray-600"
-              (click)="loginForm.reset()"
+              class="text-gray-300"
+              (click)="switchLoginMode()"
             >
-              Reset
+              @if(loginMode) {Create User} @else {Login}
             </button>
           </div>
         </form>

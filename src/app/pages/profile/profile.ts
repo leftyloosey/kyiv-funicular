@@ -1,4 +1,4 @@
-import { Component, inject, computed, signal } from '@angular/core';
+import { Component, inject, computed, signal, effect } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Comment } from '../../interfaces/comment';
@@ -18,10 +18,16 @@ export class Profile {
   comments = computed(() => this.data() as Comment);
 
   constructor() {
-    this.route.data.subscribe((hero) => {
-      const { user } = hero;
-      this.display.set(user);
+    effect(() => {
+      this.route.data.subscribe((comment) => {
+        const { user } = comment;
+        this.display.set(user);
+      });
     });
+    // this.route.data.subscribe((comment) => {
+    //   const { user } = comment;
+    //   this.display.set(user);
+    // });
   }
 
   // settings = computed(() => this.data().settings as Settings);

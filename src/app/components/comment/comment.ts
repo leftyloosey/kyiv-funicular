@@ -30,8 +30,8 @@ export class CommentComponent {
     this.hasClickedReply = !this.hasClickedReply;
     this.setComments();
   }
-  clickDelete() {
-    // this.hasClickedReply = !this.hasClickedReply;
-    // this.setComments();
+  clickDelete(id: string) {
+    console.log(id);
+    this.commentService.deleteComment(id);
   }
 }
