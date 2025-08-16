@@ -1,0 +1,36 @@
+$font-stack: "Space Grotesk", sans-serif;
+
+$short-fade: 1s;
+$long-fade: 2s;
+$longest-fade: 3s;
+
+%clicked-link-behavior {
+  text-decoration: none;
+  color: white;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@mixin set-fadeIn-duration($duration) {
+  animation: fadeIn $duration;
+}
+
+// @function set-text-color($color) {
+//   @if (channel($color, "red", $space: rgb)) > 70 {
+//     // @if (lightness($color)) > 70 {
+//     @return #000;
+//   } @else {
+//     @return #fff;
+//   }
+// }
+
+// @mixin set-background($color) {
+//   background-color: $color;
+//   // color: set-text-color($color);
+// }

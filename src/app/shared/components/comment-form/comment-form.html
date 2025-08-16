@@ -1,0 +1,24 @@
+<form #commentForm="ngForm" (ngSubmit)="onSubmit(commentForm)">
+  <section class="entry-area">
+    <textarea
+      name="entry"
+      type="text"
+      [(ngModel)]="model.entry"
+      id="entry"
+      entry="entry"
+      #entry="ngModel"
+      [cols]="50"
+      [rows]="smallReplyBox() ? '1' : '5'"
+      [hidden]="!canClickReply"
+    ></textarea>
+    <div [hidden]="logged() || !entry.value">Log in to post</div>
+    <button
+      [hidden]="!canClickReply"
+      [class]="logged() ? 'logged' : 'unlogged'"
+      [disabled]="!logged()"
+      type="submit"
+    >
+      Create
+    </button>
+  </section>
+</form>

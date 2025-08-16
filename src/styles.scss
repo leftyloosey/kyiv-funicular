@@ -1,0 +1,31 @@
+@use "./styles/comment" as *;
+@use "./styles/flex" as *;
+@use "./styles/colors" as c;
+@use "./styles/text-entry" as *;
+@use "./styles/config" as *;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: c.$background-color;
+  font-family: $font-stack;
+  line-height: 1.6;
+}
+
+.comment-hide {
+  visibility: hidden;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}

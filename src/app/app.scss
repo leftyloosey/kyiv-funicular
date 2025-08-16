@@ -1,0 +1,26 @@
+@use "../styles.scss" as *;
+
+.app-container {
+  @extend %flex-col;
+  row-gap: 20px;
+}
+
+.nav-container {
+  @extend %flex-row;
+  @extend %secondary-background;
+  // background-color: $primary-color;
+  justify-content: end;
+
+  div {
+    @extend %flex-row;
+
+    column-gap: 4px;
+  }
+
+  a {
+    @extend %clicked-link-behavior;
+    font-size: large;
+    border-right: solid;
+    padding-right: 2px;
+  }
+}

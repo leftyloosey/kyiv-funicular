@@ -1,0 +1,9 @@
+<section>
+  <div class="deev">
+    @for (comments of (this.displayComments()); track $index) {
+    <div class="pad">
+      <app-comment [comment]="comments" [isProfileComment]="true"></app-comment>
+    </div>
+    }
+  </div>
+</section>

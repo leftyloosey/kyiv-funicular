@@ -9,7 +9,7 @@ import {
   withFetch,
   withInterceptors,
 } from '@angular/common/http';
-import { basicInterceptor } from './interceptors/basic.interceptor';
+import { basicInterceptor } from './utils/interceptors/basic.interceptor';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {

@@ -1,0 +1,16 @@
+<article class="home-container">
+  <section class="form-container">
+    <app-comment-form [smallReplyBox]="false"></app-comment-form>
+  </section>
+
+  <section class="comment-container">
+    <div>
+      @for (comments of (this.displayComments()); track $index) {
+      <app-comment
+        [comment]="comments"
+        [isProfileComment]="false"
+      ></app-comment>
+      }
+    </div>
+  </section>
+</article>

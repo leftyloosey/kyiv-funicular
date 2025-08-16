@@ -1,0 +1,14 @@
+@use "../../../styles.scss" as *;
+section {
+  width: 100%;
+  //   background-color: red;
+  justify-content: center;
+}
+.deev {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.pad {
+  margin: 2rem;
+}

@@ -1,0 +1,18 @@
+@use "../../../../styles.scss" as *;
+
+.form-container {
+  margin-left: 10px;
+  textarea {
+    @extend %reply__txtarea;
+    height: 50px;
+  }
+  button {
+    @extend %comment__button;
+  }
+}
+.submit-hover:hover {
+  @extend %comment__button-submit-hover;
+}
+.alert-hover:hover {
+  @extend %comment__button-alert-hover;
+}

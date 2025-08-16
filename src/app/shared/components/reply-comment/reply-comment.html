@@ -1,0 +1,24 @@
+<section class="form-container">
+  <form #commentForm="ngForm" (ngSubmit)="onSubmit(commentForm)">
+    <textarea
+      name="entry"
+      type="text"
+      [(ngModel)]="model.entry"
+      id="entry"
+      entry="entry"
+      #entry="ngModel"
+      [rows]="1"
+    ></textarea>
+    <div>
+      <div [hidden]="!logged || !entry.value">Log in to post</div>
+
+      <button
+        [disabled]="logged"
+        [class]="logged ? 'alert-hover' : 'submit-hover'"
+        type="submit"
+      >
+        Reply
+      </button>
+    </div>
+  </form>
+</section>

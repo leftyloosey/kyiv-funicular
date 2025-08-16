@@ -1,16 +1,31 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home';
-import { Login } from './pages/login/login';
-import { Profile } from './pages/profile/profile';
-import { loginGuard } from './guards/log-guard-guard';
-import { Redirector } from './components/redirector/redirector';
-import { commentResolver } from './resolvers/user.resolver';
+import { HomeComponent } from './modules/home/home';
+import { Login } from './modules/login/login';
+import { Profile } from './modules/profile/profile';
+import { loginGuard } from './utils/guards/log-guard-guard';
+import { profileGuard } from './utils/guards/profile-guard-guard';
+import { commentResolver } from './utils/resolvers/user.resolver';
+import { homeResolver } from './utils/resolvers/home-resolver';
+import { Translate } from './modules/translate/translate';
 
 export const routes: Routes = [
+  {
+    path: 'profile',
+    canActivate: [profileGuard],
+    resolve: {
+      comment: commentResolver,
+    },
+    component: Profile,
+  },
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path: 'translate',
+    pathMatch: 'full',
+    component: Translate,
   },
   {
     path: '*',
@@ -18,25 +33,16 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'redirector',
-    component: Redirector,
-  },
-  {
     path: 'home',
+    resolve: {
+      comment: homeResolver,
+    },
     component: HomeComponent,
   },
   {
     path: 'login',
-    component: Login,
-  },
-  {
-    path: 'profile',
     canActivate: [loginGuard],
-    resolve: {
-      user: commentResolver,
-    },
-    // runGuardsAndResolvers: 'always',
-    component: Profile,
+    component: Login,
   },
   // {
   //   path: 'about',

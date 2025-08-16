@@ -1,0 +1,23 @@
+$background-color: #fcfcfc;
+$secondary-color: #899499;
+$tertiary-color: #e5e4e2;
+$alert-color: #f7b66d;
+$submit-color: #6fc276;
+$text-reply-color: #eeee;
+$delete-color: #f47174;
+
+%secondary-background {
+  background-color: $secondary-color;
+}
+%alert-background {
+  background-color: $alert-color;
+}
+%submit-background {
+  background-color: $submit-color;
+}
+%primary-background {
+  background-color: $background-color;
+}
+// .submit-background {
+//   background-color: $submit-color;
+// }

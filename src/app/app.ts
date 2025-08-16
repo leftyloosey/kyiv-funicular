@@ -1,17 +1,19 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthService } from './services/auth.service';
-import { userNameSignal } from './signals';
+import { AuthService } from './services/auth-service/auth.service';
+import { userNameSignal } from './utils/signals';
 
 @Component({
   selector: 'app-root',
   imports: [CommonModule, RouterModule],
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  // providers: [{ provide: RouteReuseStrategy, useClass: CustomRouteStrategy }],
 })
 export class App {
+  logoutUser() {
+    this.auth.logout();
+  }
   auth = inject(AuthService);
   suffix = "'s";
   username = '';
