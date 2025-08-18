@@ -2,7 +2,6 @@
 
 .entry-area {
   @extend %flex-col;
-
   textarea {
     @extend %reply__txtarea;
     height: 100px;

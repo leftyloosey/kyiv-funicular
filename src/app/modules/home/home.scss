@@ -2,21 +2,23 @@
 
 .home-container {
   @extend %flex-col;
-  row-gap: 20px;
-}
-
-.comment-container {
-  justify-content: center;
-  @extend %flex-row;
-  div {
-    @extend %flex-row;
-    column-gap: 1rem;
-    width: 600px;
-    overflow-x: auto;
+  row-gap: 40px;
+  .form-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
-}
-.form-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+
+  .comment-container {
+    @extend %flex-row;
+    margin-right: 10.5rem;
+    justify-content: center;
+    margin-top: 2rem;
+    div {
+      @extend %flex-row;
+      column-gap: 1rem;
+      width: 600px;
+      overflow-x: auto;
+    }
+  }
 }

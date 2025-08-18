@@ -8,6 +8,8 @@ article {
     width: 16rem;
   }
 }
+
 .flex-col {
   @extend %flex-col;
+  margin-bottom: 0.5rem;
 }

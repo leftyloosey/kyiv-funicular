@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
-
-type CreateTranslateDto = {
-  text: string;
-};
+import {
+  CreateTranslateDto,
+  translatable,
+} from '../../modules/translate/translatable';
+// type CreateTranslateDto = {
+//   text: string;
+// };
 
 @Injectable({
   providedIn: 'root',
@@ -12,13 +15,18 @@ type CreateTranslateDto = {
 export class TranslateService {
   http = inject(HttpClient);
 
+  public getAllWords = () => {
+    const url = `${environment.apiBaseUrl}/translate`;
+    return this.http.get<translatable[]>(url);
+  };
+
   public translateOne = (word: string) => {
+    console.log(word);
     const url = `${environment.apiBaseUrl}/translate`;
     const submit = { text: word };
-
-    return this.http
-      .post<CreateTranslateDto>(url, submit)
-      .subscribe((data) => console.log(data))
-      .unsubscribe();
+    console.log(submit);
+    return this.http.post<CreateTranslateDto>(url, submit);
+    // .subscribe((data) => console.log(data))
+    // .unsubscribe();
   };
 }

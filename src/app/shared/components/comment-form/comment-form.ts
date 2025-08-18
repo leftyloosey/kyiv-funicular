@@ -1,9 +1,8 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Attempt } from '../../../utils/classes/attempt';
 import { AuthService } from '../../../services/auth-service/auth.service';
-// import { commentSignal } from '../../../utils/signals';
 import { CommentService } from '../../../services/comment-service/comment.service';
 @Component({
   selector: 'app-comment-form',
@@ -11,16 +10,14 @@ import { CommentService } from '../../../services/comment-service/comment.servic
   templateUrl: './comment-form.html',
   styleUrls: ['./comment-form.scss'],
 })
-export class CommentFormComponent {
-  auth = inject(AuthService);
-  commentService = inject(CommentService);
-  smallReplyBox = input<boolean>();
-  // commentSignal = input;
-  // logged = !this.auth.isAuthenticated();
-  logged = computed(() => this.auth.isAuthenticated());
-  canClickReply: boolean = true;
+export class CommentFormComponent implements OnDestroy {
+  private auth = inject(AuthService);
+  private commentService = inject(CommentService);
+  public smallReplyBox = input<boolean>();
+  protected logged = computed(() => this.auth.isAuthenticated());
+  protected canClickReply: boolean = true;
 
-  model: Attempt;
+  protected model: Attempt;
 
   constructor() {
     this.model = Attempt.noParentId('');
@@ -28,10 +25,13 @@ export class CommentFormComponent {
       (value) => (this.canClickReply = value)
     );
   }
+  ngOnDestroy(): void {}
 
-  onSubmit(form: NgForm) {
-    console.log(form.value);
-    console.log(this.model);
-    // commentSignal.set(form.value);
+  protected submitCommentToService(form: NgForm) {
+    this.commentService.nextComment({
+      user: this.auth.getUserId(),
+      parentId: this.model.parentId,
+      text: this.model.entry,
+    });
   }
 }

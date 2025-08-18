@@ -1,1 +1,24 @@
-<p>translate works!</p>
+<form [formGroup]="translateForm" (ngSubmit)="submitTranslateWord()">
+  <label
+    >Word
+    <input type="text" formControlName="word" />
+  </label>
+
+  <button type="submit">Submit</button>
+  <button (click)="getWords()" type="submit">Get All Words</button>
+
+  @for (word of (this.displayWords()); track $index) {
+  <p>
+    {{ word.original }}
+    {{ word.translation }}
+  </p>
+  }
+
+  <!-- @if (obs$ | async; as words) {
+      @for (word of words; track $index) {
+        <p>{{ word }}</p>
+      }
+    } @else {
+      <p>Loading items...</p>
+    } -->
+</form>

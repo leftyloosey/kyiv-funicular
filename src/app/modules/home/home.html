@@ -4,9 +4,10 @@
   </section>
 
   <section class="comment-container">
-    <div>
+    <div #grb>
       @for (comments of (this.displayComments()); track $index) {
       <app-comment
+        #lrb
         [comment]="comments"
         [isProfileComment]="false"
       ></app-comment>

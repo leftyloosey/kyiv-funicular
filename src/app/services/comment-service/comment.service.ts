@@ -2,29 +2,31 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Comment } from '../../utils/interfaces/comment';
 import { environment } from '../../environments/environments';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 type CreateCommentDto = {
   parentId?: string;
   text: string;
   user: string;
 };
-// type DeleteCommentDto = {
-//   commentId: string;
-// };
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommentService {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
+  private booleanValue$ = new Subject<boolean>();
   public testSubject$ = new Subject<string>();
-  private booleanValue = new Subject<boolean>();
-  castValue = this.booleanValue.asObservable();
+  public createCommentSubject$ = new Subject<CreateCommentDto>();
 
-  sendValue(newValue: boolean) {
-    console.log(newValue);
-    this.booleanValue.next(newValue);
+  castValue = this.booleanValue$.asObservable();
+  newComment = this.createCommentSubject$.asObservable();
+
+  public sendValue(newValue: boolean) {
+    this.booleanValue$.next(newValue);
+  }
+  public nextComment(newComment: CreateCommentDto) {
+    this.createCommentSubject$.next(newComment);
   }
 
   public getComments(parentId: string = '') {
@@ -47,8 +49,6 @@ export class CommentService {
     );
   }
   public deleteComment(commentId: string) {
-    console.log(commentId);
-    console.log(`${environment.apiBaseUrl}/comments/delete/${commentId}`);
     return this.http
       .delete<Comment>(`${environment.apiBaseUrl}/comments/delete/${commentId}`)
       .subscribe(() => console.log(`${commentId} deleted`));

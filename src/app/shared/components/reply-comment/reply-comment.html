@@ -1,5 +1,5 @@
 <section class="form-container">
-  <form #commentForm="ngForm" (ngSubmit)="onSubmit(commentForm)">
+  <form #commentForm="ngForm" (ngSubmit)="submitCommentToService(commentForm)">
     <textarea
       name="entry"
       type="text"
@@ -10,11 +10,11 @@
       [rows]="1"
     ></textarea>
     <div>
-      <div [hidden]="!logged || !entry.value">Log in to post</div>
+      <div [hidden]="logged() || !entry.value">Log in to post</div>
 
       <button
-        [disabled]="logged"
-        [class]="logged ? 'alert-hover' : 'submit-hover'"
+        [disabled]="!logged()"
+        [class]="!logged() ? 'alert-hover' : 'submit-hover'"
         type="submit"
       >
         Reply
