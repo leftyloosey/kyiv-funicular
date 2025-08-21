@@ -1,0 +1,13 @@
+section {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1rem;
+  margin-left: 1rem;
+
+  div {
+    height: 20rem;
+  }
+  .word-column {
+    overflow-y: auto;
+  }
+}

@@ -25,8 +25,6 @@ export class TranslateService {
     const url = `${environment.apiBaseUrl}/translate`;
     const submit = { text: word };
     console.log(submit);
-    return this.http.post<CreateTranslateDto>(url, submit);
-    // .subscribe((data) => console.log(data))
-    // .unsubscribe();
+    return this.http.post<translatable>(url, submit);
   };
 }

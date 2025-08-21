@@ -1,24 +1,20 @@
-<form [formGroup]="translateForm" (ngSubmit)="submitTranslateWord()">
-  <label
-    >Word
-    <input type="text" formControlName="word" />
-  </label>
+<section>
+  <form [formGroup]="translateForm" (ngSubmit)="submitTranslateWord()">
+    <label
+      ><button type="submit">Translate</button>
+      <input type="text" formControlName="word" />
+    </label>
+  </form>
+  <div>
+    <div class="word-column">
+      @for (word of (this.displayWords()); track $index) {
 
-  <button type="submit">Submit</button>
-  <button (click)="getWords()" type="submit">Get All Words</button>
+      <p>
+        {{ word.original }}
+        {{ word.translation }}
+      </p>
 
-  @for (word of (this.displayWords()); track $index) {
-  <p>
-    {{ word.original }}
-    {{ word.translation }}
-  </p>
-  }
-
-  <!-- @if (obs$ | async; as words) {
-      @for (word of words; track $index) {
-        <p>{{ word }}</p>
       }
-    } @else {
-      <p>Loading items...</p>
-    } -->
-</form>
+    </div>
+  </div>
+</section>

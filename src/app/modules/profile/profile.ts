@@ -12,6 +12,7 @@ import { CommentComponent } from '../../shared/components/comment/comment';
 import { CommonModule } from '@angular/common';
 import { Observable, Subject } from 'rxjs';
 import { CommentService } from '../../services/comment-service/comment.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-profile',
   imports: [CommonModule, CommentComponent],
@@ -33,12 +34,14 @@ export class Profile implements OnDestroy {
 
   constructor() {
     this.routeData$ = this.route.data;
-    this.comt.deleteCommentSubject$.subscribe((comment) => {
-      this.comt.deleteCommentOnBackend(comment);
-      this.displayComments.set(
-        this.displayComments().filter((item) => item.id !== comment)
-      );
-    });
+    this.comt.deleteCommentSubject$
+      .pipe(takeUntilDestroyed())
+      .subscribe((comment) => {
+        this.comt.deleteCommentOnBackend(comment);
+        this.displayComments.set(
+          this.displayComments().filter((item) => item.id !== comment)
+        );
+      });
   }
 
   public ngOnDestroy(): void {

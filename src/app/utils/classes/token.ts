@@ -41,7 +41,8 @@ export class Token {
       const currentTime = Date.now() / 1000;
       if (this.decoded.exp) return this.decoded.exp < currentTime;
     } catch (error) {
-      console.error('Error decoding token:', error);
+      // console.error('Error decoding token:', error);
+      console.log('not logged in');
       return true;
     }
     return true;
@@ -55,7 +56,9 @@ export class Token {
       if (this.decoded.userId && !this.isExpired())
         this.setUserId(this.decoded.userId);
     } catch (error) {
-      console.error('Error decoding token:', error);
+      // console.error('Error decoding token:', error);
+      console.log('not logged in');
+
       this.setUsername('');
     }
   }
