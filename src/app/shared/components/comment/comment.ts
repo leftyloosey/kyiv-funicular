@@ -24,18 +24,19 @@ export class CommentComponent implements OnDestroy {
   public isProfileComment = input.required<boolean>();
   public hasClickedReply: boolean = false;
 
-  private newKOM$ = this.commentService.getKomment;
-  protected comments$ = toObservable(this.comment);
+  private newKomment$ = this.commentService.getKomment;
+  // protected comments$ = toObservable(this.comment);
   private kommentSubscription: Subscription;
 
   constructor() {
-    this.kommentSubscription = this.newKOM$.subscribe((newComment) => {
-      const parentOfNew = newComment.parentId || null;
+    this.kommentSubscription = this.newKomment$.subscribe((newKomment) => {
+      const parentOfNew = newKomment.parentId || null;
       const currentId = this.comment().id || null;
 
       if (parentOfNew == currentId) this.setNestedComments();
     });
   }
+
   ngOnDestroy(): void {
     this.kommentSubscription.unsubscribe();
   }

@@ -18,7 +18,9 @@ export class CommentService {
 
   public deleteCommentSubject$ = new Subject<string>();
   public createCommentSubject$ = new Subject<CreateCommentDto>();
-  public kreateKommentSubject$ = new Subject<CreateCommentDto>();
+
+  // public kommentTowardFront$ = new Subject<CreateCommentDto>();
+  // public kreateKommentSubject$ = new Subject<CreateCommentDto>();
   public getKommentSubject$ = new Subject<Comment>();
 
   public newComment = this.createCommentSubject$.asObservable();
