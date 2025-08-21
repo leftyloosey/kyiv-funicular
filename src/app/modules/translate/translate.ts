@@ -27,6 +27,7 @@ export class Translate {
       .subscribe((toBeTranslated) => {
         this.translate
           .translateOne(toBeTranslated as string)
+          .pipe(takeUntilDestroyed())
           .subscribe((translatedWord) => {
             this.displayWords.update((existingWords) => [
               translatedWord,
