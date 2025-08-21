@@ -21,17 +21,15 @@ export class CommentFormComponent implements OnDestroy {
 
   constructor() {
     this.model = Attempt.noParentId('');
-    this.commentService.castValue.subscribe(
-      (value) => (this.canClickReply = value)
-    );
   }
   ngOnDestroy(): void {}
 
   protected submitCommentToService(form: NgForm) {
-    this.commentService.nextComment({
+    this.commentService.submitCommentToService({
       user: this.auth.getUserId(),
       parentId: this.model.parentId,
       text: this.model.entry,
     });
+    form.resetForm();
   }
 }

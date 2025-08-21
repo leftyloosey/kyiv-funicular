@@ -1,12 +1,8 @@
 import { jwtDecode } from 'jwt-decode';
 import { UserPayload } from '../interfaces/jwt';
 import { userNameSignal } from '../signals';
-import { effect } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-
 export class Token {
   private jwtValue;
-  // static jwtKey = 'JWT';
   private decoded: UserPayload = {};
   private userName = '';
   private userId = '';
@@ -28,11 +24,12 @@ export class Token {
     this.userName = name;
   }
 
-  private setUserId(userId: string) {
-    this.userId = userId;
-  }
   public getUserId(): string {
     return this.userId;
+  }
+
+  private setUserId(userId: string) {
+    this.userId = userId;
   }
 
   public isExpired(): boolean {
@@ -62,7 +59,4 @@ export class Token {
       this.setUsername('');
     }
   }
-  // private saveJWT(data: object) {
-  //   localStorage.setItem(Token.jwtKey, JSON.stringify(data));
-  // }
 }

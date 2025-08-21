@@ -9,11 +9,11 @@
       #entry="ngModel"
       [cols]="50"
       [rows]="smallReplyBox() ? '1' : '5'"
-      [hidden]="!canClickReply"
     ></textarea>
-    <div [hidden]="logged() || !entry.value">Log in to post</div>
+    <div class="alert-hover" [hidden]="logged() || !entry.value">
+      Log in to post
+    </div>
     <button
-      [hidden]="!canClickReply"
       [class]="logged() ? 'logged' : 'unlogged'"
       [disabled]="!logged()"
       type="submit"

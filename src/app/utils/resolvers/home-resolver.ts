@@ -1,6 +1,5 @@
 import { inject } from '@angular/core';
 import { CommentService } from '../../services/comment-service/comment.service';
-// import { CommentService } from '../../services/comment-service/comment.service';
 import { Comment } from '../interfaces/comment';
 import type {
   ActivatedRouteSnapshot,
@@ -15,5 +14,5 @@ export const homeResolver: ResolveFn<Observable<Array<Comment>>> = (
 ) => {
   const comt = inject(CommentService);
 
-  return comt.getComments();
+  return comt.getCommentsFromBackend();
 };

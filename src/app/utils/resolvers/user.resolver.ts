@@ -20,5 +20,5 @@ export const commentResolver: ResolveFn<Observable<Array<Comment>>> = (
 
   const userId = auth.getUserId();
 
-  return comt.getCommentsByUser(userId);
+  return comt.getBackendCommentsByUser(userId);
 };

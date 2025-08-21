@@ -34,7 +34,7 @@ export class AuthService {
   public logout() {
     this.cookieService.delete('token');
     this.setUserNameSignal('');
-    console.log(this.router.url);
+
     if (this.router.url == '/home') window.location.reload();
     this.router.navigate(['/home']);
     this.isAuthenticated();
@@ -55,7 +55,6 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    // if (this.token.isExpired()) return false;
     return this.cookieService.check('token') && !this.token.isExpired();
   }
 

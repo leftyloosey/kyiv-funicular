@@ -3,7 +3,7 @@
 @use "./flex" as f;
 
 %comment_ {
-  @include m.set-fadeIn-duration(m.$long-fade);
+  @include m.set-fadeIn-duration(m.$short-fade);
   margin-left: 10px;
   width: 27rem;
   max-height: 7.5rem;

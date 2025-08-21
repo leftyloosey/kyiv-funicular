@@ -1,11 +1,11 @@
 <section class="form-container">
   <form #commentForm="ngForm" (ngSubmit)="submitCommentToService(commentForm)">
+    <!-- id="entry"
+      entry="entry" -->
     <textarea
       name="entry"
       type="text"
       [(ngModel)]="model.entry"
-      id="entry"
-      entry="entry"
       #entry="ngModel"
       [rows]="1"
     ></textarea>

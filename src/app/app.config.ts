@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withRouterConfig({
-        onSameUrlNavigation: 'reload',
+        // onSameUrlNavigation: 'reload',
       })
     ),
     provideHttpClient(withFetch(), withInterceptors([basicInterceptor])),

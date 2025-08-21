@@ -2,7 +2,8 @@
 
 .home-container {
   @extend %flex-col;
-  row-gap: 40px;
+  height: 80vh;
+  row-gap: 2rem;
   .form-container {
     display: flex;
     justify-content: center;
@@ -11,13 +12,15 @@
 
   .comment-container {
     @extend %flex-row;
+    height: 75%;
     margin-right: 10.5rem;
     justify-content: center;
+    overflow-y: auto;
     margin-top: 2rem;
     div {
       @extend %flex-row;
       column-gap: 1rem;
-      width: 600px;
+      width: 41.5vw;
       overflow-x: auto;
     }
   }

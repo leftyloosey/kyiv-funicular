@@ -1,4 +1,9 @@
-<article class="comment" [class]="comment().parentId ? '' : ''">
+<article
+  class="comment"
+  (mouseover)="mouseUpperTrue()"
+  (mouseout)="mouseUpperFalse()"
+  [class]="comment().parentId ? '' : ''"
+>
   <div>
     <div class="flex-row" [class]="comment().parentId ? 'comment-hide' : ''">
       <img alt="" src="man.jpeg" class="comment__picture" />
@@ -22,29 +27,28 @@
     </ul>
 
     <button
+      (click)="toggleClickButtonOnly()"
       [class]="
         comment().parentId || this.isProfileComment()
           ? 'comment-hide'
           : 'basic-hover'
       "
-      (click)="clickReply()"
-      [disabled]="!hasClickedReply && !canClickReply"
     >
-      {{ hasClickedReply ? "Close Replies" : "Reply" }}
+      {{ toggleRepliesVisible() ? "Close Replies" : "Reply" }}
     </button>
 
     <button
       [class]="this.isProfileComment() ? 'delete-hover' : 'comment-hide'"
-      (click)="clickDelete(comment().id)"
+      (click)="deleteComment(comment().id)"
     >
       Delete
     </button>
   </div>
 </article>
-<section>
-  @if(hasClickedReply) { @for(comment of nestedComments(); track $index) {
-  <app-comment [isProfileComment]="false" [comment]="comment"></app-comment> } }
+<section (mouseover)="mouseLowerTrue()" (mouseout)="mouseLowerFalse()">
+  @if(toggleRepliesVisible()) { @for(comment of nestedComments(); track $index)
+  {
+  <app-comment2 [comment]="comment"></app-comment2>
+  } } @if(comment().id && toggleRepliesVisible()) {
+  <app-reply-comment [parentId]="comment().id"></app-reply-comment>}
 </section>
-
-@if(comment().id && hasClickedReply && third) {
-<app-reply-comment [parentId]="comment().id"></app-reply-comment>} @else { }

@@ -1,11 +1,7 @@
 import {
   afterEveryRender,
-  afterNextRender,
-  AfterViewChecked,
   AfterViewInit,
   Component,
-  computed,
-  effect,
   ElementRef,
   inject,
   OnDestroy,
@@ -17,27 +13,26 @@ import { CommentComponent } from '../../shared/components/comment/comment';
 import { CommentService } from '../../services/comment-service/comment.service';
 import { Comment } from '../../utils/interfaces/comment';
 import { CommentFormComponent } from '../../shared/components/comment-form/comment-form';
-import { distinct, map, Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { scrollSignal } from '../../utils/signals';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-home',
   imports: [CommonModule, CommentComponent, CommentFormComponent],
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
 })
-export class HomeComponent
-  implements OnDestroy, AfterViewInit, AfterViewChecked
-{
+export class HomeComponent implements OnDestroy, AfterViewInit {
   private commentService = inject(CommentService);
   private route = inject(ActivatedRoute);
   private routeData$: Observable<any> = this.route.data;
   protected comments = signal<Comment[]>([]);
-  protected displayComments = signal<Comment[]>([]);
-  protected scrollWidth = signal<number>(0);
-  protected scroller = computed(() => scrollSignal());
 
-  grb = viewChild<ElementRef>('grb');
+  protected scrollWidth = signal<number>(0);
+  protected oldWidth = signal<number>(0);
+
+  protected displayComments = signal<Comment[]>([]);
+  protected commentContainer = viewChild<ElementRef>('commentContainer');
 
   private commentsList$ = this.routeData$.subscribe(
     (response: { [key: string]: Comment[] }) => {
@@ -47,42 +42,37 @@ export class HomeComponent
   );
 
   constructor() {
-    afterNextRender(() => {
-      this.grb()?.nativeElement.scrollTo({
-        left: this.scrollWidth(),
-        behavior: 'smooth',
-      });
+    afterEveryRender(() => {
+      if (this.scrollWidth() === this.oldWidth()) {
+        this.commentContainer()?.nativeElement.scrollTo({
+          left: this.scrollWidth(),
+          behavior: 'smooth',
+        });
+        this.oldWidth.set(0);
+      }
     });
-  }
-  ngAfterViewChecked(): void {
-    this.scrollWidth.set(this.grb()?.nativeElement.scrollWidth);
-    scrollSignal.set(true);
+
+    this.commentService.newComment
+      .pipe(takeUntilDestroyed())
+      .subscribe((com) => {
+        this.commentService.createCommentOnBackend(com).subscribe((comment) => {
+          if (!comment.parentId) {
+            this.displayComments.update((prev) => [...prev, comment]);
+            this.oldWidth.set(this.scrollWidth());
+          } else {
+            this.commentService.getCommentsFromService(comment);
+          }
+        });
+      });
   }
 
   ngAfterViewInit(): void {
-    this.scrollWidth.set(this.grb()?.nativeElement.scrollWidth);
-    this.commentService.createCommentSubject$
-      .pipe(
-        // take(1),
-        distinct(),
-        map((com) => {
-          this.commentService
-            .createComment(com)
-            .pipe(
-              // take(1),
-              distinct()
-            )
-
-            .subscribe((comment) => {
-              if (!comment.parentId) {
-                this.displayComments.update((prev) => [...prev, comment]);
-                this.scrollWidth.set(this.grb()?.nativeElement.scrollWidth);
-              } else {
-              }
-            });
-        })
-      )
-      .subscribe();
+    this.scrollWidth.set(this.commentContainer()?.nativeElement.scrollWidth);
+    this.commentContainer()?.nativeElement.scrollTo({
+      left: this.scrollWidth(),
+      behavior: 'smooth',
+    });
+    this.oldWidth.set(this.scrollWidth());
   }
 
   ngOnDestroy(): void {

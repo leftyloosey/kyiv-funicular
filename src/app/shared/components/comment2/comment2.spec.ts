@@ -1,22 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommentComponent } from './comment';
-import { CommonModule } from '@angular/common';
+import { Comment2 } from './comment2';
+import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
 import { inputBinding, provideZonelessChangeDetection } from '@angular/core';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { routes } from '../../../app.routes';
-import { Comment2 } from '../comment2/comment2';
-import { ReplyComment } from '../reply-comment/reply-comment';
 
-describe('Comment', () => {
-  let component: CommentComponent;
-  let fixture: ComponentFixture<CommentComponent>;
+describe('Comment2', () => {
+  let component: Comment2;
+  let fixture: ComponentFixture<Comment2>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule, CommentComponent, Comment2, ReplyComment],
+      imports: [Comment2, CommonModule, AsyncPipe, DatePipe],
       providers: [
         provideZonelessChangeDetection(),
         provideHttpClientTesting(),
@@ -24,12 +22,8 @@ describe('Comment', () => {
         provideRouter(routes),
       ],
     }).compileComponents();
-
-    fixture = TestBed.createComponent(CommentComponent, {
-      bindings: [
-        inputBinding('comment', () => 'value'),
-        inputBinding('isProfileComment', () => 'value'),
-      ],
+    fixture = TestBed.createComponent(Comment2, {
+      bindings: [inputBinding('comment', () => 'value')],
     });
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -18,6 +18,7 @@ $delete-color: #f47174;
 %primary-background {
   background-color: $background-color;
 }
-// .submit-background {
-//   background-color: $submit-color;
-// }
+
+%secondary-border {
+  border-color: $secondary-color;
+}

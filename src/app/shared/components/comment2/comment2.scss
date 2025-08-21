@@ -1,0 +1,15 @@
+@use "../../../../styles.scss" as *;
+
+.comment {
+  @extend %comment_;
+}
+section {
+  @extend %comment__dropdown_section;
+}
+
+.delete-hover:hover {
+  @extend %comment__button-delete-hover;
+}
+.basic-hover:hover {
+  @extend %comment__button-basic-hover;
+}

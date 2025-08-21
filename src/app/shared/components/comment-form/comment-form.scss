@@ -15,3 +15,7 @@
   @extend %comment__button;
   @extend %comment__button-submit-hover;
 }
+.alert-hover {
+  @extend %alert-background;
+  color: white;
+}

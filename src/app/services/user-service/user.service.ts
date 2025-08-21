@@ -9,11 +9,11 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class UserService {
-  http = inject(HttpClient);
-  auth = inject(AuthService);
-  router = inject(Router);
+  private http = inject(HttpClient);
+  private auth = inject(AuthService);
+  private router = inject(Router);
 
-  createUser(name: string, password: string) {
+  public createUser(name: string, password: string) {
     this.http
       .post<User>(`${environment.apiBaseUrl}/users`, {
         name: name,
@@ -23,11 +23,8 @@ export class UserService {
     this.auth.getTokenFromBackend(name, password);
     this.router.navigate(['/redirector']);
   }
-  loginUser(name: string, password: string) {
+  public loginUser(name: string, password: string) {
     this.auth.getTokenFromBackend(name, password).subscribe({
-      // next: (data) => {
-      //   console.log('data in old userService', data);
-      // },
       error: (err) => console.log(err),
       complete: () => {
         this.router.navigate(['/profile']);

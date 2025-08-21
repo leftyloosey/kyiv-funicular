@@ -1,78 +1,82 @@
-import {
-  afterNextRender,
-  AfterViewInit,
-  Component,
-  effect,
-  inject,
-  input,
-  signal,
-} from '@angular/core';
+import { Component, inject, input, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Comment } from '../../../utils/interfaces/comment';
 import { CommentService } from '../../../services/comment-service/comment.service';
 import { ReplyComment } from '../reply-comment/reply-comment';
-import { nestedSignal } from '../../../utils/signals';
+import { Comment2 } from '../comment2/comment2';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { Subscription } from 'rxjs';
+import { inputSafetyStorage } from '../../../utils/signals';
 @Component({
   selector: 'app-comment',
-  imports: [CommonModule, ReplyComment],
+  imports: [CommonModule, Comment2, ReplyComment],
   templateUrl: './comment.html',
   styleUrls: ['./comment.scss'],
 })
-export class CommentComponent implements AfterViewInit {
+export class CommentComponent implements OnDestroy {
   private commentService = inject(CommentService);
+  protected commentId: string = '';
+  protected upper: boolean = false;
+  protected lower: boolean = true;
+
   public nestedComments = signal<Comment[]>([]);
   public comment = input.required<Comment>();
   public isProfileComment = input.required<boolean>();
-  protected commentId: string = '';
   public hasClickedReply: boolean = false;
-  third: boolean = false;
-  canClickReply: boolean = true;
-  replySize = signal<boolean>(false);
+
+  private newKOM$ = this.commentService.getKomment;
+  protected comments$ = toObservable(this.comment);
+  private kommentSubscription: Subscription;
 
   constructor() {
-    this.commentService.castValue.subscribe(
-      (value) => (this.canClickReply = value)
-    );
-    effect(() => {
-      if (!nestedSignal()) this.nestedComments.update(() => []);
+    this.kommentSubscription = this.newKOM$.subscribe((newComment) => {
+      const parentOfNew = newComment.parentId || null;
+      const currentId = this.comment().id || null;
+
+      if (parentOfNew == currentId) this.setNestedComments();
     });
   }
-  ngAfterViewInit(): void {
-    nestedSignal.set(true);
-    this.setNestedComments();
+  ngOnDestroy(): void {
+    this.kommentSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.commentId = this.comment().id;
-  }
-
-  public setNestedComments() {
-    this.commentService.getComments(this.comment().id).subscribe({
-      next: (comments) => this.nestedComments.set(comments),
-      complete: () => {
-        this.third = true;
-      },
-    });
-    nestedSignal.set(true);
-  }
-
-  public clickReply() {
-    if (this.hasClickedReply) {
-      this.changeCanReply(true);
-      this.hasClickedReply = !this.hasClickedReply;
-      this.third = false;
-      return;
-    }
-    this.hasClickedReply = !this.hasClickedReply;
-
-    this.changeCanReply(false);
-
     this.setNestedComments();
   }
-  protected clickDelete(id: string) {
-    this.commentService.testSubject$.next(id);
+
+  private setNestedComments() {
+    this.commentService
+      .getCommentsFromBackend(this.comment().id)
+      .subscribe((comment) => {
+        this.nestedComments.set([...comment]);
+      });
   }
-  protected changeCanReply(value: boolean) {
-    this.commentService.sendValue(value);
+
+  protected mouseUpperTrue() {
+    if (this.hasClickedReply == true) this.upper = true;
+  }
+  protected mouseLowerTrue() {
+    if (this.hasClickedReply == true) this.lower = true;
+  }
+  protected mouseLowerFalse() {
+    this.lower = false;
+  }
+  protected mouseUpperFalse() {
+    this.upper = false;
+  }
+  protected toggleClickButtonOnly() {
+    inputSafetyStorage.set('');
+    this.hasClickedReply = !this.hasClickedReply;
+  }
+  protected toggleRepliesVisible(): boolean {
+    if (this.hasClickedReply == true && (this.upper || this.lower)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  protected deleteComment(id: string) {
+    this.commentService.deleteCommentSubject$.next(id);
   }
 }

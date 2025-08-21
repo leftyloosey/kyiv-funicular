@@ -5,6 +5,6 @@ export function basicInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
-  console.log(req.url);
+  // console.log(req.url);
   return next(req);
 }

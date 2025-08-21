@@ -1,10 +1,9 @@
 @use "../../../styles.scss" as *;
 section {
   width: 100%;
-  //   background-color: red;
   justify-content: center;
 }
-.deev {
+.comment-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

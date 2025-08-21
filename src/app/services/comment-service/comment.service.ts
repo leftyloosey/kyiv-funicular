@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Comment } from '../../utils/interfaces/comment';
 import { environment } from '../../environments/environments';
-import { Subject } from 'rxjs';
+import { shareReplay, Subject } from 'rxjs';
 
 type CreateCommentDto = {
   parentId?: string;
@@ -15,40 +15,45 @@ type CreateCommentDto = {
 })
 export class CommentService {
   private http = inject(HttpClient);
-  private booleanValue$ = new Subject<boolean>();
-  public testSubject$ = new Subject<string>();
+
+  public deleteCommentSubject$ = new Subject<string>();
   public createCommentSubject$ = new Subject<CreateCommentDto>();
+  public kreateKommentSubject$ = new Subject<CreateCommentDto>();
+  public getKommentSubject$ = new Subject<Comment>();
 
-  castValue = this.booleanValue$.asObservable();
-  newComment = this.createCommentSubject$.asObservable();
+  public newComment = this.createCommentSubject$.asObservable();
+  public getKomment = this.getKommentSubject$.asObservable();
 
-  public sendValue(newValue: boolean) {
-    this.booleanValue$.next(newValue);
-  }
-  public nextComment(newComment: CreateCommentDto) {
+  public submitCommentToService(newComment: CreateCommentDto) {
     this.createCommentSubject$.next(newComment);
   }
+  public getCommentsFromService(getKomment: Comment) {
+    this.getKommentSubject$.next(getKomment);
+  }
 
-  public getComments(parentId: string = '') {
+  public getCommentsFromBackend(parentId: string = '') {
     let url = `${environment.apiBaseUrl}/comments`;
     if (parentId.length > 0) {
       url += '/' + parentId;
     }
     return this.http.get<Comment[]>(url);
   }
-  public getCommentsByUser(userId: string = '') {
+
+  public getBackendCommentsByUser(userId: string = '') {
     let url = `${environment.apiBaseUrl}/comments/user/${userId}`;
 
     return this.http.get<Comment[]>(url);
   }
 
-  public createComment(comment: CreateCommentDto) {
+  public createCommentOnBackend(comment: CreateCommentDto) {
     return this.http.post<Comment>(
       `${environment.apiBaseUrl}/comments`,
       comment
     );
+    // .pipe(shareReplay({ bufferSize: 1, refCount: true }));
   }
-  public deleteComment(commentId: string) {
+
+  public deleteCommentOnBackend(commentId: string) {
     return this.http
       .delete<Comment>(`${environment.apiBaseUrl}/comments/delete/${commentId}`)
       .subscribe(() => console.log(`${commentId} deleted`));

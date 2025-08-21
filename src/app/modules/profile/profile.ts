@@ -33,17 +33,15 @@ export class Profile implements OnDestroy {
 
   constructor() {
     this.routeData$ = this.route.data;
-    this.comt.testSubject$.subscribe((comment) => {
-      console.log('profile subject hit');
-      this.comt.deleteComment(comment);
+    this.comt.deleteCommentSubject$.subscribe((comment) => {
+      this.comt.deleteCommentOnBackend(comment);
       this.displayComments.set(
         this.displayComments().filter((item) => item.id !== comment)
       );
     });
-    // this.testSubject$.subscribe((comment) => this.comt.deleteComment(comment));
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.commentsList$.unsubscribe();
   }
 }
