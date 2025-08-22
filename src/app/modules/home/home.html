@@ -1,11 +1,10 @@
-<div class="top">
-  <article class="home-container">
-    <section class="form-container">
-      <app-comment-form [smallReplyBox]="false"></app-comment-form>
-    </section>
-
+<article class="home-container">
+  <section class="form-container">
+    <app-comment-form [smallReplyBox]="false"></app-comment-form>
+  </section>
+  <div class="goulash">
     <section class="comment-container">
-      <div #commentContainer>
+      <div #commentContainer class="inner-div">
         @for (comments of (this.displayComments()); track $index) {
         <app-comment
           [comment]="comments"
@@ -14,5 +13,5 @@
         }
       </div>
     </section>
-  </article>
-</div>
+  </div>
+</article>
