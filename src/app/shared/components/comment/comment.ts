@@ -33,7 +33,7 @@ export class CommentComponent implements OnDestroy {
       const parentOfNew = newKomment.parentId || null;
       const currentId = this.comment().id || null;
 
-      if (parentOfNew == currentId) this.setNestedComments();
+      if (parentOfNew === currentId) this.setNestedComments();
     });
   }
 

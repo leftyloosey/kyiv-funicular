@@ -8,6 +8,7 @@
 .nav-container {
   @extend %flex-row;
   @extend %secondary-background;
+  width: 100%;
   justify-content: end;
 
   div {
