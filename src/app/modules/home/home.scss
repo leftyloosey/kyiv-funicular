@@ -2,26 +2,39 @@
 
 .home-container {
   @extend %flex-col;
+
   height: 80vh;
   row-gap: 2rem;
   .form-container {
     display: flex;
     justify-content: center;
     width: 100%;
+    // background-color: blue;
   }
+}
 
-  .comment-container {
+.comment-container {
+  // @extend %flex-row;
+  // display: flex;
+  // justify-content: center;
+  height: 75%;
+  overflow-y: auto;
+  margin-top: 2rem;
+  // background-color: yellow;
+  width: 30rem;
+  translate: -24px 0;
+  .inner-div {
     @extend %flex-row;
-    height: 75%;
-    margin-right: 10.5rem;
-    justify-content: center;
-    overflow-y: auto;
-    margin-top: 2rem;
-    div {
-      @extend %flex-row;
-      column-gap: 1rem;
-      width: 41.5vw;
-      overflow-x: auto;
-    }
+    column-gap: 1rem;
+    width: 100%;
+    overflow-x: auto;
+    // background-color: red;
   }
+}
+
+.goulash {
+  display: flex;
+  justify-content: center;
+  // background-color: green;
+  width: 100%;
 }

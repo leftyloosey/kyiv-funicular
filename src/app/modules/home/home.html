@@ -2,15 +2,16 @@
   <section class="form-container">
     <app-comment-form [smallReplyBox]="false"></app-comment-form>
   </section>
-
-  <section class="comment-container">
-    <div #commentContainer>
-      @for (comments of (this.displayComments()); track $index) {
-      <app-comment
-        [comment]="comments"
-        [isProfileComment]="false"
-      ></app-comment>
-      }
-    </div>
-  </section>
+  <div class="goulash">
+    <section class="comment-container">
+      <div #commentContainer class="inner-div">
+        @for (comments of (this.displayComments()); track $index) {
+        <app-comment
+          [comment]="comments"
+          [isProfileComment]="false"
+        ></app-comment>
+        }
+      </div>
+    </section>
+  </div>
 </article>
