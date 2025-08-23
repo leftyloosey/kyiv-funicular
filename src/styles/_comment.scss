@@ -65,3 +65,76 @@
   @extend %comment__button;
   background-color: c.$delete-color;
 }
+
+// @use "./colors" as c;
+// @use "./config" as m;
+// @use "./flex" as f;
+
+// %comment_ {
+//   @include m.set-fadeIn-duration(m.$short-fade);
+//   margin-left: 10px;
+//   width: 27rem;
+//   max-height: 7.5rem;
+//   box-shadow: 1px 2px 2px -2px;
+//   // box-shadow: 0 4px 6px -1px;
+
+//   img {
+//     height: 50px;
+//     width: 12;
+//   }
+
+//   ul {
+//     list-style-type: none;
+//   }
+//   li {
+//     display: flex;
+//     flex-direction: row;
+//     font-size: small;
+//     justify-content: end;
+//   }
+//   button {
+//     @extend %comment__button;
+//     // border-top: solid;
+//     border-width: 0px;
+//     width: 100%;
+//     // border-color: black;
+//     padding: 3px;
+
+//     width: 100%;
+//   }
+//   // button:hover {
+//   //   @extend %comment__button-basic-hover;
+//   // }
+// }
+
+// %comment__dropdown_section {
+//   display: flex;
+//   flex-direction: column;
+//   row-gap: 8px;
+//   margin-top: 8px;
+// }
+
+// %comment__button {
+//   // border-top: solid;
+//   border-width: 0px;
+//   width: 100%;
+//   // border-color: black;
+//   padding: 3px;
+// }
+
+// %comment__button-basic-hover:hover {
+//   @extend %comment__button;
+//   background-color: c.$secondary-color;
+// }
+// %comment__button-submit-hover:hover {
+//   @extend %comment__button;
+//   background-color: c.$submit-color;
+// }
+// %comment__button-alert-hover:hover {
+//   @extend %comment__button;
+//   background-color: c.$alert-color;
+// }
+// %comment__button-delete-hover:hover {
+//   @extend %comment__button;
+//   background-color: c.$delete-color;
+// }
