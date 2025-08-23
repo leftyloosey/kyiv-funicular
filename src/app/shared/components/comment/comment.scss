@@ -37,8 +37,10 @@ section {
     justify-content: end;
   }
   button {
-    @extend %comment__button;
-
+    // border-top: solid;
+    border-width: 0px;
     width: 100%;
+    // border-color: black;
+    padding: 3px;
   }
 }
