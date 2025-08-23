@@ -3,7 +3,6 @@
 @use "./styles/colors" as c;
 @use "./styles/text-entry" as *;
 @use "./styles/config" as *;
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -28,4 +27,17 @@ body {
 .flex-col {
   display: flex;
   flex-direction: column;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@mixin set-fadeIn-duration($duration) {
+  animation: fadeIn $duration;
 }
