@@ -43,4 +43,14 @@ section {
     // border-color: black;
     padding: 3px;
   }
+  section {
+    // @extend %comment__dropdown_section;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    margin-top: 8px;
+  }
+  .reduce {
+    width: 23rem;
+  }
 }

@@ -45,7 +45,11 @@
     </button>
   </div>
 </article>
-<section (mouseover)="mouseLowerTrue()" (mouseout)="mouseLowerFalse()">
+<section
+  class="reduce"
+  (mouseover)="mouseLowerTrue()"
+  (mouseout)="mouseLowerFalse()"
+>
   @if(toggleRepliesVisible()) { @for(comment of nestedComments(); track $index)
   {
   <app-comment2 [comment]="comment"></app-comment2>
