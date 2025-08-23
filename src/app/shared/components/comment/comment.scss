@@ -13,12 +13,12 @@ section {
 .basic-hover:hover {
   @extend %comment__button-basic-hover;
 }
-// @media only screen and (max-width: 600px) {
-//   .comment {
-//     @include m.set-fadeIn-duration(m.$short-fade);
-//     margin-left: 10px;
-//     max-height: 7.5rem;
-//     box-shadow: 1px 2px 2px -2px;
-//     width: 23rem;
-//   }
-// }
+@media only screen and (max-width: 600px) {
+  .comment {
+    @include m.set-fadeIn-duration(m.$short-fade);
+    margin-left: 10px;
+    max-height: 7.5rem;
+    box-shadow: 1px 2px 2px -2px;
+    width: 23rem;
+  }
+}
