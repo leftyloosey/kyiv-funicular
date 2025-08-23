@@ -14,7 +14,7 @@ section {
   @extend %comment__button-basic-hover;
 }
 @media only screen and (max-width: 600px) {
-  .comment_ {
+  .comment {
     @extend %comment_;
     width: 23rem;
   }
