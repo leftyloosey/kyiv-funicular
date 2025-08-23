@@ -15,7 +15,10 @@ section {
 }
 @media only screen and (max-width: 600px) {
   .comment {
-    @extend %comment_;
+    @include m.set-fadeIn-duration(m.$short-fade);
+    margin-left: 10px;
+    max-height: 7.5rem;
+    box-shadow: 1px 2px 2px -2px;
     width: 23rem;
   }
 }
