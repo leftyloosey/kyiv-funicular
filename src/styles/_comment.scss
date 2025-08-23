@@ -9,12 +9,7 @@
   max-height: 7.5rem;
   box-shadow: 1px 2px 2px -2px;
   // box-shadow: 0 4px 6px -1px;
-}
 
-@media only screen and (max-width: 600px) {
-  %comment_ {
-    width: 23rem;
-  }
   img {
     height: 50px;
     width: 12;
@@ -38,7 +33,11 @@
   //   @extend %comment__button-basic-hover;
   // }
 }
-
+@media only screen and (max-width: 600px) {
+  %comment_ {
+    width: 23rem;
+  }
+}
 %comment__dropdown_section {
   display: flex;
   flex-direction: column;
