@@ -1,0 +1,57 @@
+<section class="big">
+  <div class="wik">
+    <app-wiktion />
+  </div>
+  <form
+    class="topForm"
+    [formGroup]="manualForm"
+    (ngSubmit)="submitManualWord()"
+  >
+    <label for="original"
+      >Original:
+      <input id="original" type="text" formControlName="original" />
+    </label>
+    <label for="translation"
+      >Translation:
+      <input id="translation" type="text" formControlName="translation" />
+    </label>
+    <label for="partOfSpeech"
+      >Part of Speech:
+      <input id="partOfSpeech" type="text" formControlName="partOfSpeech" />
+    </label>
+    <div>
+      <label><button type="submit">Enter</button></label>
+
+      <label><button type="button" (click)="toggleCase()">Case</button></label>
+    </div>
+  </form>
+
+  <div [style.display]="isCaseHidden ? 'none' : 'block'">
+    @switch (this.word.partOfSpeech) { @case ("Verb") {
+    <!-- <div>Verb відмінки</div> -->
+    <app-imperfect />
+    } @case ("Noun") {
+    <!-- <div>Noun відмінки</div> -->
+    <app-noun />
+    } @case ("Adjective") {
+    <div>Adjective відмінки</div>
+    } }
+  </div>
+
+  <div class="rightDiv">
+    <p><strong>translations:</strong></p>
+    @for (item of this.definitions(); track item) {
+    <!-- @for (item of this.word.definitions; track item) { -->
+    <li>{{ item }}</li>
+    } @empty {
+    <li>(no translations)</li>
+    }
+    <p><strong>examples:</strong></p>
+    @for (item of this.examples; track item) {
+    <!-- } @for (item of this.word.examples; track item) { -->
+    <li>{{ item }}</li>
+    } @empty {
+    <li>(no examples)</li>
+    }
+  </div>
+</section>

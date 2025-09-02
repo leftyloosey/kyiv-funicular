@@ -3,6 +3,13 @@
 @use "./styles/colors" as c;
 @use "./styles/text-entry" as *;
 @use "./styles/config" as *;
+$background-color: #fcfcfc;
+$secondary-color: #899499;
+$tertiary-color: #e5e4e2;
+$alert-color: #f7b66d;
+$submit-color: #6fc276;
+$text-reply-color: #eeee;
+$delete-color: #f47174;
 * {
   box-sizing: border-box;
   margin: 0;

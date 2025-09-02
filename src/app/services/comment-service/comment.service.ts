@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Comment } from '../../utils/interfaces/comment';
 import { environment } from '../../environments/environments';
-import { shareReplay, Subject } from 'rxjs';
+import { Observable, shareReplay, Subject, tap } from 'rxjs';
 
 type CreateCommentDto = {
   parentId?: string;
@@ -15,6 +15,7 @@ type CreateCommentDto = {
 })
 export class CommentService {
   private http = inject(HttpClient);
+  private apiUrl = `${environment.apiBaseUrl}/comments`;
 
   public deleteCommentSubject$ = new Subject<string>();
   public createCommentSubject$ = new Subject<CreateCommentDto>();
@@ -42,22 +43,26 @@ export class CommentService {
   }
 
   public getBackendCommentsByUser(userId: string = '') {
-    let url = `${environment.apiBaseUrl}/comments/user/${userId}`;
+    let url = `${environment.apiBaseUrl}/comments/user/${userId}`; //todo
 
     return this.http.get<Comment[]>(url);
   }
 
   public createCommentOnBackend(comment: CreateCommentDto) {
     return this.http.post<Comment>(
-      `${environment.apiBaseUrl}/comments`,
+      `${environment.apiBaseUrl}/comments`, //todo
       comment
     );
     // .pipe(shareReplay({ bufferSize: 1, refCount: true }));
   }
 
-  public deleteCommentOnBackend(commentId: string) {
-    return this.http
-      .delete<Comment>(`${environment.apiBaseUrl}/comments/delete/${commentId}`)
-      .subscribe(() => console.log(`${commentId} deleted`));
+  public deleteCommentOnBackend(commentId: string): Observable<Comment> {
+    return this.http.delete<Comment>(
+      `${environment.apiBaseUrl}/comments/delete/${commentId}`
+    );
+    // .pipe(tap()
+    // .subscribe(() => console.log(`${commentId} deleted`)); //todo
+    // subscribe in component, not here. use tap for clg
+    //
   }
 }

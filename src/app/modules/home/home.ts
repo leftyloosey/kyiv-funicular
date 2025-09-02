@@ -42,7 +42,8 @@ export class HomeComponent implements OnDestroy, AfterViewInit {
   );
 
   constructor() {
-    afterEveryRender(() => {
+    // afterEveryRender(() => {
+    setTimeout(() => {
       if (this.scrollWidth() === this.oldWidth()) {
         this.commentContainer()?.nativeElement.scrollTo({
           left: this.scrollWidth(),
@@ -50,7 +51,9 @@ export class HomeComponent implements OnDestroy, AfterViewInit {
         });
         this.oldWidth.set(0);
       }
-    });
+    }, 1000);
+
+    // });
 
     this.commentService.newComment
       .pipe(takeUntilDestroyed())

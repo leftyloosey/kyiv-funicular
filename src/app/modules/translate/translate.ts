@@ -1,9 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '../../services/translate-service/translate.service';
-import { Subject } from 'rxjs';
 import { translatable } from './translatable';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { map, pipe, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-translate',
@@ -13,32 +13,45 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class Translate {
   protected displayWords = signal<translatable[]>([]);
-  public wordDelivery$ = new Subject<string>();
-  // public pushWord = this.wordSubject$.asObservable();
-  private translate = inject(TranslateService);
+
   protected translateForm = new FormGroup({
     word: new FormControl(''),
   });
 
-  constructor() {
-    this.getWordsFromBackend();
-    this.wordDelivery$
-      .pipe(takeUntilDestroyed())
-      .subscribe((toBeTranslated) => {
-        this.translate
-          .translateOne(toBeTranslated as string)
-          .pipe(takeUntilDestroyed())
-          .subscribe((translatedWord) => {
-            this.displayWords.update((existingWords) => [
-              translatedWord,
-              ...existingWords,
-            ]);
-          });
-      });
+  constructor(private translate: TranslateService) {
+    // this.getWordsFromBackend();
+
+    translate
+      .getAllWords()
+      .pipe(
+        takeUntilDestroyed(),
+        map((words) => {
+          words.reverse();
+          return this.displayWords.set(words);
+        })
+      )
+      .subscribe();
+
+    translate.wordDelivery$
+      .pipe(
+        takeUntilDestroyed(),
+        switchMap((toBeTranslated) => {
+          return translate.translateOne(toBeTranslated as string);
+        })
+      )
+      .pipe(
+        map((translatedWord) => {
+          this.displayWords.update((existingWords) => [
+            translatedWord,
+            ...existingWords,
+          ]);
+        })
+      )
+      .subscribe();
   }
 
   public pushTranslate(word: string) {
-    this.wordDelivery$.next(word);
+    this.translate.wordDelivery$.next(word);
   }
 
   protected submitTranslateWord() {
@@ -47,10 +60,10 @@ export class Translate {
     this.translateForm.reset();
   }
 
-  protected getWordsFromBackend() {
-    this.translate.getAllWords().subscribe((words) => {
-      words.reverse();
-      return this.displayWords.set(words);
-    });
-  }
+  // protected getWordsFromBackend() {
+  //   this.translate.getAllWords().subscribe((words) => {
+  //     words.reverse();
+  //     return this.displayWords.set(words);
+  //   });
+  // }
 }

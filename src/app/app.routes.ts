@@ -7,6 +7,9 @@ import { profileGuard } from './utils/guards/profile-guard-guard';
 import { commentResolver } from './utils/resolvers/user.resolver';
 import { homeResolver } from './utils/resolvers/home-resolver';
 import { Translate } from './modules/translate/translate';
+import { Wiktion } from './modules/wiktion/wiktion';
+import { Wordmenu } from './modules/wordmenu/wordmenu/wordmenu';
+import { Newword } from './modules/newword/newword/newword';
 
 export const routes: Routes = [
   {
@@ -26,6 +29,21 @@ export const routes: Routes = [
     path: 'translate',
     pathMatch: 'full',
     component: Translate,
+  },
+  {
+    path: 'newword',
+    pathMatch: 'full',
+    component: Newword,
+  },
+  {
+    path: 'wiktion',
+    pathMatch: 'full',
+    component: Wiktion,
+  },
+  {
+    path: 'wordmenu',
+    pathMatch: 'full',
+    component: Wordmenu,
   },
   {
     path: '*',

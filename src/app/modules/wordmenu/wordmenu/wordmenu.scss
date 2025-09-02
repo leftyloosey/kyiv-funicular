@@ -1,0 +1,42 @@
+@use "../../../../styles.scss" as *;
+
+.page {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  &__name {
+    font-size: 18px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    // padding: 10px;
+  }
+}
+
+.btn {
+  &--standard,
+  &--delete {
+    color: black;
+  }
+
+  &--standard {
+    background: $secondary-color;
+  }
+
+  &--delete {
+    background: red;
+  }
+
+  &-icon,
+  &-text {
+    color: black;
+  }
+
+  &-text {
+    font-size: 12px;
+  }
+}

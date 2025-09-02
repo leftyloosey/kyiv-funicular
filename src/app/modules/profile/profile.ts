@@ -25,19 +25,19 @@ export class Profile implements OnDestroy {
   private route = inject(ActivatedRoute);
   private routeData$: Observable<any> = this.route.data;
 
-  private commentsList$ = this.routeData$.subscribe(
-    (response: { [key: string]: Comment[] }) => {
+  private commentsList$ = this.routeData$
+    .pipe(takeUntilDestroyed())
+    .subscribe((response: { [key: string]: Comment[] }) => {
       const comments = response['comment'] || [];
       this.displayComments.set(comments);
-    }
-  );
+    });
 
   constructor() {
     this.routeData$ = this.route.data;
     this.comt.deleteCommentSubject$
       .pipe(takeUntilDestroyed())
       .subscribe((comment) => {
-        this.comt.deleteCommentOnBackend(comment);
+        this.comt.deleteCommentOnBackend(comment).subscribe(); //todo
         this.displayComments.set(
           this.displayComments().filter((item) => item.id !== comment)
         );
