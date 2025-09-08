@@ -1,0 +1,17 @@
+<section class="contain">
+  <div class="card">
+    <app-quiz-card [word]="this.displayWords2[this.count]" />
+    <button (click)="returnCount(1)">next</button>
+    <button (click)="returnCount(-1)">previous</button>
+  </div>
+</section>
+<!-- <div class="contain">
+  @for (item of this.dispObservable$ | async; track $index) {
+  <div class="cards">
+    <app-quiz-card [word]="item" />
+  </div>
+  } @empty {
+  <p>No items found.</p>
+  }
+</div> -->
+<!-- {{ this.displayWords2[this.count].original }} -->

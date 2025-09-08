@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Perfect } from './perfect';
+import { Adjective } from './adjective';
 
-describe('Perfect', () => {
-  let component: Perfect;
-  let fixture: ComponentFixture<Perfect>;
+describe('Adjective', () => {
+  let component: Adjective;
+  let fixture: ComponentFixture<Adjective>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Perfect]
+      imports: [Adjective]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Perfect);
+    fixture = TestBed.createComponent(Adjective);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

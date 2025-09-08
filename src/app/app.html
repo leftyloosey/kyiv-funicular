@@ -1,7 +1,10 @@
 <section class="app-container">
   <header class="nav-container">
     <div>
-      <a routerLink="/login">
+      <a routerLink="/newword"> new word </a>
+      <a routerLink="/quiz"> quiz </a>
+    </div>
+    <!-- <a routerLink="/login">
         @if(computedNameSignal()) {
         <span>{{ computedNameSignal() + this.suffix }} profile</span>
 
@@ -11,7 +14,7 @@
       <button class="logout-hover" (click)="logoutUser()">Logout</button>
       }
       <a routerLink="/home"> Home </a>
-    </div>
+    </div> -->
   </header>
 
   <router-outlet></router-outlet>

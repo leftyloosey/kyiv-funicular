@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { NounCase } from '../../../utils/classes/word';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -25,9 +25,27 @@ export class Noun {
     plurLoc: '',
     plurVoc: '',
   };
-  submitNoun() {
-    console.log(this.nounForm.value);
+  sendUp = output<NounCase>();
+
+  onSendUp() {
+    this.submitNoun();
+    this.sendUp.emit(this.buildingWord);
   }
+
+  loopFormToWord(form: FormGroup): void {
+    Object.keys(form.controls).forEach((key) => {
+      const control = form.get(key);
+      for (let property in this.buildingWord) {
+        this.buildingWord[key] = control?.value;
+      }
+    });
+  }
+
+  submitNoun() {
+    console.log(this.buildingWord);
+    this.loopFormToWord(this.nounForm);
+  }
+
   protected nounForm = new FormGroup({
     singNom: new FormControl(this.buildingWord.singNom),
     singAcc: new FormControl(this.buildingWord.singAcc),

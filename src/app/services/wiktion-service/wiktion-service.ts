@@ -31,4 +31,11 @@ export class WiktionService {
     console.log(submit);
     return this.http.post<string>(url, submit);
   };
+
+  public saveNewWord(word: Word) {
+    return this.http.post<Word>(
+      `${environment.apiBaseUrl}/translate/save`,
+      word
+    );
+  }
 }

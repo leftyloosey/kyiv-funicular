@@ -1,24 +1,55 @@
-.topForm {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-  margin-bottom: 4rem;
-}
 .big {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  width: 30%;
+  width: 100%;
 }
-.rightDiv {
+.lessBig {
   display: flex;
+  width: 33vw;
   flex-direction: column;
 }
 .wik {
-  // text-align: right;
-  justify-content: end;
-  display: flex;
+  text-align: right;
 }
+.topForm {
+  display: flex;
+  flex-direction: column;
+  width: 66%;
+  text-align: right;
+}
+
+// .topForm {
+//   display: flex;
+//   flex-direction: column;
+//   text-align: right;
+//   margin-bottom: 4rem;
+//   justify-content: center;
+// }
+// .big {
+//   display: flex;
+//   background-color: red;
+//   flex-direction: column;
+//   justify-content: center;
+//   width: 100%;
+//   margin-bottom: 2rem;
+// }
+// .lessBig {
+//   background-color: yellow;
+//   display: flex;
+//   flex-direction: column;
+//   width: 33vw;
+//   margin-bottom: 2rem;
+// }
+// .rightDiv {
+//   display: flex;
+//   flex-direction: column;
+// }
+// .wik {
+//   // text-align: right;
+//   justify-content: space-around;
+//   display: flex;
+//   margin-bottom: 8rem;
+// }
 @media only screen and (max-width: 600px) {
   .big {
     width: 100%;

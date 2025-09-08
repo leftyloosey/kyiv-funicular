@@ -10,6 +10,8 @@ import { Translate } from './modules/translate/translate';
 import { Wiktion } from './modules/wiktion/wiktion';
 import { Wordmenu } from './modules/wordmenu/wordmenu/wordmenu';
 import { Newword } from './modules/newword/newword/newword';
+import { Quiz } from './modules/quiz/quiz';
+import { quizResolverResolver } from './utils/resolvers/quiz-resolver/quiz-resolver-resolver';
 
 export const routes: Routes = [
   {
@@ -26,19 +28,17 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'translate',
+    path: 'quiz',
     pathMatch: 'full',
-    component: Translate,
+    resolve: {
+      words: quizResolverResolver,
+    },
+    component: Quiz,
   },
   {
     path: 'newword',
     pathMatch: 'full',
     component: Newword,
-  },
-  {
-    path: 'wiktion',
-    pathMatch: 'full',
-    component: Wiktion,
   },
   {
     path: 'wordmenu',

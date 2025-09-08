@@ -1,57 +1,125 @@
-<section class="big">
-  <div class="wik">
-    <app-wiktion />
-  </div>
-  <form
-    class="topForm"
-    [formGroup]="manualForm"
-    (ngSubmit)="submitManualWord()"
-  >
-    <label for="original"
-      >Original:
-      <input id="original" type="text" formControlName="original" />
-    </label>
-    <label for="translation"
-      >Translation:
-      <input id="translation" type="text" formControlName="translation" />
-    </label>
-    <label for="partOfSpeech"
-      >Part of Speech:
-      <input id="partOfSpeech" type="text" formControlName="partOfSpeech" />
-    </label>
-    <div>
-      <label><button type="submit">Enter</button></label>
+<div class="big">
+  <div class="lessBig">
+    <form
+      class="topForm"
+      [formGroup]="manualForm"
+      (ngSubmit)="submitManualWord()"
+    >
+      <div class="wik">
+        <app-wiktion />
+      </div>
+      <span> Manual Entry:</span>
+      <label for="original"
+        >Original:
+        <input
+          autocomplete="off"
+          id="original"
+          type="text"
+          formControlName="original"
+        />
+      </label>
+      <label for="translation"
+        >Translation:
+        <input
+          autocomplete="off"
+          id="translation"
+          type="text"
+          formControlName="translation"
+        />
+      </label>
+      <label for="partOfSpeech">Part of Speech:</label>
 
-      <label><button type="button" (click)="toggleCase()">Case</button></label>
+      <select
+        name="partOfSpeech"
+        id="partOfSpeech"
+        formControlName="partOfSpeech"
+        (change)="caseButtonHide($event)"
+      >
+        <option value="Verb">Verb</option>
+        <option value="Adjective">Adjective</option>
+        <option value="Noun">Noun</option>
+        <option value="Other">Other</option>
+      </select>
+      <div>
+        <label
+          ><button
+            [hidden]="this.isCaseButtonHidden"
+            (click)="toggleCase()"
+            type="submit"
+          >
+            Case
+          </button></label
+        >
+      </div>
+    </form>
+
+    <div [style.display]="isCaseHidden ? 'none' : 'block'">
+      @switch (this.word.partOfSpeech) { @case ("Verb") {
+      <app-imperfect (sendUp)="onSendUp($event)" />
+
+      } @case ("Noun") {
+      <app-noun (sendUp)="onSendUp($event)" />
+
+      } @case ("Adjective") {
+      <app-adjective (sendUp)="onSendUp($event)" />
+      } @default {
+      <p></p>
+      }}
     </div>
-  </form>
 
-  <div [style.display]="isCaseHidden ? 'none' : 'block'">
-    @switch (this.word.partOfSpeech) { @case ("Verb") {
-    <!-- <div>Verb відмінки</div> -->
-    <app-imperfect />
-    } @case ("Noun") {
-    <!-- <div>Noun відмінки</div> -->
-    <app-noun />
-    } @case ("Adjective") {
-    <div>Adjective відмінки</div>
-    } }
-  </div>
+    <div>
+      <p><strong>translations:</strong></p>
+      @for (item of this.definitions(); track $index) {
+      <li>{{ item }}</li>
+      } @empty {
+      <li>(no translations)</li>
+      }
+      <p><strong>examples:</strong></p>
+      @for (item of this.examples(); track $index) {
+      <li>{{ item }}</li>
+      } @empty {
+      <li>(no examples)</li>
+      }
+    </div>
 
-  <div class="rightDiv">
-    <p><strong>translations:</strong></p>
-    @for (item of this.definitions(); track item) {
-    <!-- @for (item of this.word.definitions; track item) { -->
-    <li>{{ item }}</li>
-    } @empty {
-    <li>(no translations)</li>
-    }
-    <p><strong>examples:</strong></p>
-    @for (item of this.examples; track item) {
-    <!-- } @for (item of this.word.examples; track item) { -->
-    <li>{{ item }}</li>
-    } @empty {
-    <li>(no examples)</li>
-    }
+    <form
+      class="topForm"
+      [formGroup]="addDefinition"
+      (ngSubmit)="submitDefinition()"
+    >
+      <label for="definition"
+        >Definition:
+        <textarea
+          autocomplete="off"
+          id="definition"
+          type="text"
+          formControlName="definition"
+        >
+        </textarea>
+      </label>
+      <div>
+        <label><button type="submit">Add definition</button></label>
+        <label
+          ><button (click)="definitionEdit($event)">Edit last</button></label
+        >
+      </div>
+    </form>
+    <form class="topForm" [formGroup]="addExample" (ngSubmit)="submitExample()">
+      <label for="example"
+        >Example:
+        <textarea
+          autocomplete="off"
+          id="example"
+          type="text"
+          formControlName="example"
+        ></textarea>
+      </label>
+      <div>
+        <label><button type="submit">Add example</button></label>
+        <label><button (click)="exampleEdit($event)">Edit last</button></label>
+      </div>
+      <button (click)="seeWord($event)">save word</button>
+      <button (click)="reset($event)">reset</button>
+    </form>
   </div>
-</section>
+</div>

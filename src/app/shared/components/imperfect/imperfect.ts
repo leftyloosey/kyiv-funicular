@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ImperfCase } from '../../../utils/classes/word';
 
@@ -9,7 +9,10 @@ import { ImperfCase } from '../../../utils/classes/word';
   styleUrl: './imperfect.scss',
 })
 export class Imperfect {
+  sendUp = output<ImperfCase>();
+
   buildingWord: ImperfCase = {
+    aspect: '',
     malePast: '',
     femPast: '',
     plurPast: '',
@@ -26,10 +29,24 @@ export class Imperfect {
     plurFuture: '',
     weFuture: '',
   };
+  loopFormToWord(form: FormGroup): void {
+    Object.keys(form.controls).forEach((key) => {
+      const control = form.get(key);
+      for (let property in this.buildingWord) {
+        this.buildingWord[key] = control?.value;
+      }
+    });
+  }
+  onSendUp() {
+    this.submitImperfect();
+    this.sendUp.emit(this.buildingWord);
+  }
   submitImperfect() {
-    console.log(this.imperfectForm.value);
+    this.loopFormToWord(this.imperfectForm);
+    console.log(this.buildingWord);
   }
   protected imperfectForm = new FormGroup({
+    aspect: new FormControl(this.buildingWord.aspect),
     malePast: new FormControl(this.buildingWord.malePast),
     femPast: new FormControl(this.buildingWord.femPast),
     plurPast: new FormControl(this.buildingWord.plurPast),

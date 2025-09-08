@@ -1,0 +1,17 @@
+.big {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 80vw;
+  text-align: right;
+}
+.little {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+@media only screen and (max-width: 600px) {
+  .big {
+    justify-content: end;
+  }
+}
