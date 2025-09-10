@@ -3,7 +3,6 @@ import {
   FormBuilder,
   FormGroup,
   FormArray,
-  Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatFormField } from '@angular/material/form-field';

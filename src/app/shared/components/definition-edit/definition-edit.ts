@@ -73,13 +73,17 @@ export class DefinitionEdit implements OnInit {
   // addFormGroup1(defs: string[]) {
   //   this.formArray.push(this.createFormGroup1(defs));
   // }
-  addFormGroup() {
+  addFormGroupMyMod() {
     this.formArray.push(this.definitions());
   }
-  // addFormGroup() {
-  //   this.formArray.push(this.createFormGroup());
-  // }
-
+  addFormGroup() {
+    this.formArray.push(this.createBlankFormGroup());
+  }
+  createBlankFormGroup(): FormGroup {
+    return this.fb.group({
+      definition: [''],
+    });
+  }
   removeFormGroup(index: number) {
     console.log('index', index);
     this.formArray.removeAt(index);
