@@ -1,4 +1,10 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnDestroy,
+  signal,
+} from '@angular/core';
 import { Subscription, tap } from 'rxjs';
 import { WiktionService } from '../../services/wiktion-service/wiktion-service';
 import { Word, WordCase, WordWithId } from '../../utils/classes/word';
@@ -17,7 +23,6 @@ import { Router } from '@angular/router';
 import { EditImperfect } from '../../shared/components/edit-imperfect/edit-imperfect';
 import { EditAdjective } from '../../shared/components/edit-adjective/edit-adjective';
 import { Quiz } from '../quiz/quiz';
-import { DynamicFormComponent } from '../dynamic-form/dynamic-form';
 import { ExampleEdit } from '../../shared/components/example-edit/example-edit';
 import { DefinitionEdit } from '../../shared/components/definition-edit/definition-edit';
 import {
@@ -50,7 +55,7 @@ import {
   templateUrl: './edit-word.html',
   styleUrl: './edit-word.scss',
 })
-export class EditWord implements OnDestroy, OnInit {
+export class EditWord implements OnDestroy, AfterViewInit {
   isCaseHidden: boolean = true;
   isCaseButtonHidden: boolean = false;
   router = inject(Router);
@@ -182,7 +187,8 @@ export class EditWord implements OnDestroy, OnInit {
   saveData(resultData: Word) {
     this.dialogRef.close(resultData);
   }
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    // ngOnInit(): void {
     this.bob = this.wiktion
       .getOneWord(this.data.word.id)
       .pipe(
