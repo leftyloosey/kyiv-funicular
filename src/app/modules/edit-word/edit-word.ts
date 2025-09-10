@@ -1,44 +1,59 @@
-import {
-  Component,
-  inject,
-  OnDestroy,
-  AfterViewInit,
-  signal,
-} from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Subscription, tap } from 'rxjs';
-import { WiktionService } from '../../../services/wiktion-service/wiktion-service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Word, WordCase, WordWithId } from '../../../utils/classes/word';
+import { WiktionService } from '../../services/wiktion-service/wiktion-service';
+import { Word, WordCase, WordWithId } from '../../utils/classes/word';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Wiktion } from '../../wiktion/wiktion';
+import { EditNoun } from '../../shared/components/edit-noun/edit-noun';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogContent } from '@angular/material/dialog';
-import { EditAdjective } from '../../../shared/components/edit-adjective/edit-adjective';
-import { EditNoun } from '../../../shared/components/edit-noun/edit-noun';
-import { EditImperfect } from '../../../shared/components/edit-imperfect/edit-imperfect';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogContent,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { EditImperfect } from '../../shared/components/edit-imperfect/edit-imperfect';
+import { EditAdjective } from '../../shared/components/edit-adjective/edit-adjective';
+import { Quiz } from '../quiz/quiz';
+import { DynamicFormComponent } from '../dynamic-form/dynamic-form';
+import { ExampleEdit } from '../../shared/components/example-edit/example-edit';
+import { DefinitionEdit } from '../../shared/components/definition-edit/definition-edit';
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelTitle,
+  MatExpansionPanelHeader,
+} from '@angular/material/expansion';
+
 @Component({
-  selector: 'app-newword',
+  selector: 'app-edit-word',
   imports: [
     ReactiveFormsModule,
-    Wiktion,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
     MatDialogContent,
-    EditAdjective,
     EditNoun,
     EditImperfect,
+    EditAdjective,
+    // DynamicFormComponent,
+    ExampleEdit,
+    DefinitionEdit,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelTitle,
+    MatExpansionPanelHeader,
   ],
-  templateUrl: './newword.html',
-  styleUrl: './newword.scss',
+  templateUrl: './edit-word.html',
+  styleUrl: './edit-word.scss',
 })
-export class Newword implements OnDestroy, AfterViewInit {
+export class EditWord implements OnDestroy, OnInit {
   isCaseHidden: boolean = true;
   isCaseButtonHidden: boolean = false;
+  router = inject(Router);
   definitions = signal<string[]>([]);
   examples = signal<string[]>([]);
   word: Word = {
@@ -71,6 +86,36 @@ export class Newword implements OnDestroy, AfterViewInit {
   }
   onSendUp($event: WordCase) {
     this.word.case = $event;
+  }
+
+  sendUpDef($event: string[]) {
+    const newDefArray: string[] = [];
+
+    interface newDefInterface {
+      definition: string;
+    }
+
+    for (const def of $event) {
+      const { definition } = def as unknown as newDefInterface;
+      newDefArray.push(definition);
+    }
+    this.word.definitions = newDefArray;
+
+    this.definitions.set(newDefArray);
+  }
+  sendUpExmp($event: string[]) {
+    const newExmpArray: string[] = [];
+
+    interface newExmpInterface {
+      example: string;
+    }
+
+    for (const exmp of $event) {
+      const { example } = exmp as unknown as newExmpInterface;
+      newExmpArray.push(example);
+    }
+    this.word.examples = newExmpArray;
+    this.examples.set(newExmpArray);
   }
 
   submitDefinition() {
@@ -108,22 +153,7 @@ export class Newword implements OnDestroy, AfterViewInit {
 
     this.addExample.controls.example.setValue(pop as string);
   }
-  seeWord(e: Event) {
-    this.word.original = this.manualForm.value.original as string;
-    this.word.translation = this.manualForm.value.translation as string;
-    this.word.partOfSpeech = this.manualForm.value.partOfSpeech as string;
 
-    if (window.confirm(JSON.stringify(this.word))) {
-      this.wiktion.saveNewWord(this.word).subscribe({
-        error: (err) => window.alert(err),
-        complete: () => window.alert('successful'),
-      });
-
-      this.reset(e);
-    } else {
-      console.log('cancelled.');
-    }
-  }
   patchWord(e: Event) {
     this.word.original = this.manualForm.value.original as string;
     this.word.translation = this.manualForm.value.translation as string;
@@ -131,6 +161,10 @@ export class Newword implements OnDestroy, AfterViewInit {
 
     if (window.confirm(JSON.stringify(this.word))) {
       this.wiktion.patchNewWord(this.word as WordWithId).subscribe({
+        next: (item) => {
+          console.log(item);
+          this.saveData(item);
+        },
         error: (err) => window.alert(JSON.stringify(err)),
         complete: () => window.alert('successful'),
       });
@@ -140,12 +174,17 @@ export class Newword implements OnDestroy, AfterViewInit {
       console.log('cancelled.');
     }
   }
+  constructor(
+    private wiktion: WiktionService,
+    public dialogRef: MatDialogRef<Quiz>
+  ) {}
 
-  constructor(private wiktion: WiktionService) {
-    console.log(this.data);
+  saveData(resultData: Word) {
+    this.dialogRef.close(resultData);
   }
-  ngAfterViewInit(): void {
-    this.bob = this.wiktion.newScrapeInternal$
+  ngOnInit(): void {
+    this.bob = this.wiktion
+      .getOneWord(this.data.word.id)
       .pipe(
         // taskeUntilDestroyed(),
         tap((translatedWord) => {
@@ -161,7 +200,6 @@ export class Newword implements OnDestroy, AfterViewInit {
               case 'Verb':
                 this.word.partOfSpeech = 'Verb';
                 break;
-
               default:
                 this.word.partOfSpeech = 'Other';
             }
@@ -170,15 +208,31 @@ export class Newword implements OnDestroy, AfterViewInit {
               partOfSpeech: this.word.partOfSpeech,
               translation: this.word.translation,
             });
-
             this.definitions.set(this.word.definitions);
             this.examples.set(this.word.examples);
           }
         })
       )
-      .subscribe({ error: (err) => window.alert(err) });
+      .subscribe({
+        error: (err) => window.alert(err),
+      });
   }
+
   ngOnDestroy(): void {
+    this.word = {
+      definitions: [],
+      examples: [],
+      original: '',
+      translation: '',
+      partOfSpeech: '',
+      case: {},
+    };
+    this.isCaseHidden = true;
+    this.manualForm.reset();
+    this.addDefinition.reset();
+    this.addExample.reset();
+    this.definitions.set([]);
+    this.examples.set([]);
     this.wiktion.pushInternalScrape({
       definitions: [],
       examples: [],

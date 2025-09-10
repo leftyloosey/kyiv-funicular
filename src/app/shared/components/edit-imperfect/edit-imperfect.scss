@@ -1,16 +1,21 @@
 .big {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  width: 80vw;
+  // flex-wrap: nowrap;
+  // width: 80vw;
   text-align: right;
-  justify-content: space-around;
 }
 .little {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   text-align: right;
+  margin-bottom: 0.5rem;
+}
+.aspect {
+  // display: flex;
+  // justify-content: start;
+  text-align: right;
+  margin-bottom: 1rem;
 }
 @media only screen and (max-width: 600px) {
   .big {

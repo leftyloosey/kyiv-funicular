@@ -96,6 +96,9 @@ export class Word {
     public partOfSpeech: string
   ) {}
 }
+export class WordWithId extends Word {
+  public id: string = '';
+}
 export interface WordInterface {
   definitions: string[];
   examples: string[];

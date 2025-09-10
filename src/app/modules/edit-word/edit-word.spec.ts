@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Imperfect } from './imperfect';
+import { EditWord } from './edit-word';
 
-describe('Imperfect', () => {
-  let component: Imperfect;
-  let fixture: ComponentFixture<Imperfect>;
+describe('EditWord', () => {
+  let component: EditWord;
+  let fixture: ComponentFixture<EditWord>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Imperfect]
+      imports: [EditWord]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Imperfect);
+    fixture = TestBed.createComponent(EditWord);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,4 +5,19 @@
 }
 
 .card {
+  &__card-button {
+    margin-top: 1rem;
+    display: flex;
+    column-gap: 10px;
+  }
+}
+.editButton {
+  display: flex;
+  justify-content: center;
+  position: sticky;
+}
+.buttonContain {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }

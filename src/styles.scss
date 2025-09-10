@@ -1,39 +1,49 @@
-@use "./styles/comment" as *;
-@use "./styles/flex" as *;
-@use "./styles/colors" as c;
-@use "./styles/text-entry" as *;
-@use "./styles/config" as *;
-$background-color: #fcfcfc;
-$secondary-color: #899499;
-$tertiary-color: #e5e4e2;
-$alert-color: #f7b66d;
-$submit-color: #6fc276;
-$text-reply-color: #eeee;
-$delete-color: #f47174;
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use "@angular/material" as mat;
 
+html {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+:root {
+  @include mat.form-field-overrides(
+    (
+      disabled-input-text-placeholder-color: orange,
+      disabled-leading-icon-color: red,
+      // filled-with-label-container-padding-top: 10x,
+      // filled-with-label-container-padding-bottom: 20px,
+      // container-height: 2.2rem,
+      // container-vertical-padding: 1px,,,
+    )
+  );
+}
 body {
-  background-color: c.$background-color;
-  font-family: $font-stack;
-  line-height: 1.6;
-}
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
 
-.comment-hide {
-  visibility: hidden;
-}
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
 
-.flex-row {
-  display: flex;
-  flex-direction: row;
-}
-
-.flex-col {
-  display: flex;
-  flex-direction: column;
+  // Reset the user agent margin.
+  margin: 0;
 }
 
 @keyframes fadeIn {
@@ -48,3 +58,16 @@ body {
 @mixin set-fadeIn-duration($duration) {
   animation: fadeIn $duration;
 }
+
+html,
+body {
+  height: 100%;
+}
+%flex-row {
+  display: flex;
+  flex-direction: row;
+}
+// body {
+//   margin: 0;
+//   font-family: Roboto, "Helvetica Neue", sans-serif;
+// }

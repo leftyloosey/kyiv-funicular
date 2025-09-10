@@ -1,5 +1,3 @@
-@use "../../../../styles.scss" as *;
-
 .page {
   display: flex;
   justify-content: center;
@@ -24,7 +22,7 @@
   }
 
   &--standard {
-    background: $secondary-color;
+    // background: $secondary-color;
   }
 
   &--delete {

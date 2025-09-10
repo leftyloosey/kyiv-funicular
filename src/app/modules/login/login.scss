@@ -1,15 +1,15 @@
-@use "../../../styles.scss" as *;
+// @use "../../../styles.scss" as *;
 
-article {
-  display: flex;
-  justify-content: center;
+// article {
+//   display: flex;
+//   justify-content: center;
 
-  div {
-    width: 16rem;
-  }
-}
+//   div {
+//     width: 16rem;
+//   }
+// }
 
-.flex-col {
-  @extend %flex-col;
-  margin-bottom: 0.5rem;
-}
+// .flex-col {
+//   @extend %flex-col;
+//   margin-bottom: 0.5rem;
+// }

@@ -12,6 +12,8 @@ import { Wordmenu } from './modules/wordmenu/wordmenu/wordmenu';
 import { Newword } from './modules/newword/newword/newword';
 import { Quiz } from './modules/quiz/quiz';
 import { quizResolverResolver } from './utils/resolvers/quiz-resolver/quiz-resolver-resolver';
+import { DynamicFormComponent } from './modules/dynamic-form/dynamic-form';
+import { EditWord } from './modules/edit-word/edit-word';
 
 export const routes: Routes = [
   {
@@ -24,7 +26,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'newword',
     pathMatch: 'full',
   },
   {
@@ -41,13 +43,23 @@ export const routes: Routes = [
     component: Newword,
   },
   {
+    path: 'editword',
+    pathMatch: 'full',
+    component: EditWord,
+  },
+  {
+    path: 'test',
+    pathMatch: 'full',
+    component: DynamicFormComponent,
+  },
+  {
     path: 'wordmenu',
     pathMatch: 'full',
     component: Wordmenu,
   },
   {
     path: '*',
-    redirectTo: 'home',
+    redirectTo: 'newword',
     pathMatch: 'full',
   },
   {

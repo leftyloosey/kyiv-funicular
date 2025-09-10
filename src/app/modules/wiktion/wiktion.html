@@ -1,6 +1,8 @@
 <form [formGroup]="scrapeForm" (ngSubmit)="submitScrapeWord()">
-  <label
-    ><button type="submit">Translate</button>
-    <input type="text" formControlName="scrape" />
-  </label>
+  <button type="submit" matButton>+</button>
+  <mat-form-field appearance="outline">
+    <mat-label>Supply translation</mat-label>
+
+    <input type="text" formControlName="scrape" matInput />
+  </mat-form-field>
 </form>

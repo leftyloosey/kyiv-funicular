@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Noun } from './noun';
+import { DynamicForm } from './dynamic-form';
 
-describe('Noun', () => {
-  let component: Noun;
-  let fixture: ComponentFixture<Noun>;
+describe('DynamicForm', () => {
+  let component: DynamicForm;
+  let fixture: ComponentFixture<DynamicForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Noun]
+      imports: [DynamicForm]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Noun);
+    fixture = TestBed.createComponent(DynamicForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

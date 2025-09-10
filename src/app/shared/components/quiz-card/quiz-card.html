@@ -1,15 +1,22 @@
-<div (click)="toggleHidden()">{{ this.word().original }}</div>
+<section class="outer">
+  <div (click)="toggleHidden()">
+    <strong>{{ this.word().original }}</strong>
+  </div>
 
-<div [style.display]="detailsHidden ? 'none' : 'block'">
-  <p (click)="toggleHidden2()">{{ this.word().translation }}</p>
-  <p (click)="toggleHidden2()">{{ this.word().definitions[0] }}</p>
-</div>
+  <div [style.display]="detailsHidden ? 'none' : 'block'">
+    @if(this.word().translation) {
+    <p (click)="toggleHidden2()">{{ this.word().translation }}</p>
+    } @else {
+    <p (click)="toggleHidden2()">{{ this.word().definitions[0] }}</p>
+    }
+  </div>
 
-<div [style.display]="detailsHidden2 ? 'none' : 'block'">
-  @for (definition of this.word().definitions; track $index) {
-  <p>{{ definition }}</p>
-  } @for (example of this.word().examples; track $index) {
-  <p>{{ example }}</p>
-  }
-  <pre>{{ this.word().case | json }}</pre>
-</div>
+  <div [style.display]="detailsHidden2 ? 'none' : 'block'">
+    @for (definition of this.word().definitions; track $index) {
+    <p>{{ definition }}</p>
+    } @for (example of this.word().examples; track $index) {
+    <p>{{ example }}</p>
+    }
+    <pre>{{ this.word().case | json }}</pre>
+  </div>
+</section>

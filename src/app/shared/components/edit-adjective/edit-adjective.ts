@@ -1,34 +1,14 @@
-import { Component, output } from '@angular/core';
-import { AdjCase } from '../../../utils/classes/word';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AfterViewInit, Component, input, output } from '@angular/core';
+import { AdjCase, WordCase } from '../../../utils/classes/word';
+import { FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-adjective',
+  selector: 'app-edit-adjective',
   imports: [ReactiveFormsModule],
-  templateUrl: './adjective.html',
-  styleUrl: './adjective.scss',
+  templateUrl: './edit-adjective.html',
+  styleUrl: './edit-adjective.scss',
 })
-export class Adjective {
-  sendUp = output<AdjCase>();
-
-  onSendUp() {
-    this.submitAdjective();
-    this.sendUp.emit(this.buildingWord);
-  }
-
-  loopFormToWord(form: FormGroup): void {
-    Object.keys(form.controls).forEach((key) => {
-      const control = form.get(key);
-      for (let property in this.buildingWord) {
-        this.buildingWord[key] = control?.value;
-      }
-    });
-  }
-
-  submitAdjective() {
-    this.loopFormToWord(this.adjForm);
-    console.log(this.buildingWord);
-  }
+export class EditAdjective implements AfterViewInit {
   buildingWord: AdjCase = {
     malNom: '',
     malAcc: '',
@@ -62,7 +42,43 @@ export class Adjective {
     plurLoc: '',
     plurVoc: '',
   };
+  sendUp = output<AdjCase>();
+  sendDown = input<WordCase>();
+  // adjForm!: FormGroup;
 
+  onSendUp() {
+    this.submitAdjective();
+    console.log(this.buildingWord);
+    console.log(this.adjForm.controls);
+    this.sendUp.emit(this.buildingWord);
+  }
+  ngAfterViewInit(): void {
+    const receivedCase = JSON.parse(JSON.stringify(this.sendDown()));
+    if (Object.keys(receivedCase).length === 0) {
+      console.log('empty');
+    } else {
+      this.buildingWord = this.sendDown() as AdjCase;
+      this.loopWordToForm(this.adjForm);
+    }
+  }
+  loopFormToWord(form: FormGroup): void {
+    Object.keys(form.controls).forEach((key) => {
+      const control = form.get(key);
+      for (let property in this.buildingWord) {
+        this.buildingWord[key] = control?.value;
+      }
+    });
+  }
+  loopWordToForm(form: FormGroup): void {
+    Object.keys(form.controls).forEach((key) => {
+      const control = form.get(key);
+      control?.setValue(this.buildingWord[key]);
+    });
+  }
+  submitAdjective() {
+    console.log(this.buildingWord);
+    this.loopFormToWord(this.adjForm);
+  }
   protected adjForm = new FormGroup({
     malNom: new FormControl(this.buildingWord.malNom),
     malAcc: new FormControl(this.buildingWord.malAcc),

@@ -1,15 +1,15 @@
-import { Component, output } from '@angular/core';
+import { AfterViewInit, Component, input, output } from '@angular/core';
+import { ImperfCase, WordCase } from '../../../utils/classes/word';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ImperfCase } from '../../../utils/classes/word';
-
 @Component({
-  selector: 'app-imperfect',
+  selector: 'app-edit-imperfect',
   imports: [ReactiveFormsModule],
-  templateUrl: './imperfect.html',
-  styleUrl: './imperfect.scss',
+  templateUrl: './edit-imperfect.html',
+  styleUrl: './edit-imperfect.scss',
 })
-export class Imperfect {
+export class EditImperfect implements AfterViewInit {
   sendUp = output<ImperfCase>();
+  sendDown = input<WordCase>();
 
   buildingWord: ImperfCase = {
     aspect: '',
@@ -29,6 +29,22 @@ export class Imperfect {
     plurFuture: '',
     weFuture: '',
   };
+
+  onSendUp() {
+    this.submitImperfect();
+    this.sendUp.emit(this.buildingWord);
+  }
+
+  ngAfterViewInit(): void {
+    const receivedCase = JSON.parse(JSON.stringify(this.sendDown()));
+    if (Object.keys(receivedCase).length === 0) {
+      console.log('empty');
+    } else {
+      this.buildingWord = this.sendDown() as ImperfCase;
+      this.loopWordToForm(this.imperfectForm);
+    }
+  }
+
   loopFormToWord(form: FormGroup): void {
     Object.keys(form.controls).forEach((key) => {
       const control = form.get(key);
@@ -37,13 +53,14 @@ export class Imperfect {
       }
     });
   }
-  onSendUp() {
-    this.submitImperfect();
-    this.sendUp.emit(this.buildingWord);
+  loopWordToForm(form: FormGroup): void {
+    Object.keys(form.controls).forEach((key) => {
+      const control = form.get(key);
+      control?.setValue(this.buildingWord[key]);
+    });
   }
   submitImperfect() {
     this.loopFormToWord(this.imperfectForm);
-    console.log(this.buildingWord);
   }
   protected imperfectForm = new FormGroup({
     aspect: new FormControl(this.buildingWord.aspect),

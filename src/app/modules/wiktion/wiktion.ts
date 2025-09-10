@@ -5,10 +5,20 @@ import { WiktionService } from '../../services/wiktion-service/wiktion-service';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Word, WordInterface } from '../../utils/classes/word';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-wiktion',
-  imports: [ReactiveFormsModule],
+  imports: [
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+  ],
   templateUrl: './wiktion.html',
   styleUrl: './wiktion.scss',
 })
@@ -42,7 +52,7 @@ export class Wiktion implements OnDestroy {
           this.router.navigate(['/newword']);
         })
       )
-      .subscribe();
+      .subscribe({ error: (err) => window.alert(JSON.stringify(err)) });
   }
   ngOnDestroy(): void {
     this.bob.unsubscribe();

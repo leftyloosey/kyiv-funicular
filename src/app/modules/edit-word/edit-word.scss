@@ -1,27 +1,27 @@
-@media only screen and (max-width: 600px) {
-  .new-word-form {
-    width: 100%;
-  }
-  .definition-example {
-    width: 100%;
-  }
-}
-@media only screen and (min-width: 650px) {
-  .new-word-form {
-    width: 75%;
-  }
-  .definition-example {
-    width: 75%;
-  }
-}
-@media only screen and (min-width: 992px) {
-  .new-word-form {
-    width: 50%;
-  }
-  .definition-example {
-    width: 50%;
-  }
-}
+// @media only screen and (max-width: 600px) {
+//   .new-word-form {
+//     width: 100%;
+//   }
+//   .definition-example {
+//     width: 100%;
+//   }
+// }
+// @media only screen and (min-width: 650px) {
+//   .new-word-form {
+//     width: 75%;
+//   }
+//   .definition-example {
+//     width: 75%;
+//   }
+// }
+// @media only screen and (min-width: 992px) {
+//   .new-word-form {
+//     width: 50%;
+//   }
+//   .definition-example {
+//     width: 50%;
+//   }
+// }
 
 .outer {
   padding: 1rem;
@@ -29,6 +29,7 @@
 .new-word-form {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .wiktion-div {
   display: flex;
@@ -51,6 +52,7 @@
   justify-content: center;
 }
 .definition-example {
+  width: 100%;
 }
 .definition-example--buttons {
   display: flex;

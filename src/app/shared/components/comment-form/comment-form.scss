@@ -1,21 +1,21 @@
-@use "../../../../styles.scss" as *;
+// @use "../../../../styles.scss" as *;
 
-.entry-area {
-  @extend %flex-col;
-  textarea {
-    @extend %reply__txtarea;
-    height: 100px;
-  }
-}
-.unlogged {
-  @extend %comment__button;
-  @extend %comment__button-alert-hover;
-}
-.logged {
-  @extend %comment__button;
-  @extend %comment__button-submit-hover;
-}
-.alert-hover {
-  @extend %alert-background;
-  color: white;
-}
+// .entry-area {
+//   @extend %flex-col;
+//   textarea {
+//     @extend %reply__txtarea;
+//     height: 100px;
+//   }
+// }
+// .unlogged {
+//   @extend %comment__button;
+//   @extend %comment__button-alert-hover;
+// }
+// .logged {
+//   @extend %comment__button;
+//   @extend %comment__button-submit-hover;
+// }
+// .alert-hover {
+//   @extend %alert-background;
+//   color: white;
+// }

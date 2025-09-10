@@ -1,10 +1,18 @@
 <section class="contain">
-  <div class="card">
-    <app-quiz-card [word]="this.displayWords2[this.count]" />
-    <button (click)="returnCount(1)">next</button>
+  <div class="card__card-button">
     <button (click)="returnCount(-1)">previous</button>
+    <button (click)="returnCount(1)">next</button>
   </div>
 </section>
+<section class="contain">
+  <div class="card">
+    <app-quiz-card [word]="this.displayWords3()[this.count]" />
+  </div>
+</section>
+<div class="buttonContain">
+  <button class="editButton" (click)="openD()">edit</button>
+</div>
+
 <!-- <div class="contain">
   @for (item of this.dispObservable$ | async; track $index) {
   <div class="cards">
