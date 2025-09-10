@@ -1,13 +1,4 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './modules/home/home';
-import { Login } from './modules/login/login';
-import { Profile } from './modules/profile/profile';
-import { loginGuard } from './utils/guards/log-guard-guard';
-import { profileGuard } from './utils/guards/profile-guard-guard';
-import { commentResolver } from './utils/resolvers/user.resolver';
-import { homeResolver } from './utils/resolvers/home-resolver';
-import { Translate } from './modules/translate/translate';
-import { Wiktion } from './modules/wiktion/wiktion';
 import { Wordmenu } from './modules/wordmenu/wordmenu/wordmenu';
 import { Newword } from './modules/newword/newword/newword';
 import { Quiz } from './modules/quiz/quiz';
@@ -16,14 +7,6 @@ import { DynamicFormComponent } from './modules/dynamic-form/dynamic-form';
 import { EditWord } from './modules/edit-word/edit-word';
 
 export const routes: Routes = [
-  {
-    path: 'profile',
-    canActivate: [profileGuard],
-    resolve: {
-      comment: commentResolver,
-    },
-    component: Profile,
-  },
   {
     path: '',
     redirectTo: 'newword',
@@ -61,18 +44,6 @@ export const routes: Routes = [
     path: '*',
     redirectTo: 'newword',
     pathMatch: 'full',
-  },
-  {
-    path: 'home',
-    resolve: {
-      comment: homeResolver,
-    },
-    component: HomeComponent,
-  },
-  {
-    path: 'login',
-    canActivate: [loginGuard],
-    component: Login,
   },
   // {
   //   path: 'about',
