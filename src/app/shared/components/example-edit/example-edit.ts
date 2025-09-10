@@ -23,13 +23,9 @@ export class ExampleEdit implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
-    // this.dynamicForm = this.fb.group({
-    //   formArray: this.fb.array([this.addAllGroups(this.arr)]),
-    // });
     console.log('in edit', this.examples());
     this.dynamicForm = this.fb.group({
       formArray: this.fb.array([this.createFormGroup1(this.examples())]),
-      // formArray: this.fb.array([this.createFormGroup()]),
     });
     this.addAllGroups();
   }
@@ -43,22 +39,11 @@ export class ExampleEdit implements OnInit {
       example: [defs[0]],
     });
   }
-  // createFormGroup(): FormGroup {
-  //   return this.fb.group({
-  //     definition: [''],
-  //   });
-  // }
   createSpecific(example: string): FormGroup {
     return this.fb.group({
       example: [example],
     });
   }
-  // createFormGroup(): FormGroup {
-  //   return this.fb.group({
-  //     name: ['', Validators.required],
-  //     email: ['', [Validators.required, Validators.email]],
-  //   });
-  // }
 
   populateGroup(examples: string[]) {
     for (let index = 1; index < examples.length; index++) {
@@ -69,15 +54,10 @@ export class ExampleEdit implements OnInit {
   addAllGroups() {
     this.populateGroup(this.examples());
   }
-  // addFormGroup1(defs: string[]) {
-  //   this.formArray.push(this.createFormGroup1(defs));
-  // }
+
   addFormGroup() {
     this.formArray.push(this.examples());
   }
-  // addFormGroup() {
-  //   this.formArray.push(this.createFormGroup());
-  // }
 
   removeFormGroup(index: number) {
     this.formArray.removeAt(index);
