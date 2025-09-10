@@ -23,7 +23,6 @@ export class ExampleEdit implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
-    console.log('in edit', this.examples());
     this.dynamicForm = this.fb.group({
       formArray: this.fb.array([this.createFormGroup1(this.examples())]),
     });
@@ -34,10 +33,19 @@ export class ExampleEdit implements OnInit {
     return this.dynamicForm.get('formArray') as FormArray;
   }
 
-  createFormGroup1(defs: string[]): FormGroup {
-    return this.fb.group({
-      example: [defs[0]],
-    });
+  createFormGroup1(exmps: string[]): FormGroup {
+    // return this.fb.group({
+    //   example: [defs[0]],
+    // });
+    if (exmps[0]) {
+      return this.fb.group({
+        example: [exmps[0]],
+      });
+    } else {
+      return this.fb.group({
+        example: [''],
+      });
+    }
   }
   createSpecific(example: string): FormGroup {
     return this.fb.group({
@@ -56,9 +64,14 @@ export class ExampleEdit implements OnInit {
   }
 
   addFormGroup() {
-    this.formArray.push(this.examples());
+    // this.formArray.push(this.examples());
+    this.formArray.push(this.createBlankFormGroup());
   }
-
+  createBlankFormGroup(): FormGroup {
+    return this.fb.group({
+      example: [''],
+    });
+  }
   removeFormGroup(index: number) {
     this.formArray.removeAt(index);
   }

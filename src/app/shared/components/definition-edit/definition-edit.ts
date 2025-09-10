@@ -3,7 +3,6 @@ import {
   FormBuilder,
   FormGroup,
   FormArray,
-  Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatFormField } from '@angular/material/form-field';
@@ -24,10 +23,6 @@ export class DefinitionEdit implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
-    // this.dynamicForm = this.fb.group({
-    //   formArray: this.fb.array([this.addAllGroups(this.arr)]),
-    // });
-    console.log('in edit', this.definitions());
     this.dynamicForm = this.fb.group({
       formArray: this.fb.array([this.createFormGroup1(this.definitions())]),
       // formArray: this.fb.array([this.createFormGroup()]),
@@ -40,26 +35,21 @@ export class DefinitionEdit implements OnInit {
   }
 
   createFormGroup1(defs: string[]): FormGroup {
-    return this.fb.group({
-      definition: [defs[0]],
-    });
+    if (defs[0]) {
+      return this.fb.group({
+        definition: [defs[0]],
+      });
+    } else {
+      return this.fb.group({
+        definition: [''],
+      });
+    }
   }
-  // createFormGroup(): FormGroup {
-  //   return this.fb.group({
-  //     definition: [''],
-  //   });
-  // }
   createSpecific(definition: string): FormGroup {
     return this.fb.group({
       definition: [definition],
     });
   }
-  // createFormGroup(): FormGroup {
-  //   return this.fb.group({
-  //     name: ['', Validators.required],
-  //     email: ['', [Validators.required, Validators.email]],
-  //   });
-  // }
 
   populateGroup(definitions: string[]) {
     for (let index = 1; index < definitions.length; index++) {
@@ -70,12 +60,10 @@ export class DefinitionEdit implements OnInit {
   addAllGroups() {
     this.populateGroup(this.definitions());
   }
-  // addFormGroup1(defs: string[]) {
-  //   this.formArray.push(this.createFormGroup1(defs));
+
+  // addFormGroupMyMod() {
+  //   this.formArray.push(this.definitions());
   // }
-  addFormGroupMyMod() {
-    this.formArray.push(this.definitions());
-  }
   addFormGroup() {
     this.formArray.push(this.createBlankFormGroup());
   }
