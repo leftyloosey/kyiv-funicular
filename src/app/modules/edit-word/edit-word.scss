@@ -38,6 +38,7 @@
 .speech-row {
   display: flex;
   justify-content: end;
+  margin-bottom: -0.5rem;
   &__field {
     width: 100%;
   }
@@ -50,6 +51,7 @@
 .save-button-row {
   display: flex;
   justify-content: center;
+  // margin-top: 1rem;
 }
 .definition-example {
   width: 100%;
@@ -58,6 +60,8 @@
   display: flex;
   justify-content: end;
 }
-.translations-examples-container {
+
+.collapsing-example-containers {
   margin-bottom: 1rem;
+  margin-top: 1rem;
 }

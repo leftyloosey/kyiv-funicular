@@ -1,146 +1,121 @@
- <mat-dialog-content>
-<section class="outer">
-<form [formGroup]="manualForm" (ngSubmit)="submitManualWord()" class="new-word-form">
-
-<div class="wiktion-div">
-  <app-wiktion />
-</div>
-
-  <mat-form-field>
-    <mat-label for="original">Original</mat-label>
-    <input
-      autocomplete="off"
-      id="original"
-      type="text"
-      formControlName="original"
-      matInput
-    />
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label for="translation">Translation</mat-label>
-    <input
-      autocomplete="off"
-      id="translation"
-      type="text"
-      formControlName="translation"
-      matInput
-    />
-  </mat-form-field>
-<div class="speech-row">
-  <mat-form-field class="speech-row__field">
-    <mat-label for="partOfSpeech">Part of Speech</mat-label>
-
-    <mat-select
-      name="partOfSpeech"
-      id="partOfSpeech"
-      formControlName="partOfSpeech"
-      (change)="caseButtonHide($event)"
+<mat-dialog-content>
+  <section class="outer">
+    <form
+      [formGroup]="manualForm"
+      (ngSubmit)="submitManualWord()"
+      class="new-word-form"
     >
-      <mat-option value="Verb">Verb</mat-option>
-      <mat-option value="Adjective">Adjective</mat-option>
-      <mat-option value="Noun">Noun</mat-option>
-      <mat-option value="Other">Other</mat-option>
-    </mat-select>
-  </mat-form-field>
+      <div class="wiktion-div">
+        <app-wiktion />
+      </div>
 
-      <button
-        [hidden]="this.isCaseButtonHidden"
-        (click)="toggleCase()"
-        type="submit"
-        matButton="tonal"
-        class="speech-row__case-button"
-      >
-        Case
-      </button>
+      <mat-form-field>
+        <mat-label for="original">Original</mat-label>
+        <input
+          autocomplete="off"
+          id="original"
+          type="text"
+          formControlName="original"
+          matInput
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label for="translation">Translation</mat-label>
+        <input
+          autocomplete="off"
+          id="translation"
+          type="text"
+          formControlName="translation"
+          matInput
+        />
+      </mat-form-field>
+      <div class="speech-row">
+        <mat-form-field class="speech-row__field">
+          <mat-label for="partOfSpeech">Part of Speech</mat-label>
+
+          <mat-select
+            name="partOfSpeech"
+            id="partOfSpeech"
+            formControlName="partOfSpeech"
+          >
+            <mat-option value="Verb">Verb</mat-option>
+            <mat-option value="Adjective">Adjective</mat-option>
+            <mat-option value="Noun">Noun</mat-option>
+            <mat-option value="Other">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          (click)="toggleCase()"
+          type="submit"
+          matButton="tonal"
+          class="speech-row__case-button"
+        >
+          Case
+        </button>
+      </div>
+    </form>
+
+    <div [style.display]="isCaseHidden ? 'none' : 'block'">
+      @switch (this.word.partOfSpeech) { @case ("Verb") {
+      <app-edit-imperfect
+        [sendDown]="this.word.case"
+        (sendUp)="onSendUp($event)"
+      />
+
+      } @case ("Noun") {
+      <app-edit-noun [sendDown]="this.word.case" (sendUp)="onSendUp($event)" />
+
+      } @case ("Adjective") {
+      <app-edit-adjective
+        [sendDown]="this.word.case"
+        (sendUp)="onSendUp($event)"
+      />
+      } @default {
+      <p></p>
+      }}
     </div>
-</form>
 
-<div [style.display]="isCaseHidden ? 'none' : 'block'">
-  @switch (this.word.partOfSpeech) { @case ("Verb") {
-  <app-edit-imperfect [sendDown]="this.word.case" (sendUp)="onSendUp($event)" />
-
-  } @case ("Noun") {
-  <app-edit-noun [sendDown]="this.word.case" (sendUp)="onSendUp($event)" />
-
-  } @case ("Adjective") {
-  <app-edit-adjective [sendDown]="this.word.case"  (sendUp)="onSendUp($event)" />
-  } @default {
-  <p></p>
-  }}
-</div>
-
-<div class="translations-examples-container">
-  <p><strong>translations:</strong></p>
-  @for (item of this.definitions(); track $index) {
-  <li>{{ item }}</li>
-  } @empty {
-  <li>(no translations)</li>
-  }
-  <p><strong>examples:</strong></p>
-  @for (item of this.examples(); track $index) {
-  <li>{{ item }}</li>
-  } @empty {
-  <li>(no examples)</li>
-  }
-</div>
-
-<form
-  [formGroup]="addDefinition"
-  (ngSubmit)="submitDefinition()"
-  
->
-  <mat-form-field  class="definition-example">
-    <mat-label for="definition">New Definition</mat-label>
-    <textarea
-      autocomplete="off"
-      id="definition"
-      type="text"
-      formControlName="definition"
-      matInput
-    >
-    </textarea>
-      <div class="definition-example--buttons">
-    <label><button type="submit" matButton>Add</button></label>
-    <label><button (click)="definitionEdit($event)" matButton>Edit last</button></label>
-  </div>
-  </mat-form-field>
-
-</form>
-
-<form [formGroup]="addExample" (ngSubmit)="submitExample()" >
-  <mat-form-field class="definition-example">
-    <mat-label for="example">New Example</mat-label>
-    <textarea
-      autocomplete="off"
-      id="example"
-      type="text"
-      formControlName="example"
-      matInput
-    ></textarea>
-      <div class="definition-example--buttons">
-    <label
-      ><button type="submit" matButton=>Add</button></label
-    >
-    <label
-      ><button (click)="exampleEdit($event)" matButton=>
-        Edit last
-      </button></label
-    >
-  </div>
-  </mat-form-field>
-
-  <div class="save-button-row">
-    @if (this.data) 
-    {
-      <button (click)="patchWord($event)" matButton="filled">Edit word</button>
-    } 
-    @else {
-      <button (click)="seeWord($event)" matButton="filled">Save word</button>
+    <div class="translations-examples-container">
+      <p><strong>translations:</strong></p>
+      @for (item of this.wiktion.definitionData$ | async; track $index) {
+      <li>{{ item }}</li>
+      } @empty {
+      <li>(no translations)</li>
       }
-  
-  <button (click)="reset($event)" matButton="elevated">Reset</button>
-  </div>
-  </form>
-</section>
-</mat-dialog-content> 
+      <p><strong>examples:</strong></p>
+      @for (item of this.wiktion.exampleData$ | async; track $index) {
+      <li>{{ item }}</li>
+      } @empty {
+      <li>(no examples)</li>
+      }
+    </div>
+    <div class="definition-example">
+      <mat-accordion multi>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Edit Definitions</mat-panel-title>
+          </mat-expansion-panel-header>
+          @if (this.wiktion.definitionData$ | async; as data ) {
+          <app-definition-edit [definitions]="data" />
+          } @else {
+          <app-definition-edit [definitions]="this.word.definitions" />}
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Edit Examples</mat-panel-title>
+          </mat-expansion-panel-header>
+          @if (this.wiktion.exampleData$ | async; as data ) {
+          <app-example-edit [examples]="data" />
+          } @else { <app-example-edit [examples]="this.word.examples" />}
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <div class="save-button-row">
+      <button (click)="seeWord($event)" matButton="filled">Save word</button>
+      <button (click)="reset($event)" matButton="elevated">Reset</button>
+    </div>
+  </section>
+</mat-dialog-content>

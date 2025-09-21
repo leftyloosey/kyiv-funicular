@@ -1,14 +1,6 @@
 <mat-dialog-content>
   <section class="outer">
-    <form
-      [formGroup]="manualForm"
-      (ngSubmit)="submitManualWord()"
-      class="new-word-form"
-    >
-      <!-- <div class="wiktion-div">
-  <app-wiktion />
-</div> -->
-
+    <form [formGroup]="manualForm" class="new-word-form">
       <mat-form-field>
         <mat-label for="original">Original</mat-label>
         <input
@@ -38,7 +30,6 @@
             name="partOfSpeech"
             id="partOfSpeech"
             formControlName="partOfSpeech"
-            (change)="caseButtonHide($event)"
           >
             <mat-option value="Verb">Verb</mat-option>
             <mat-option value="Adjective">Adjective</mat-option>
@@ -79,53 +70,40 @@
       }}
     </div>
 
-    <div class="translations-examples-container">
+    <div>
       <p><strong>translations:</strong></p>
-      @for (item of this.definitions(); track $index) {
+      @for (item of this.wiktion.definitionData$ | async; track $index) {
       <li>{{ item }}</li>
       } @empty {
       <li>(no translations)</li>
       }
       <p><strong>examples:</strong></p>
-      @for (item of this.examples(); track $index) {
+      @for (item of this.wiktion.exampleData$ | async; track $index) {
       <li>{{ item }}</li>
       } @empty {
       <li>(no examples)</li>
       }
     </div>
 
-    <!-- <form [formGroup]="addDefinition" (ngSubmit)="submitDefinition()">
-      <app-definition-edit
-        [definitions]="this.data.word.definitions"
-        (sendUpDef)="sendUpDef($event)"
-      />
-    </form> -->
+    <div class="collapsing-example-containers">
+      <mat-accordion multi>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Edit Definitions</mat-panel-title>
+          </mat-expansion-panel-header>
 
-    <mat-accordion class="example-headers-align" multi>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>Edit Definitions</mat-panel-title>
-        </mat-expansion-panel-header>
-        <form [formGroup]="addDefinition" (ngSubmit)="submitDefinition()">
-          <app-definition-edit
-            [definitions]="this.data.word.definitions"
-            (sendUpDef)="sendUpDef($event)"
-          />
-        </form>
-      </mat-expansion-panel>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>Edit Examples</mat-panel-title>
-        </mat-expansion-panel-header>
-        <form [formGroup]="addExample" (ngSubmit)="submitExample()">
-          <app-example-edit
-            [examples]="this.data.word.examples"
-            (sendUpExmp)="sendUpExmp($event)"
-          />
-        </form>
-      </mat-expansion-panel>
-    </mat-accordion>
+          <app-definition-edit [definitions]="this.data.word.definitions" />
+        </mat-expansion-panel>
 
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Edit Examples</mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <app-example-edit [examples]="this.data.word.examples" />
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
     <div class="save-button-row">
       <button (click)="patchWord($event)" matButton="filled">Edit word</button>
       <button (click)="reset($event)" matButton="elevated">Reset</button>

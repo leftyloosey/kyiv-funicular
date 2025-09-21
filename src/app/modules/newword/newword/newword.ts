@@ -1,30 +1,35 @@
-import {
-  Component,
-  inject,
-  OnDestroy,
-  AfterViewInit,
-  signal,
-} from '@angular/core';
-import { Subscription, tap } from 'rxjs';
+import { Component, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { map, Subscription, tap } from 'rxjs';
 import { WiktionService } from '../../../services/wiktion-service/wiktion-service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Word, WordCase, WordWithId } from '../../../utils/classes/word';
+import { Word, WordCase } from '../../../utils/classes/word';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Wiktion } from '../../wiktion/wiktion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogContent } from '@angular/material/dialog';
+import { MatDialogContent } from '@angular/material/dialog';
 import { EditAdjective } from '../../../shared/components/edit-adjective/edit-adjective';
 import { EditNoun } from '../../../shared/components/edit-noun/edit-noun';
 import { EditImperfect } from '../../../shared/components/edit-imperfect/edit-imperfect';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AsyncPipe } from '@angular/common';
+import { ExampleEdit } from '../../../shared/components/example-edit/example-edit';
+import { DefinitionEdit } from '../../../shared/components/definition-edit/definition-edit';
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle,
+} from '@angular/material/expansion';
 @Component({
   selector: 'app-newword',
   imports: [
     ReactiveFormsModule,
     Wiktion,
     MatFormFieldModule,
+    ExampleEdit,
+    DefinitionEdit,
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
@@ -32,15 +37,18 @@ import { EditImperfect } from '../../../shared/components/edit-imperfect/edit-im
     EditAdjective,
     EditNoun,
     EditImperfect,
+    AsyncPipe,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelTitle,
+    MatExpansionPanelHeader,
   ],
   templateUrl: './newword.html',
   styleUrl: './newword.scss',
 })
 export class Newword implements OnDestroy, AfterViewInit {
   isCaseHidden: boolean = true;
-  isCaseButtonHidden: boolean = false;
-  definitions = signal<string[]>([]);
-  examples = signal<string[]>([]);
+
   word: Word = {
     definitions: [],
     examples: [],
@@ -49,19 +57,15 @@ export class Newword implements OnDestroy, AfterViewInit {
     partOfSpeech: '',
     case: {},
   };
-  bob!: Subscription;
-  data = inject(MAT_DIALOG_DATA, { optional: true });
+  translationSub!: Subscription;
+
+  @ViewChild(ExampleEdit) exampleChild!: ExampleEdit;
+  @ViewChild(DefinitionEdit) definitionChild!: DefinitionEdit;
 
   protected manualForm = new FormGroup({
     original: new FormControl(''),
     translation: new FormControl(''),
     partOfSpeech: new FormControl(''),
-  });
-  protected addDefinition = new FormGroup({
-    definition: new FormControl(''),
-  });
-  protected addExample = new FormGroup({
-    example: new FormControl(''),
   });
 
   submitManualWord() {
@@ -73,41 +77,6 @@ export class Newword implements OnDestroy, AfterViewInit {
     this.word.case = $event;
   }
 
-  submitDefinition() {
-    this.definitions.update((prev) => [
-      ...prev,
-      this.addDefinition.value.definition as string,
-    ]);
-    this.word.definitions.push(this.addDefinition.value.definition as string);
-    this.addDefinition.reset();
-  }
-  submitExample() {
-    this.examples.update((prev) => [
-      ...prev,
-      this.addExample.value.example as string,
-    ]);
-    this.word.examples.push(this.addExample.value.example as string);
-    this.addExample.reset();
-  }
-
-  definitionEdit(e: Event) {
-    e.preventDefault();
-    const pop = this.definitions().pop();
-    this.definitions.update((currentItems) =>
-      currentItems.filter((item) => pop !== item)
-    );
-
-    this.addDefinition.controls.definition.setValue(pop as string);
-  }
-  exampleEdit(e: Event) {
-    e.preventDefault();
-    const pop = this.examples().pop();
-    this.examples.update((currentItems) =>
-      currentItems.filter((item) => pop !== item)
-    );
-
-    this.addExample.controls.example.setValue(pop as string);
-  }
   seeWord(e: Event) {
     this.word.original = this.manualForm.value.original as string;
     this.word.translation = this.manualForm.value.translation as string;
@@ -116,23 +85,9 @@ export class Newword implements OnDestroy, AfterViewInit {
     if (window.confirm(JSON.stringify(this.word))) {
       this.wiktion.saveNewWord(this.word).subscribe({
         error: (err) => window.alert(err),
-        complete: () => window.alert('successful'),
-      });
-
-      this.reset(e);
-    } else {
-      console.log('cancelled.');
-    }
-  }
-  patchWord(e: Event) {
-    this.word.original = this.manualForm.value.original as string;
-    this.word.translation = this.manualForm.value.translation as string;
-    this.word.partOfSpeech = this.manualForm.value.partOfSpeech as string;
-
-    if (window.confirm(JSON.stringify(this.word))) {
-      this.wiktion.patchNewWord(this.word as WordWithId).subscribe({
-        error: (err) => window.alert(JSON.stringify(err)),
-        complete: () => window.alert('successful'),
+        complete: () => {
+          window.alert('successful');
+        },
       });
 
       this.reset(e);
@@ -141,16 +96,36 @@ export class Newword implements OnDestroy, AfterViewInit {
     }
   }
 
-  constructor(private wiktion: WiktionService) {
-    console.log(this.data);
-  }
-  ngAfterViewInit(): void {
-    this.bob = this.wiktion.newScrapeInternal$
+  constructor(protected wiktion: WiktionService) {
+    this.wiktion.definitionData$
       .pipe(
-        // taskeUntilDestroyed(),
-        tap((translatedWord) => {
+        takeUntilDestroyed(),
+        tap((defs) => {
+          console.log(defs);
+          this.word.definitions = defs;
+        })
+      )
+      .subscribe();
+
+    this.wiktion.exampleData$
+      .pipe(
+        takeUntilDestroyed(),
+        tap((exmps) => {
+          console.log('exmps', exmps);
+
+          this.word.examples = exmps;
+        })
+      )
+      .subscribe();
+  }
+
+  ngAfterViewInit(): void {
+    this.translationSub = this.wiktion.newScrapeInternal$
+      .pipe(
+        map((translatedWord) => {
           if (translatedWord) {
             this.word = translatedWord;
+            this.word.case = {};
             switch (translatedWord.partOfSpeech) {
               case 'Noun':
                 this.word.partOfSpeech = 'Noun';
@@ -171,23 +146,15 @@ export class Newword implements OnDestroy, AfterViewInit {
               translation: this.word.translation,
             });
 
-            this.definitions.set(this.word.definitions);
-            this.examples.set(this.word.examples);
+            this.wiktion.updateDefinitionData(this.word.definitions);
+            this.wiktion.updateExampleData(this.word.examples);
           }
         })
       )
-      .subscribe({ error: (err) => window.alert(err) });
+      .subscribe();
   }
   ngOnDestroy(): void {
-    this.wiktion.pushInternalScrape({
-      definitions: [],
-      examples: [],
-      original: '',
-      translation: '',
-      partOfSpeech: '',
-      case: {},
-    });
-    this.bob.unsubscribe();
+    this.translationSub.unsubscribe();
   }
 
   reset(e: Event) {
@@ -202,22 +169,13 @@ export class Newword implements OnDestroy, AfterViewInit {
     };
     this.isCaseHidden = true;
     this.manualForm.reset();
-    this.addDefinition.reset();
-    this.addExample.reset();
-    this.definitions.set([]);
-    this.examples.set([]);
+    this.wiktion.updateDefinitionData([]);
+    this.wiktion.updateExampleData([]);
+    this.exampleChild.reset();
+    this.definitionChild.reset();
   }
 
   toggleCase(): void {
     this.isCaseHidden = !this.isCaseHidden;
-  }
-  caseButtonHide(e: Event): void {
-    e.preventDefault();
-    if (this.manualForm.controls.partOfSpeech.value === 'Other') {
-      this.isCaseButtonHidden = true;
-      this.isCaseHidden = true;
-    } else {
-      this.isCaseButtonHidden = false;
-    }
   }
 }

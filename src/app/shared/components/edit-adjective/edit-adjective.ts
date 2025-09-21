@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, input, output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  input,
+  OnDestroy,
+  output,
+} from '@angular/core';
 import { AdjCase, WordCase } from '../../../utils/classes/word';
 import { FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
 
@@ -8,7 +14,10 @@ import { FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
   templateUrl: './edit-adjective.html',
   styleUrl: './edit-adjective.scss',
 })
-export class EditAdjective implements AfterViewInit {
+export class EditAdjective implements AfterViewInit, OnDestroy {
+  ngOnDestroy(): void {
+    console.log('adjective destroyed!');
+  }
   buildingWord: AdjCase = {
     malNom: '',
     malAcc: '',

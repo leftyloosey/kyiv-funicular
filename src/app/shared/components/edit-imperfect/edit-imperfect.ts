@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, input, output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  input,
+  OnDestroy,
+  output,
+} from '@angular/core';
 import { ImperfCase, WordCase } from '../../../utils/classes/word';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 @Component({
@@ -7,7 +13,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './edit-imperfect.html',
   styleUrl: './edit-imperfect.scss',
 })
-export class EditImperfect implements AfterViewInit {
+export class EditImperfect implements AfterViewInit, OnDestroy {
   sendUp = output<ImperfCase>();
   sendDown = input<WordCase>();
 
@@ -40,6 +46,7 @@ export class EditImperfect implements AfterViewInit {
     if (Object.keys(receivedCase).length === 0) {
       console.log('empty');
     } else {
+      console.log('something here');
       this.buildingWord = this.sendDown() as ImperfCase;
       this.loopWordToForm(this.imperfectForm);
     }
@@ -57,6 +64,12 @@ export class EditImperfect implements AfterViewInit {
     Object.keys(form.controls).forEach((key) => {
       const control = form.get(key);
       control?.setValue(this.buildingWord[key]);
+    });
+  }
+  clearForm(form: FormGroup): void {
+    Object.keys(form.controls).forEach((key) => {
+      const control = form.get(key);
+      control?.setValue('');
     });
   }
   submitImperfect() {
@@ -80,4 +93,29 @@ export class EditImperfect implements AfterViewInit {
     plurFuture: new FormControl(this.buildingWord.plurFuture),
     weFuture: new FormControl(this.buildingWord.weFuture),
   });
+
+  ngOnDestroy(): void {
+    console.log('verb destroyed!');
+    this.buildingWord = {
+      aspect: '',
+      malePast: '',
+      femPast: '',
+      plurPast: '',
+      firstPresent: '',
+      InfPresent2nd: '',
+      FormPresent2nd: '',
+      present3rd: '',
+      plurPresent: '',
+      wePresent: '',
+      firstFuture: '',
+      InfFuture2nd: '',
+      FormFuture2nd: '',
+      future3rd: '',
+      plurFuture: '',
+      weFuture: '',
+    };
+    this.loopWordToForm(this.imperfectForm);
+    this.imperfectForm.reset();
+    console.log(this.imperfectForm.value);
+  }
 }

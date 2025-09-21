@@ -8,6 +8,7 @@ import {
 import { MatFormField } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { WiktionService } from '../../../services/wiktion-service/wiktion-service';
 
 @Component({
   selector: 'app-definition-edit',
@@ -20,7 +21,7 @@ export class DefinitionEdit implements OnInit {
   sendUpDef = output<string[]>();
   definitions = input.required<string[]>();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private wiktion: WiktionService) {}
 
   ngOnInit() {
     this.dynamicForm = this.fb.group({
@@ -61,9 +62,6 @@ export class DefinitionEdit implements OnInit {
     this.populateGroup(this.definitions());
   }
 
-  // addFormGroupMyMod() {
-  //   this.formArray.push(this.definitions());
-  // }
   addFormGroup() {
     this.formArray.push(this.createBlankFormGroup());
   }
@@ -73,18 +71,32 @@ export class DefinitionEdit implements OnInit {
     });
   }
   removeFormGroup(index: number) {
-    console.log('index', index);
     this.formArray.removeAt(index);
   }
 
-  onSubmit() {
-    console.log(this.dynamicForm.value);
+  // onSubmit() {
+  //   console.log(this.dynamicForm.value);
+  // }
+  public reset() {
+    this.dynamicForm.reset();
+    this.formArray.clear();
   }
+
   toEdit(e: Event) {
     e.preventDefault();
 
     const { formArray } = this.dynamicForm.value;
-    console.log(formArray);
-    this.sendUpDef.emit(formArray);
+    // this.sendUpDef.emit(formArray);
+    const newDefArray: string[] = [];
+
+    interface newDefInterface {
+      definition: string;
+    }
+
+    for (const def of formArray) {
+      const { definition } = def as unknown as newDefInterface;
+      newDefArray.push(definition);
+    }
+    this.wiktion.updateDefinitionData(newDefArray);
   }
 }

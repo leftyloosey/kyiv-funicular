@@ -52,7 +52,7 @@ export class Wiktion implements OnDestroy {
           this.router.navigate(['/newword']);
         })
       )
-      .subscribe({ error: (err) => window.alert(JSON.stringify(err)) });
+      .subscribe();
   }
   ngOnDestroy(): void {
     this.bob.unsubscribe();

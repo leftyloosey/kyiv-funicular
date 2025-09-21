@@ -8,6 +8,7 @@ import {
 import { MatFormField } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { WiktionService } from '../../../services/wiktion-service/wiktion-service';
 
 @Component({
   selector: 'app-example-edit',
@@ -20,13 +21,15 @@ export class ExampleEdit implements OnInit {
   sendUpExmp = output<string[]>();
   examples = input.required<string[]>();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private wiktion: WiktionService) {}
 
   ngOnInit() {
+    console.log('EXAMPLE EDIT INIT');
     this.dynamicForm = this.fb.group({
       formArray: this.fb.array([this.createFormGroup1(this.examples())]),
     });
     this.addAllGroups();
+    console.log(this.examples());
   }
 
   get formArray() {
@@ -75,15 +78,29 @@ export class ExampleEdit implements OnInit {
   removeFormGroup(index: number) {
     this.formArray.removeAt(index);
   }
-
-  onSubmit() {
-    console.log('submit in example form', this.dynamicForm.value);
+  public reset() {
+    this.dynamicForm.reset();
+    this.formArray.clear();
   }
+  // onSubmit() {
+  //   console.log('submit in example form', this.dynamicForm.value);
+  // }
+
   toEdit(e: Event) {
     e.preventDefault();
 
     const { formArray } = this.dynamicForm.value;
+    const newExmpArray: string[] = [];
 
-    this.sendUpExmp.emit(formArray);
+    interface newExmpInterface {
+      example: string;
+    }
+
+    for (const exmp of formArray) {
+      const { example } = exmp as unknown as newExmpInterface;
+      newExmpArray.push(example);
+    }
+    this.wiktion.updateExampleData(newExmpArray);
+    // this.sendUpExmp.emit(formArray);
   }
 }
