@@ -23,7 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
   styleUrl: './wiktion.scss',
 })
 export class Wiktion implements OnDestroy {
-  bob: Subscription;
+  // bob: Subscription;
   buildingWord: Word = new Word('', '', '');
   private router = inject(Router);
 
@@ -32,7 +32,8 @@ export class Wiktion implements OnDestroy {
   });
 
   constructor(private wiktion: WiktionService) {
-    this.bob = wiktion.newScrape$
+    wiktion.newScrape$
+      // this.bob = wiktion.newScrape$
       .pipe(
         takeUntilDestroyed(),
         switchMap((word) => {
@@ -55,7 +56,7 @@ export class Wiktion implements OnDestroy {
       .subscribe();
   }
   ngOnDestroy(): void {
-    this.bob.unsubscribe();
+    // this.bob.unsubscribe();
   }
 
   protected submitScrapeWord() {

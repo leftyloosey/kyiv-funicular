@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environments';
 import {
-  // BehaviorSubject,
+  BehaviorSubject,
   catchError,
   EMPTY,
   Observable,
-  ReplaySubject,
+  // ReplaySubject,
   Subject,
 } from 'rxjs';
 import { Word, WordWithId } from '../../utils/classes/word';
@@ -19,15 +19,15 @@ export class WiktionService {
   http = inject(HttpClient);
 
   public scrapeDelivery = new Subject<string>();
-  public scrapeInternal = new ReplaySubject<Word>();
-  // public scrapeInternal = new BehaviorSubject<Word>({
-  //   definitions: [],
-  //   examples: [],
-  //   original: '',
-  //   translation: '',
-  //   partOfSpeech: '',
-  //   case: {},
-  // });
+  // public scrapeInternal = new ReplaySubject<Word>(1);
+  public scrapeInternal = new BehaviorSubject<Word>({
+    definitions: [],
+    examples: [],
+    original: '',
+    translation: '',
+    partOfSpeech: '',
+    case: {},
+  });
 
   public newScrape$ = this.scrapeDelivery.asObservable();
   public newScrapeInternal$ = this.scrapeInternal.asObservable();

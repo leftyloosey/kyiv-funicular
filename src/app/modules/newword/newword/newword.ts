@@ -167,6 +167,7 @@ export class Newword implements OnDestroy, AfterViewInit {
       partOfSpeech: '',
       case: {},
     };
+    this.wiktion.pushInternalScrape(this.word);
     this.isCaseHidden = true;
     this.manualForm.reset();
     this.wiktion.updateDefinitionData([]);
