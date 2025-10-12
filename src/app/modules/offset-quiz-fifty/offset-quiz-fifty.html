@@ -1,0 +1,40 @@
+<div class="all">
+  <p class="bigCount">{{ this.offset.current }}</p>
+
+  <section class="flexContainer-wordPanel">
+    <section class="wordPanel">
+      @for (item of this.output$| async; track item.id; let idx = $index) { @if
+      (idx===this.offset.count) {
+      <p class="smallCount">{{ $index + 1 }} / {{ this.offset.splength }}</p>
+      <div class="wordPanel__card">
+        <app-basic-quiz (sendUp)="onSendUp($event)" [word]="item" />
+      </div>
+      } }
+    </section>
+  </section>
+  <section class="flexContainer-btnPanel">
+    <section class="btnPanel">
+      <p>
+        <i (click)="this.offset.pageChange(-1)" class="bigArrow left"></i>
+      </p>
+      <p>
+        <i (click)="this.offset.returnCount(-1)" class="smallArrow left"></i>
+      </p>
+      <button class="btnPanel__mode--button" (click)="this.offset.moodToggle()">
+        mode
+      </button>
+      <button
+        class="btnPanel__mode--button"
+        (click)="this.offset.toggleHideLevel()"
+      >
+        + / -
+      </button>
+      <p>
+        <i (click)="this.offset.returnCount(1)" class="smallArrow right"></i>
+      </p>
+      <p>
+        <i (click)="this.offset.pageChange(1)" class="bigArrow right"></i>
+      </p>
+    </section>
+  </section>
+</div>
