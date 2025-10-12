@@ -1,0 +1,58 @@
+.flexContainer {
+  padding: 1rem;
+}
+.caseBlock {
+  overflow-y: auto;
+  width: 90vw;
+  max-height: 25vh;
+  text-align: right;
+}
+.definitionBlock {
+  overflow-y: auto;
+  // max-height: 24vh;
+  margin-top: 1rem;
+  font-style: italic;
+}
+.exampleBlock {
+  overflow-y: auto;
+  max-height: 23vh;
+  // margin-top: 1rem;
+  color: #a0a0a0;
+}
+.titleBlock {
+  padding: 1rem;
+  position: fixed;
+  left: 2.5vw;
+  bottom: 8vh;
+  &__titleText:hover {
+    cursor: pointer;
+    color: greenyellow;
+  }
+}
+.tenseStyle {
+  color: #a0a0a0;
+  font-size: x-small;
+}
+.caseStyle {
+  color: white;
+  font-size: small;
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+// @media only screen and (min-width: 600px) {...}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .caseBlock {
+    overflow-y: auto;
+    width: 50vw;
+    max-height: 25vh;
+    text-align: right;
+  }
+
+  .titleBlock {
+    padding: 1rem;
+    position: fixed;
+    left: 23.5vw;
+    bottom: 8vh;
+  }
+}

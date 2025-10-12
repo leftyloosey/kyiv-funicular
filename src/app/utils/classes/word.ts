@@ -1,5 +1,11 @@
 export interface WordCase {}
 
+export class UnpackCase implements WordCase {
+  kase: WordCase;
+  constructor(strase: WordCase) {
+    this.kase = strase;
+  }
+}
 export interface NounCase extends WordCase {
   [x: string]: any;
   singNom: string;
@@ -102,12 +108,23 @@ export class WordWithId extends Word {
 export interface WordInterface {
   definitions: string[];
   examples: string[];
-
-  //  original: string,
-  //    translation: string,
   partOfSpeech: string;
 }
+export interface FirstFiftyOffset {
+  firstQueryResults: WordWithId[];
+  page: number;
+  totalWords: number;
+}
+export interface FirstFifty {
+  firstQueryResults: WordWithId[];
+  lastPostInResults: WordWithId;
+  myCursor: string;
+  totalWords: number;
+}
 
+export interface SendAway {
+  id: string;
+}
 export class Noun extends Word {
   public singNom = '';
   public singAcc = '';
@@ -124,4 +141,13 @@ export class Noun extends Word {
   public plurIns = '';
   public plurLoc = '';
   public plurVoc = '';
+}
+export interface CaseDisplay {
+  tense: string;
+  value: string;
+}
+
+export interface Quizzable {
+  toggleHideLevel(): void;
+  moodToggle(): void;
 }

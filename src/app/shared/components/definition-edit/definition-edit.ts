@@ -26,7 +26,6 @@ export class DefinitionEdit implements OnInit {
   ngOnInit() {
     this.dynamicForm = this.fb.group({
       formArray: this.fb.array([this.createFormGroup1(this.definitions())]),
-      // formArray: this.fb.array([this.createFormGroup()]),
     });
     this.addAllGroups();
   }
@@ -74,9 +73,6 @@ export class DefinitionEdit implements OnInit {
     this.formArray.removeAt(index);
   }
 
-  // onSubmit() {
-  //   console.log(this.dynamicForm.value);
-  // }
   public reset() {
     this.dynamicForm.reset();
     this.formArray.clear();
@@ -86,7 +82,6 @@ export class DefinitionEdit implements OnInit {
     e.preventDefault();
 
     const { formArray } = this.dynamicForm.value;
-    // this.sendUpDef.emit(formArray);
     const newDefArray: string[] = [];
 
     interface newDefInterface {

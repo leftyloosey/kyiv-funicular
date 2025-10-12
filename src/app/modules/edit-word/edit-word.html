@@ -1,6 +1,15 @@
 <mat-dialog-content>
   <section class="outer">
     <form [formGroup]="manualForm" class="new-word-form">
+      <!-- <mat-form-field>
+        <mat-label for="original">Original</mat-label>
+        <input
+          autocomplete="off"
+          type="text"
+          formControlName="original"
+          matInput
+        />
+      </mat-form-field> -->
       <mat-form-field>
         <mat-label for="original">Original</mat-label>
         <input
@@ -72,17 +81,10 @@
 
     <div>
       <p><strong>translations:</strong></p>
-      @for (item of this.wiktion.definitionData$ | async; track $index) {
-      <li>{{ item }}</li>
-      } @empty {
-      <li>(no translations)</li>
-      }
+      <app-drag-drop [type]="this.def" [items]="this.defs()" />
+
       <p><strong>examples:</strong></p>
-      @for (item of this.wiktion.exampleData$ | async; track $index) {
-      <li>{{ item }}</li>
-      } @empty {
-      <li>(no examples)</li>
-      }
+      <app-drag-drop [type]="this.exmp" [items]="this.exmps()" />
     </div>
 
     <div class="collapsing-example-containers">
@@ -91,7 +93,6 @@
           <mat-expansion-panel-header>
             <mat-panel-title>Edit Definitions</mat-panel-title>
           </mat-expansion-panel-header>
-
           <app-definition-edit [definitions]="this.data.word.definitions" />
         </mat-expansion-panel>
 
@@ -99,11 +100,11 @@
           <mat-expansion-panel-header>
             <mat-panel-title>Edit Examples</mat-panel-title>
           </mat-expansion-panel-header>
-
           <app-example-edit [examples]="this.data.word.examples" />
         </mat-expansion-panel>
       </mat-accordion>
     </div>
+
     <div class="save-button-row">
       <button (click)="patchWord($event)" matButton="filled">Edit word</button>
       <button (click)="reset($event)" matButton="elevated">Reset</button>

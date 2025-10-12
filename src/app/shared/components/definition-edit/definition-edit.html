@@ -1,5 +1,4 @@
 <form [formGroup]="dynamicForm" (focusout)="toEdit($event)" #definitionEdit>
-  <!-- <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()"> -->
   <div formArrayName="formArray">
     @for (group of formArray.controls; track group; let index = $index) {
     <div [formGroupName]="index">
@@ -15,8 +14,4 @@
   <button mat-raised-button color="primary" (click)="addFormGroup()">
     Add Definition
   </button>
-  <!-- <button mat-raised-button color="primary" (click)="toEdit($event)">
-    Confirm
-  </button> -->
-  <!-- <button mat-raised-button color="accent" type="submit">Submit</button> -->
 </form>

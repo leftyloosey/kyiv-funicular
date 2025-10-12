@@ -1,5 +1,5 @@
-import { Component, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
-import { map, Subscription, tap } from 'rxjs';
+import { Component, inject, ViewChild } from '@angular/core';
+import { map, tap } from 'rxjs';
 import { WiktionService } from '../../../services/wiktion-service/wiktion-service';
 import { Word, WordCase } from '../../../utils/classes/word';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +12,7 @@ import { MatDialogContent } from '@angular/material/dialog';
 import { EditAdjective } from '../../../shared/components/edit-adjective/edit-adjective';
 import { EditNoun } from '../../../shared/components/edit-noun/edit-noun';
 import { EditImperfect } from '../../../shared/components/edit-imperfect/edit-imperfect';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { ExampleEdit } from '../../../shared/components/example-edit/example-edit';
 import { DefinitionEdit } from '../../../shared/components/definition-edit/definition-edit';
@@ -22,6 +22,9 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle,
 } from '@angular/material/expansion';
+import { switchPartSpeech } from '../../../utils/functions/functions';
+import { DragDrop } from '../../../shared/components/drag-drop/drag-drop';
+
 @Component({
   selector: 'app-newword',
   imports: [
@@ -42,11 +45,12 @@ import {
     MatExpansionPanel,
     MatExpansionPanelTitle,
     MatExpansionPanelHeader,
+    DragDrop,
   ],
   templateUrl: './newword.html',
   styleUrl: './newword.scss',
 })
-export class Newword implements OnDestroy, AfterViewInit {
+export class Newword {
   isCaseHidden: boolean = true;
 
   word: Word = {
@@ -57,7 +61,7 @@ export class Newword implements OnDestroy, AfterViewInit {
     partOfSpeech: '',
     case: {},
   };
-  translationSub!: Subscription;
+  wiktion = inject(WiktionService);
 
   @ViewChild(ExampleEdit) exampleChild!: ExampleEdit;
   @ViewChild(DefinitionEdit) definitionChild!: DefinitionEdit;
@@ -68,20 +72,65 @@ export class Newword implements OnDestroy, AfterViewInit {
     partOfSpeech: new FormControl(''),
   });
 
-  submitManualWord() {
-    this.word.original = this.manualForm.value.original as string;
-    this.word.translation = this.manualForm.value.translation as string;
-    this.word.partOfSpeech = this.manualForm.value.partOfSpeech as string;
-  }
-  onSendUp($event: WordCase) {
-    this.word.case = $event;
+  defs = toSignal(
+    this.wiktion.definitionData$.pipe(
+      // takeUntilDestroyed(),
+      tap((defs) => {
+        this.word.definitions = defs;
+      })
+    )
+  );
+
+  exmps = toSignal(
+    this.wiktion.exampleData$.pipe(
+      // takeUntilDestroyed(),
+      tap((exmps) => {
+        this.word.examples = exmps;
+      })
+    )
+  );
+
+  def: string = 'def';
+  exmp: string = 'exmp';
+
+  formValues$ = this.manualForm.valueChanges;
+
+  constructor() {
+    this.wiktion.newScrapeInternal$
+      .pipe(
+        takeUntilDestroyed(),
+        map((translatedWord) => {
+          if (translatedWord) {
+            this.word = translatedWord;
+            this.word.case = {};
+            this.word.partOfSpeech = switchPartSpeech(translatedWord);
+
+            this.manualForm.patchValue({
+              original: this.word.original,
+              partOfSpeech: this.word.partOfSpeech,
+              translation: this.word.translation,
+            });
+
+            this.wiktion.updateDefinitionData(this.word.definitions);
+            this.wiktion.updateExampleData(this.word.examples);
+          }
+        })
+      )
+      .subscribe();
+
+    this.formValues$
+      .pipe(
+        takeUntilDestroyed(),
+        map((words) => {
+          this.word.original = words.original as string;
+          this.word.translation = words.translation as string;
+          this.word.partOfSpeech = words.partOfSpeech as string;
+        })
+      )
+      .subscribe();
   }
 
   seeWord(e: Event) {
-    this.word.original = this.manualForm.value.original as string;
-    this.word.translation = this.manualForm.value.translation as string;
-    this.word.partOfSpeech = this.manualForm.value.partOfSpeech as string;
-
     if (window.confirm(JSON.stringify(this.word))) {
       this.wiktion.saveNewWord(this.word).subscribe({
         error: (err) => window.alert(err),
@@ -96,77 +145,13 @@ export class Newword implements OnDestroy, AfterViewInit {
     }
   }
 
-  constructor(protected wiktion: WiktionService) {
-    this.wiktion.definitionData$
-      .pipe(
-        takeUntilDestroyed(),
-        tap((defs) => {
-          console.log(defs);
-          this.word.definitions = defs;
-        })
-      )
-      .subscribe();
-
-    this.wiktion.exampleData$
-      .pipe(
-        takeUntilDestroyed(),
-        tap((exmps) => {
-          console.log('exmps', exmps);
-
-          this.word.examples = exmps;
-        })
-      )
-      .subscribe();
-  }
-
-  ngAfterViewInit(): void {
-    this.translationSub = this.wiktion.newScrapeInternal$
-      .pipe(
-        map((translatedWord) => {
-          if (translatedWord) {
-            this.word = translatedWord;
-            this.word.case = {};
-            switch (translatedWord.partOfSpeech) {
-              case 'Noun':
-                this.word.partOfSpeech = 'Noun';
-                break;
-              case 'Adjective':
-                this.word.partOfSpeech = 'Adjective';
-                break;
-              case 'Verb':
-                this.word.partOfSpeech = 'Verb';
-                break;
-
-              default:
-                this.word.partOfSpeech = 'Other';
-            }
-            this.manualForm.patchValue({
-              original: this.word.original,
-              partOfSpeech: this.word.partOfSpeech,
-              translation: this.word.translation,
-            });
-
-            this.wiktion.updateDefinitionData(this.word.definitions);
-            this.wiktion.updateExampleData(this.word.examples);
-          }
-        })
-      )
-      .subscribe();
-  }
-  ngOnDestroy(): void {
-    this.translationSub.unsubscribe();
+  onSendUp($event: WordCase) {
+    this.word.case = $event;
   }
 
   reset(e: Event) {
     e.preventDefault();
-    this.word = {
-      definitions: [],
-      examples: [],
-      original: '',
-      translation: '',
-      partOfSpeech: '',
-      case: {},
-    };
+    this.word = new Word('', '', '');
     this.wiktion.pushInternalScrape(this.word);
     this.isCaseHidden = true;
     this.manualForm.reset();

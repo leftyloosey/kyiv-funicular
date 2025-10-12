@@ -24,12 +24,17 @@ html {
       disabled-leading-icon-color: red,
     )
   );
+  @include mat.progress-spinner-overrides(
+    (
+      active-indicator-color: #800000,
+    )
+  );
 }
 body {
   // Default the application to a light color theme. This can be changed to
   // `dark` to enable the dark color theme, or to `light dark` to defer to the
   // user's system settings.
-  color-scheme: light;
+  color-scheme: dark;
 
   // Set a default background, font and text colors for the application using
   // Angular Material's system-level CSS variables. Learn more about these
@@ -63,7 +68,49 @@ body {
   display: flex;
   flex-direction: row;
 }
-// body {
-//   margin: 0;
-//   font-family: Roboto, "Helvetica Neue", sans-serif;
+// .app-description {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   h1 {
+//     margin-bottom: 5px;
+//   }
+//   p {
+//     margin-top: 0;
+//   }
+// }
+
+// .click {
+//   width: 30px;
+//   height: 30px;
+//   border-radius: 50%;
+//   position: fixed;
+//   opacity: 0;
+//   transform: scale(0.5, 0.5) translate(-15px, -15px);
+//   transition: all 1.5s ease-in-out;
+//   animation: appear 0.4s ease;
+//   background-color: green;
+//   opacity: 0.5;
+//   transform: scale(1, 1);
+// }
+// @keyframes appear {
+//   0% {
+//     opacity: 0;
+//     transform: scale(0.5, 0.5);
+//   }
+//   100% {
+//     opacity: 0.5;
+//     transform: scale(1, 1);
+//   }
+// }
+[mat-stroked-button] {
+  min-width: 150px;
+  margin-left: 10px;
+}
+// app-page-click-counter {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   height: 100%;
 // }

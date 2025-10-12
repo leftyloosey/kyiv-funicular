@@ -44,9 +44,7 @@ export class EditImperfect implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     const receivedCase = JSON.parse(JSON.stringify(this.sendDown()));
     if (Object.keys(receivedCase).length === 0) {
-      console.log('empty');
     } else {
-      console.log('something here');
       this.buildingWord = this.sendDown() as ImperfCase;
       this.loopWordToForm(this.imperfectForm);
     }
@@ -95,7 +93,6 @@ export class EditImperfect implements AfterViewInit, OnDestroy {
   });
 
   ngOnDestroy(): void {
-    console.log('verb destroyed!');
     this.buildingWord = {
       aspect: '',
       malePast: '',
@@ -116,6 +113,5 @@ export class EditImperfect implements AfterViewInit, OnDestroy {
     };
     this.loopWordToForm(this.imperfectForm);
     this.imperfectForm.reset();
-    console.log(this.imperfectForm.value);
   }
 }

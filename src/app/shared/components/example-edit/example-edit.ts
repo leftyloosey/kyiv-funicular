@@ -24,12 +24,10 @@ export class ExampleEdit implements OnInit {
   constructor(private fb: FormBuilder, private wiktion: WiktionService) {}
 
   ngOnInit() {
-    console.log('EXAMPLE EDIT INIT');
     this.dynamicForm = this.fb.group({
       formArray: this.fb.array([this.createFormGroup1(this.examples())]),
     });
     this.addAllGroups();
-    console.log(this.examples());
   }
 
   get formArray() {

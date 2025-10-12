@@ -1,32 +1,13 @@
 import { Routes } from '@angular/router';
-// import { Newword } from './modules/newword/newword/newword';
-// import { Quiz } from './modules/quiz/quiz';
-import { quizResolverResolver } from './utils/resolvers/quiz-resolver/quiz-resolver-resolver';
-
+import { Newword } from './modules/newword/newword/newword';
+// import { quizResolverResolver } from './utils/resolvers/quiz-resolver/quiz-resolver-resolver';
+import { OffsetQuizFifty } from './modules/offset-quiz-fifty/offset-quiz-fifty';
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'newword',
     pathMatch: 'full',
   },
-  // {
-  //   path: 'quiz',
-  //   pathMatch: 'full',
-  //   resolve: {
-  //     words: quizResolverResolver,
-  //   },
-  //   component: Quiz,
-  // },
-  // {
-  //   path: 'newword',
-  //   pathMatch: 'full',
-  //   component: Newword,
-  // },
-  // {
-  //   path: 'editword',
-  //   pathMatch: 'full',
-  //   component: EditWord,
-  // },
   {
     path: '*',
     redirectTo: 'newword',
@@ -38,9 +19,10 @@ export const routes: Routes = [
       import('./modules/newword/newword/newword').then((load) => load.Newword),
   },
   {
-    path: 'quiz',
+    path: 'quiz50',
     loadComponent: () =>
-      import('./modules/quiz/quiz').then((load) => load.Quiz),
-    resolve: { words: quizResolverResolver },
+      import('./modules/offset-quiz-fifty/offset-quiz-fifty').then(
+        (load) => load.OffsetQuizFifty
+      ),
   },
 ];

@@ -1,16 +1,16 @@
 @use "../styles.scss" as *;
-
-// .app-container {
-//   @extend %flex-col;
-//   row-gap: 20px;
-// }
-
+.dropup {
+  position: absolute;
+  // margin-left: 2rem;
+  // transform: translate();
+  right: 130px;
+  // transform: translate(-90%, 0px);
+  bottom: 0;
+}
 .nav-container {
   @extend %flex-row;
-
+  color: white;
   width: 100%;
-  //   justify-content: end;
-
   div {
     @extend %flex-row;
 
@@ -19,15 +19,9 @@
 
   a {
     text-decoration: none;
-    color: black;
+    color: white;
     font-size: large;
     border-right: solid;
     padding-right: 1rem;
   }
 }
-
-// .logout-hover:hover {
-//   @extend %alert-background;
-//   border: 2px solid transparent;
-//   color: white;
-// }

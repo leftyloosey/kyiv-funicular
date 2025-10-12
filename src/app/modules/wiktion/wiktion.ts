@@ -1,6 +1,6 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { map, Subscription, switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { WiktionService } from '../../services/wiktion-service/wiktion-service';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -22,16 +22,15 @@ import { MatSelectModule } from '@angular/material/select';
   templateUrl: './wiktion.html',
   styleUrl: './wiktion.scss',
 })
-export class Wiktion implements OnDestroy {
-  // bob: Subscription;
+export class Wiktion {
   buildingWord: Word = new Word('', '', '');
-  private router = inject(Router);
+  // private router = inject(Router);
 
   protected scrapeForm = new FormGroup({
     scrape: new FormControl(''),
   });
 
-  constructor(private wiktion: WiktionService) {
+  constructor(private wiktion: WiktionService, private router: Router) {
     wiktion.newScrape$
       // this.bob = wiktion.newScrape$
       .pipe(
@@ -54,9 +53,6 @@ export class Wiktion implements OnDestroy {
         })
       )
       .subscribe();
-  }
-  ngOnDestroy(): void {
-    // this.bob.unsubscribe();
   }
 
   protected submitScrapeWord() {

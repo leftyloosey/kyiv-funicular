@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QuizCard } from './quiz-card';
+import { LoadingIndicator } from './loading-indicator';
 
-describe('QuizCard', () => {
-  let component: QuizCard;
-  let fixture: ComponentFixture<QuizCard>;
+describe('LoadingIndicator', () => {
+  let component: LoadingIndicator;
+  let fixture: ComponentFixture<LoadingIndicator>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QuizCard]
+      imports: [LoadingIndicator]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(QuizCard);
+    fixture = TestBed.createComponent(LoadingIndicator);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

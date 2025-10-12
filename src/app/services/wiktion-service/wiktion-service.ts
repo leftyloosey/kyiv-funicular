@@ -2,14 +2,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environments';
-import {
-  BehaviorSubject,
-  catchError,
-  EMPTY,
-  Observable,
-  // ReplaySubject,
-  Subject,
-} from 'rxjs';
+import { catchError, EMPTY, Observable, ReplaySubject, Subject } from 'rxjs';
 import { Word, WordWithId } from '../../utils/classes/word';
 
 @Injectable({
@@ -19,15 +12,7 @@ export class WiktionService {
   http = inject(HttpClient);
 
   public scrapeDelivery = new Subject<string>();
-  // public scrapeInternal = new ReplaySubject<Word>(1);
-  public scrapeInternal = new BehaviorSubject<Word>({
-    definitions: [],
-    examples: [],
-    original: '',
-    translation: '',
-    partOfSpeech: '',
-    case: {},
-  });
+  public scrapeInternal = new ReplaySubject<Word>(1);
 
   public newScrape$ = this.scrapeDelivery.asObservable();
   public newScrapeInternal$ = this.scrapeInternal.asObservable();
@@ -35,6 +20,7 @@ export class WiktionService {
   public _definitionData = new Subject<string[]>();
   public readonly definitionData$: Observable<string[]> =
     this._definitionData.asObservable();
+
   updateDefinitionData(newData: string[]) {
     this._definitionData.next(newData);
   }
@@ -42,6 +28,7 @@ export class WiktionService {
   public _exampleData = new Subject<string[]>();
   public readonly exampleData$: Observable<string[]> =
     this._exampleData.asObservable();
+
   updateExampleData(newData: string[]) {
     this._exampleData.next(newData);
   }

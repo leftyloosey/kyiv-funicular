@@ -1,10 +1,6 @@
 <mat-dialog-content>
   <section class="outer">
-    <form
-      [formGroup]="manualForm"
-      (ngSubmit)="submitManualWord()"
-      class="new-word-form"
-    >
+    <form [formGroup]="manualForm" class="new-word-form">
       <div class="wiktion-div">
         <app-wiktion />
       </div>
@@ -13,12 +9,21 @@
         <mat-label for="original">Original</mat-label>
         <input
           autocomplete="off"
-          id="original"
           type="text"
           formControlName="original"
           matInput
         />
       </mat-form-field>
+      <!-- <mat-form-field>
+        <mat-label for="original">Original</mat-label>
+        <input
+          autocomplete="off"
+          id="original"
+          type="text"
+          formControlName="original"
+          matInput
+        />
+      </mat-form-field> -->
 
       <mat-form-field>
         <mat-label for="translation">Translation</mat-label>
@@ -76,40 +81,36 @@
       <p></p>
       }}
     </div>
-
+    <!-- HERE -->
     <div class="translations-examples-container">
       <p><strong>translations:</strong></p>
-      @for (item of this.wiktion.definitionData$ | async; track $index) {
-      <li>{{ item }}</li>
-      } @empty {
-      <li>(no translations)</li>
-      }
+      <app-drag-drop [type]="this.def" [items]="this.defs()" />
+
       <p><strong>examples:</strong></p>
-      @for (item of this.wiktion.exampleData$ | async; track $index) {
-      <li>{{ item }}</li>
-      } @empty {
-      <li>(no examples)</li>
-      }
+      <app-drag-drop [type]="this.exmp" [items]="this.exmps()" />
     </div>
+
     <div class="definition-example">
       <mat-accordion multi>
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>Edit Definitions</mat-panel-title>
           </mat-expansion-panel-header>
-          @if (this.wiktion.definitionData$ | async; as data ) {
-          <app-definition-edit [definitions]="data" />
+          @if (this.wiktion.definitionData$ | async; as newDefs ) {
+          <app-definition-edit [definitions]="newDefs" />
           } @else {
-          <app-definition-edit [definitions]="this.word.definitions" />}
+          <app-definition-edit [definitions]="this.word.definitions" />
+          }
         </mat-expansion-panel>
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>Edit Examples</mat-panel-title>
           </mat-expansion-panel-header>
-          @if (this.wiktion.exampleData$ | async; as data ) {
-          <app-example-edit [examples]="data" />
-          } @else { <app-example-edit [examples]="this.word.examples" />}
+          @if (this.wiktion.exampleData$ | async; as newExmps ) {
+          <app-example-edit [examples]="newExmps" />
+          } @else { <app-example-edit [examples]="this.word.examples" />
+          }
         </mat-expansion-panel>
       </mat-accordion>
     </div>

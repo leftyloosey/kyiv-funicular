@@ -1,0 +1,73 @@
+<section class="flexContainer" #quizCard>
+  <ng-container *ngTemplateOutlet="exampleNCaseBlock"></ng-container>
+
+  @if(this.offset.quizMode) {
+  <ng-container *ngTemplateOutlet="definitionBlock"></ng-container>
+  <ng-container *ngTemplateOutlet="titleBock"></ng-container>} @else {
+
+  <ng-container *ngTemplateOutlet="reverseDefinitionBlock"></ng-container>
+  <ng-container *ngTemplateOutlet="reverseTitleBock"></ng-container>}
+</section>
+
+<ng-template #titleBock>
+  @if (this.offset.hidelevel <= 2) {
+  <div [class]="this.offset.hidelevel > 1 ? 'titleBlock' : ''">
+    <h1 class="titleBlock__titleText" (click)="this.sendUp.emit(this.word())">
+      {{ this.word().original }}
+    </h1>
+  </div>
+  }
+</ng-template>
+
+<ng-template #reverseTitleBock>
+  @if (this.offset.hidelevel <= 2) {
+  <div class="definitionBlock">
+    {{ this.word().translation }}
+
+    @for (definition of this.word().definitions; track $index; let i=$index) {
+    @if(i>=1){
+    <p>{{ definition }}</p>
+
+    } }
+  </div>
+  }</ng-template
+>
+
+<ng-template #definitionBlock>
+  @if (this.offset.hidelevel >= 1) {
+  <div class="definitionBlock">
+    {{ this.word().translation }}
+    @for (definition of this.word().definitions; track $index; let i=$index) {
+    @if(i>=1){
+    <p>{{ definition }}</p>
+    } }
+  </div>
+  }
+</ng-template>
+
+<ng-template #reverseDefinitionBlock>
+  @if (this.offset.hidelevel >= 1) {
+  <div [class]="this.offset.hidelevel > 1 ? 'titleBlock' : ''">
+    <h1 class="titleBlock__titleText" (click)="this.sendUp.emit(this.word())">
+      {{ this.word().original }}
+    </h1>
+  </div>
+  }</ng-template
+>
+
+<ng-template #exampleNCaseBlock>
+  @if (this.offset.hidelevel >= 2) {
+  <div class="caseBlock">
+    @for (case of this.rayo; track $index) {
+    <p class="tenseStyle">
+      {{ case.tense }} <span class="caseStyle">{{ case.value }}</span>
+    </p>
+    }
+  </div>
+  <div class="exampleBlock">
+    @for (example of this.word().examples; track $index) {
+    <p>{{ example }}</p>
+    }
+  </div>
+  }
+</ng-template>
