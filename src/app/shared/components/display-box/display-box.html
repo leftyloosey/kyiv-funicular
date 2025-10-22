@@ -1,1 +1,6 @@
-<p>display-box works!</p>
+@if (this.output$ |async; as newDefs) {
+<div class="display-container">
+  <app-extra-block #xtra1 [newDefs]="newDefs" [type]="this.def" />
+  <app-extra-block #xtra2 [newDefs]="newDefs" [type]="this.exmp" />
+</div>
+}

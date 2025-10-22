@@ -1,0 +1,22 @@
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    @if (showFiller) {
+    <p><a routerLink="/quiz50">Quiz</a></p>
+
+    <a routerLink="/builder">New</a>
+    <button type="button" matButton (click)="drawer.toggle()">
+      Toggle sidenav
+    </button>
+    }
+    <!-- <button (click)="showFiller = !showFiller" matButton="elevated">
+      Toggle extra text
+    </button> -->
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <router-outlet />
+    <button type="button" matButton (click)="drawer.toggle()">
+      Toggle sidenav
+    </button>
+  </div>
+</mat-drawer-container>

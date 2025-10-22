@@ -1,0 +1,94 @@
+@if (this.vals$| async ) {} @if (this.input$| async ) {}
+<mat-dialog-content>
+  <section class="outer">
+    <form
+      [formGroup]="manualForm"
+      class="new-word-form"
+      (focusout)="submitToBuilder()"
+    >
+      <mat-form-field>
+        <mat-label for="original">Original</mat-label>
+        <input
+          autocomplete="off"
+          type="text"
+          formControlName="original"
+          matInput
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label for="translation">Translation</mat-label>
+        <input
+          autocomplete="off"
+          id="translation"
+          type="text"
+          formControlName="translation"
+          matInput
+        />
+      </mat-form-field>
+      <div class="speech-row">
+        <mat-form-field class="speech-row__field">
+          <mat-label for="partOfSpeech">Part of Speech</mat-label>
+
+          <mat-select
+            (selectionChange)="speechChanged()"
+            name="partOfSpeech"
+            id="partOfSpeech"
+            formControlName="partOfSpeech"
+          >
+            <mat-option value="Verb">Verb</mat-option>
+            <mat-option value="Adjective">Adjective</mat-option>
+            <mat-option value="Noun">Noun</mat-option>
+            <mat-option value="Other">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </section>
+</mat-dialog-content>
+
+<!-- <mat-dialog-content>
+  <section class="outer">
+    <form
+      [formGroup]="manualForm"
+      class="new-word-form"
+      (focusout)="submitToBuilder()"
+    >
+      <mat-form-field>
+        <mat-label for="original">Original</mat-label>
+        <input
+          autocomplete="off"
+          type="text"
+          formControlName="original"
+          matInput
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label for="translation">Translation</mat-label>
+        <input
+          autocomplete="off"
+          id="translation"
+          type="text"
+          formControlName="translation"
+          matInput
+        />
+      </mat-form-field>
+      <div class="speech-row">
+        <mat-form-field class="speech-row__field">
+          <mat-label for="partOfSpeech">Part of Speech</mat-label>
+
+          <mat-select
+            (selectionChange)="speechChanged()"
+            name="partOfSpeech"
+            id="partOfSpeech"
+            formControlName="partOfSpeech"
+          >
+            <mat-option value="Verb">Verb</mat-option>
+            <mat-option value="Adjective">Adjective</mat-option>
+            <mat-option value="Noun">Noun</mat-option>
+            <mat-option value="Other">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </section>
+</mat-dialog-content> -->

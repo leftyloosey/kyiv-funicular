@@ -11,7 +11,7 @@ import {
   RouteConfigLoadStart,
   Router,
 } from '@angular/router';
-import { Observable, Subscription, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { LoadingService } from '../../../services/loading-service/loading-service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 

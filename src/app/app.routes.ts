@@ -1,22 +1,33 @@
 import { Routes } from '@angular/router';
-import { Newword } from './modules/newword/newword/newword';
+// import { Newword } from './modules/newword/newword/newword';
 // import { quizResolverResolver } from './utils/resolvers/quiz-resolver/quiz-resolver-resolver';
 import { OffsetQuizFifty } from './modules/offset-quiz-fifty/offset-quiz-fifty';
+import { WordBuilder } from './modules/word-builder/word-builder';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'newword',
+    redirectTo: 'builder',
     pathMatch: 'full',
   },
   {
     path: '*',
-    redirectTo: 'newword',
+    redirectTo: 'builder',
+
     pathMatch: 'full',
   },
   {
-    path: 'newword',
+    path: 'builder',
     loadComponent: () =>
-      import('./modules/newword/newword/newword').then((load) => load.Newword),
+      import('./modules/word-builder/word-builder').then(
+        (load) => load.WordBuilder
+      ),
+  },
+  {
+    path: 'wik',
+    loadComponent: () =>
+      import('./modules/word-builder/word-builder').then(
+        (load) => load.WordBuilder
+      ),
   },
   {
     path: 'quiz50',

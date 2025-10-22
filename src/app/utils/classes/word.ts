@@ -1,4 +1,8 @@
-export interface WordCase {}
+export interface WordCase {
+  [x: string]: any;
+}
+// export interface WordCase {
+// }
 
 export class UnpackCase implements WordCase {
   kase: WordCase;
@@ -141,13 +145,4 @@ export class Noun extends Word {
   public plurIns = '';
   public plurLoc = '';
   public plurVoc = '';
-}
-export interface CaseDisplay {
-  tense: string;
-  value: string;
-}
-
-export interface Quizzable {
-  toggleHideLevel(): void;
-  moodToggle(): void;
 }

@@ -1,4 +1,4 @@
 import { InjectionToken } from '@angular/core';
-import { Quizzable } from '../classes/word';
+import { Quizzable } from '../interfaces/Quizzable';
 
 export const QUIZ = new InjectionToken<Quizzable>('Quiz');

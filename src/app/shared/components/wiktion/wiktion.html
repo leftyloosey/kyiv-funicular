@@ -1,0 +1,11 @@
+<section class="wiktion-div">
+  <form [formGroup]="scrapeForm" (ngSubmit)="submitScrapeWord()">
+    <mat-form-field appearance="outline">
+      <mat-label
+        >Supply translation<button type="submit" matButton>+</button></mat-label
+      >
+
+      <input type="text" formControlName="scrape" matInput />
+    </mat-form-field>
+  </form>
+</section>

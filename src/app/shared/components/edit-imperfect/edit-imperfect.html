@@ -1,115 +1,17 @@
-<div (focusout)="onSendUp()">
-  <form [formGroup]="imperfectForm" (ngSubmit)="submitImperfect()">
-    <div class="big">
-      <div class="aspect">
-        <input
-          id="aspect"
-          type="text"
-          formControlName="aspect"
-          placeholder="aspect"
-        />
+<div (focusout)="sendToCaseComponent()">
+  <form [formGroup]="imperfectForm">
+    <div formArrayName="formArray">
+      @for (group of this.keysForForm; track group; let index = $index) {
+      <div [formGroupName]="index">
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            [placeholder]="this.keysForForm[index]"
+            [formControlName]="this.keysForForm[index]"
+          />
+        </mat-form-field>
       </div>
-      <div>
-        <div class="little">
-          <label for="malePast"
-            >male past:
-            <input id="malePast" type="text" formControlName="malePast" />
-          </label>
-
-          <label for="femPast"
-            >female past:
-            <input id="femPast" type="text" formControlName="femPast" />
-          </label>
-
-          <label for="plurPast"
-            >plural past:
-            <input id="plurPast" type="text" formControlName="plurPast" />
-          </label>
-        </div>
-        <div class="little">
-          <label for="firstPresent"
-            >first present:
-            <input
-              id="firstPresent"
-              type="text"
-              formControlName="firstPresent"
-            />
-          </label>
-
-          <label for="InfPresent2nd"
-            >informal p 2nd:
-            <input
-              id="InfPresent2nd"
-              type="text"
-              formControlName="InfPresent2nd"
-            />
-          </label>
-
-          <label for="FormPresent2nd"
-            >formal p 2nd:
-            <input
-              id="FormPresent2nd"
-              type="text"
-              formControlName="FormPresent2nd"
-            />
-          </label>
-
-          <label for="present3rd"
-            >present third:
-            <input id="present3rd" type="text" formControlName="present3rd" />
-          </label>
-
-          <label for="plurPresent"
-            >plural present:
-            <input id="plurPresent" type="text" formControlName="plurPresent" />
-          </label>
-
-          <label for="wePresent"
-            >we present:
-            <input id="wePresent" type="text" formControlName="wePresent" />
-          </label>
-        </div>
-        <div class="little">
-          <label for="firstFuture"
-            >first future:
-            <input id="firstFuture" type="text" formControlName="firstFuture" />
-          </label>
-
-          <label for="InfFuture2nd"
-            >informal f 2nd:
-            <input
-              id="InfFuture2nd"
-              type="text"
-              formControlName="InfFuture2nd"
-            />
-          </label>
-
-          <label for="FormFuture2nd"
-            >formal f 2nd:
-            <input
-              id="FormFuture2nd"
-              type="text"
-              formControlName="FormFuture2nd"
-            />
-          </label>
-
-          <label for="future3rd"
-            >future 3rd:
-            <input id="future3rd" type="text" formControlName="future3rd" />
-          </label>
-
-          <label for="plurFuture"
-            >plural future:
-            <input id="plurFuture" type="text" formControlName="plurFuture" />
-          </label>
-
-          <label for="weFuture"
-            >we future:
-            <input id="weFuture" type="text" formControlName="weFuture" />
-          </label>
-          <!-- <label><button type="submit">Save</button> </label> -->
-        </div>
-      </div>
+      }
     </div>
   </form>
 </div>

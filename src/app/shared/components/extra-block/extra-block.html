@@ -1,0 +1,30 @@
+<div class="translations-examples-container">
+  @if (this.defToEdit$ | async; as newDefs ) {
+  <!-- @if (this.defToEdit$ | async; as newDefs ) { -->
+  <mat-expansion-panel #expansionPanel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ this.type() | titlecase }}</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <app-definition-edit
+      [type]="this.type()"
+      [definitions]="
+        this.sfactory.getRelevantExtraBlock(this.newDefs(), this.type())
+      "
+    />
+  </mat-expansion-panel>
+  <!-- <app-definition-edit
+      [type]="this.type()"
+      [definitions]="this.sfactory.getRelevantExtraBlock(newDefs, this.type())"
+    />
+  </mat-expansion-panel> -->
+
+  <app-drag-drop
+    [type]="this.type()"
+    [items]="this.sfactory.getRelevantExtraBlock(newDefs, this.type())"
+  />
+  }
+  <div class="definition-example">
+    <mat-accordion multi> </mat-accordion>
+  </div>
+</div>

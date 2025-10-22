@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
-import { WordWithId } from '../../utils/classes/word';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { Word, WordWithId } from '../../utils/classes/word';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WordBuilderService {
-  public _wordBuilder = new Subject<WordWithId>();
-  public wordBuilderObserve$: Observable<WordWithId> =
+  public empty: Word = new Word('', '', '');
+
+  public _wordBuilder = new BehaviorSubject<Word>(this.empty);
+  public wordBuilderObserve$: Observable<Word> =
     this._wordBuilder.asObservable();
 
-  public updateWordBuilder(newData: WordWithId) {
+  public updateWordBuilder(newData: Word) {
     this._wordBuilder.next(newData);
   }
 }

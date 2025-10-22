@@ -1,117 +1,66 @@
+import { Component, input, OnInit, output } from '@angular/core';
+import { WordCase } from '../../../utils/classes/word';
 import {
-  AfterViewInit,
-  Component,
-  input,
-  OnDestroy,
-  output,
-} from '@angular/core';
-import { ImperfCase, WordCase } from '../../../utils/classes/word';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { CaseEdit } from '../../../utils/interfaces/CaseEdit';
+import { CaseFactory } from '../../../services/case-factory/case-factory';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
+// export type rayable = {
+//   key: string;
+//   value: string;
+// };
 @Component({
   selector: 'app-edit-imperfect',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatFormField, MatInputModule],
   templateUrl: './edit-imperfect.html',
   styleUrl: './edit-imperfect.scss',
 })
-export class EditImperfect implements AfterViewInit, OnDestroy {
-  sendUp = output<ImperfCase>();
-  sendDown = input<WordCase>();
+export class EditImperfect implements OnInit {
+  public sendUp = output<WordCase>();
+  public sendDown = input.required<WordCase>();
+  public partOfSpeech = input.required<string>();
+  protected imperfectForm!: FormGroup;
+  protected keysForForm: string[] = [];
+  private caseService!: CaseEdit;
+  private fb!: FormBuilder;
 
-  buildingWord: ImperfCase = {
-    aspect: '',
-    malePast: '',
-    femPast: '',
-    plurPast: '',
-    firstPresent: '',
-    InfPresent2nd: '',
-    FormPresent2nd: '',
-    present3rd: '',
-    plurPresent: '',
-    wePresent: '',
-    firstFuture: '',
-    InfFuture2nd: '',
-    FormFuture2nd: '',
-    future3rd: '',
-    plurFuture: '',
-    weFuture: '',
-  };
+  constructor(private prac: CaseFactory) {}
+  // constructor(private prac: CaseFactory, private fb: FormBuilder) {}
 
-  onSendUp() {
-    this.submitImperfect();
-    this.sendUp.emit(this.buildingWord);
+  public ngOnInit(): void {
+    this.caseService = this.prac.fromCode(this.partOfSpeech(), this.sendDown());
+    this.fb = this.caseService.getFb();
+    this.imperfectForm = this.fb.group({
+      formArray: this.fb.array([]),
+    });
+    this.addAllGroups();
+    this.keysForForm = this.caseService.valsForForm(this.formArray);
   }
 
-  ngAfterViewInit(): void {
-    const receivedCase = JSON.parse(JSON.stringify(this.sendDown()));
-    if (Object.keys(receivedCase).length === 0) {
+  get formArray() {
+    return this.imperfectForm.get('formArray') as FormArray;
+  }
+
+  private addAllGroups(): void {
+    if (Object.keys(this.sendDown()).length === 0) {
+      this.caseService.populateGroup(this.caseService.bigType, this.formArray);
     } else {
-      this.buildingWord = this.sendDown() as ImperfCase;
-      this.loopWordToForm(this.imperfectForm);
+      this.caseService.populateGroup(this.sendDown(), this.formArray);
     }
   }
 
-  loopFormToWord(form: FormGroup): void {
-    Object.keys(form.controls).forEach((key) => {
-      const control = form.get(key);
-      for (let property in this.buildingWord) {
-        this.buildingWord[key] = control?.value;
-      }
-    });
+  protected sendToCaseComponent(): void {
+    this.assembleWord();
+    this.sendUp.emit(this.caseService.buildingWord);
   }
-  loopWordToForm(form: FormGroup): void {
-    Object.keys(form.controls).forEach((key) => {
-      const control = form.get(key);
-      control?.setValue(this.buildingWord[key]);
-    });
-  }
-  clearForm(form: FormGroup): void {
-    Object.keys(form.controls).forEach((key) => {
-      const control = form.get(key);
-      control?.setValue('');
-    });
-  }
-  submitImperfect() {
-    this.loopFormToWord(this.imperfectForm);
-  }
-  protected imperfectForm = new FormGroup({
-    aspect: new FormControl(this.buildingWord.aspect),
-    malePast: new FormControl(this.buildingWord.malePast),
-    femPast: new FormControl(this.buildingWord.femPast),
-    plurPast: new FormControl(this.buildingWord.plurPast),
-    firstPresent: new FormControl(this.buildingWord.firstPresent),
-    InfPresent2nd: new FormControl(this.buildingWord.InfPresent2nd),
-    FormPresent2nd: new FormControl(this.buildingWord.FormPresent2nd),
-    present3rd: new FormControl(this.buildingWord.present3rd),
-    plurPresent: new FormControl(this.buildingWord.plurPresent),
-    wePresent: new FormControl(this.buildingWord.wePresent),
-    firstFuture: new FormControl(this.buildingWord.firstFuture),
-    InfFuture2nd: new FormControl(this.buildingWord.InfFuture2nd),
-    FormFuture2nd: new FormControl(this.buildingWord.FormFuture2nd),
-    future3rd: new FormControl(this.buildingWord.future3rd),
-    plurFuture: new FormControl(this.buildingWord.plurFuture),
-    weFuture: new FormControl(this.buildingWord.weFuture),
-  });
 
-  ngOnDestroy(): void {
-    this.buildingWord = {
-      aspect: '',
-      malePast: '',
-      femPast: '',
-      plurPast: '',
-      firstPresent: '',
-      InfPresent2nd: '',
-      FormPresent2nd: '',
-      present3rd: '',
-      plurPresent: '',
-      wePresent: '',
-      firstFuture: '',
-      InfFuture2nd: '',
-      FormFuture2nd: '',
-      future3rd: '',
-      plurFuture: '',
-      weFuture: '',
-    };
-    this.loopWordToForm(this.imperfectForm);
-    this.imperfectForm.reset();
+  private assembleWord(): void {
+    this.caseService.loopFormToWord(this.imperfectForm);
   }
 }

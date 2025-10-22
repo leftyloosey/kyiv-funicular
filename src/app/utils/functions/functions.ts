@@ -1,7 +1,8 @@
 import { FirstFifty, Word } from '../classes/word';
 
-export const switchPartSpeech = (translatedWord: Word): string => {
-  switch (translatedWord.partOfSpeech) {
+// export const switchPartSpeech = (translatedWord: Word): string => {
+export const switchPartSpeech = (translatedWord: string): string => {
+  switch (translatedWord) {
     case 'Noun':
       return 'Noun';
       break;

@@ -1,4 +1,10 @@
-import { Component, input, OnInit, output } from '@angular/core';
+import {
+  Component,
+  input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -8,22 +14,24 @@ import {
 import { MatFormField } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { WiktionService } from '../../../services/wiktion-service/wiktion-service';
-
+import { DisplayBoxService } from '../../../services/display-box-service/display-box-service';
+import { newDefInterface } from '../../../utils/interfaces/NewExtraDetail';
+import { wordDefinitions } from '../../../utils/interfaces/WordDefinitions';
+// import { Word } from '../../../utils/classes/word';
 @Component({
   selector: 'app-definition-edit',
   imports: [MatFormField, MatIcon, ReactiveFormsModule, MatInputModule],
   templateUrl: './definition-edit.html',
   styleUrl: './definition-edit.scss',
 })
-export class DefinitionEdit implements OnInit {
-  dynamicForm!: FormGroup;
-  sendUpDef = output<string[]>();
-  definitions = input.required<string[]>();
+export class DefinitionEdit implements OnChanges {
+  protected dynamicForm!: FormGroup;
+  public definitions = input.required<string[]>();
+  public type = input.required<string>();
 
-  constructor(private fb: FormBuilder, private wiktion: WiktionService) {}
+  constructor(private fb: FormBuilder, private displayBox: DisplayBoxService) {}
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges): void {
     this.dynamicForm = this.fb.group({
       formArray: this.fb.array([this.createFormGroup1(this.definitions())]),
     });
@@ -34,7 +42,7 @@ export class DefinitionEdit implements OnInit {
     return this.dynamicForm.get('formArray') as FormArray;
   }
 
-  createFormGroup1(defs: string[]): FormGroup {
+  private createFormGroup1(defs: string[]): FormGroup {
     if (defs[0]) {
       return this.fb.group({
         definition: [defs[0]],
@@ -45,32 +53,35 @@ export class DefinitionEdit implements OnInit {
       });
     }
   }
-  createSpecific(definition: string): FormGroup {
+  private createSpecific(definition: string): FormGroup {
     return this.fb.group({
       definition: [definition],
     });
   }
 
-  populateGroup(definitions: string[]) {
+  private populateGroup(definitions: string[]) {
     for (let index = 1; index < definitions.length; index++) {
       this.formArray.push(this.createSpecific(definitions[index]));
     }
   }
 
-  addAllGroups() {
+  private addAllGroups() {
     this.populateGroup(this.definitions());
   }
 
-  addFormGroup() {
+  protected addFormGroup() {
     this.formArray.push(this.createBlankFormGroup());
   }
-  createBlankFormGroup(): FormGroup {
+  protected createBlankFormGroup(): FormGroup {
     return this.fb.group({
       definition: [''],
     });
   }
-  removeFormGroup(index: number) {
+  protected removeFormGroup(index: number) {
+    // setTimeout(() => {
     this.formArray.removeAt(index);
+    // }, 0);
+    this.toEdit();
   }
 
   public reset() {
@@ -78,20 +89,20 @@ export class DefinitionEdit implements OnInit {
     this.formArray.clear();
   }
 
-  toEdit(e: Event) {
-    e.preventDefault();
-
+  protected toEdit() {
+    // protected toEdit(e: Event) {
+    // e.preventDefault();
     const { formArray } = this.dynamicForm.value;
+    // const newDefArray: string[] = [...this.definitions()];
     const newDefArray: string[] = [];
-
-    interface newDefInterface {
-      definition: string;
-    }
 
     for (const def of formArray) {
       const { definition } = def as unknown as newDefInterface;
       newDefArray.push(definition);
     }
-    this.wiktion.updateDefinitionData(newDefArray);
+    const modifiedArray: wordDefinitions = { [this.type()]: newDefArray };
+    setTimeout(() => {
+      this.displayBox.updateDefinitionBox(modifiedArray);
+    }, 0);
   }
 }

@@ -1,0 +1,29 @@
+@if (this.output$ | async; as word) {
+<div class="case-container">
+  <mat-expansion-panel #expansionPanel>
+    <mat-expansion-panel-header>
+      <mat-panel-title (click)="this.caseService.toggleCase()"
+        >Case</mat-panel-title
+      >
+    </mat-expansion-panel-header>
+    <div>
+      @if (this.expansionPanel?.expanded) {
+      <app-edit-imperfect
+        [sendDown]="word.case"
+        (sendUp)="onSendUp($event)"
+        [partOfSpeech]="word.partOfSpeech"
+      />
+      <!-- <app-edit-imperfect
+        [sendDown]="this.receivedCase"
+        (sendUp)="onSendUp($event)"
+        [partOfSpeech]="this.partOfSpeech"
+      /> -->
+      }
+    </div>
+  </mat-expansion-panel>
+</div>
+
+<div class="definition-example">
+  <mat-accordion multi> </mat-accordion>
+</div>
+}

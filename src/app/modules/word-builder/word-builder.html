@@ -1,1 +1,19 @@
-<p>word-builder works!</p>
+@if (!this.refresh()) {
+<div class="word-builder">
+  <div class="word-builder__left-box">
+    <app-wiktion (sendUp)="sendUp()" /><app-search-ahead />
+  </div>
+  <div class="word-builder__right-box">
+    <app-top-form (speechChange)="speechChanged()" />
+    <app-display-box />
+    <app-case-component />
+    <div class="save-button-row">
+      <button (click)="saveWord()" matButton="filled">Save word</button>
+      <button (click)="this.refreshBuilder()" matButton="filled">Reset</button>
+    </div>
+  </div>
+</div>
+
+} @else {
+<span></span>
+}

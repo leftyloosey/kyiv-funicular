@@ -1,9 +1,16 @@
-<form [formGroup]="dynamicForm" (focusout)="toEdit($event)" #definitionEdit>
+<form [formGroup]="dynamicForm" #definitionEdit>
+  <!-- <form [formGroup]="dynamicForm" (focusout)="toEdit($event)" #definitionEdit> -->
   <div formArrayName="formArray">
-    @for (group of formArray.controls; track group; let index = $index) {
+    @for (group of formArray.controls; track group.getRawValue(); let index =
+    $index) {
     <div [formGroupName]="index">
       <mat-form-field appearance="outline" class="field">
-        <input matInput placeholder="definition" formControlName="definition" />
+        <input
+          matInput
+          placeholder="..."
+          formControlName="definition"
+          (focusout)="toEdit()"
+        />
       </mat-form-field>
       <button mat-icon-button color="warn" (click)="removeFormGroup(index)">
         @if (formArray.length > 1){ <mat-icon>delete</mat-icon>}
@@ -12,6 +19,6 @@
     }
   </div>
   <button mat-raised-button color="primary" (click)="addFormGroup()">
-    Add Definition
+    Add Row
   </button>
 </form>

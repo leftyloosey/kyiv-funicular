@@ -1,0 +1,95 @@
+import { Component, DestroyRef, inject } from '@angular/core';
+import { AheadService } from '../../../services/ahead-service/ahead-service';
+import { WordWithId } from '../../../utils/classes/word';
+import { debounceTime, Observable, switchMap, tap } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '../../../services/translate-service/translate.service';
+import { AsyncPipe } from '@angular/common';
+import {
+  MatFormField,
+  MatFormFieldModule,
+  MatLabel,
+} from '@angular/material/form-field';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { Ahead } from '../../../utils/interfaces/AheadType';
+// import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+// import { EditWord } from '../../../modules/edit-word/edit-word';
+import { WiktionService } from '../../../services/wiktion-service/wiktion-service';
+
+@Component({
+  selector: 'app-search-ahead',
+  imports: [
+    AsyncPipe,
+    MatFormField,
+    MatLabel,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
+  templateUrl: './search-ahead.html',
+  styleUrl: './search-ahead.scss',
+})
+export class SearchAhead {
+  protected initAhead: Ahead = { ahead: '' };
+
+  public output$: Observable<WordWithId[]>;
+  protected vals$: Observable<Partial<Ahead>>;
+  private destroyRef = inject(DestroyRef);
+
+  protected aheadForm = new FormGroup({
+    ahead: new FormControl('', { nonNullable: true }),
+  });
+  protected formValues$ = this.aheadForm.valueChanges;
+
+  constructor(
+    private translate: TranslateService,
+    private dialog: MatDialog,
+    protected aheadService: AheadService,
+    private wiktion: WiktionService
+  ) {
+    this.output$ = this.aheadService.ahead$.pipe(
+      debounceTime(750),
+      switchMap((ahead) => {
+        const sub = ahead.ahead;
+        return this.translate.getAheadWord(sub);
+      })
+    );
+
+    this.vals$ = this.formValues$.pipe(
+      tap((values) => {
+        const { ahead } = values;
+        if (ahead) {
+          const sub = { ahead: ahead };
+          this.aheadService.updateAheadWord(sub);
+        }
+      })
+    );
+  }
+  // protected openD(word: WordWithId) {
+  //   const dialogRef = this.dialog.open(EditWord, {
+  //     data: { word },
+  //   });
+  //   dialogRef
+  //     .afterClosed()
+  //     .pipe(takeUntilDestroyed(this.destroyRef))
+  //     .subscribe((result: WordWithId) => {
+  //       if (result) {
+  //         console.log(result);
+  //         // this.offset.offsetActions$.next({
+  //         //   word: result,
+  //         //   action: 'update',
+  //         // });
+  //       }
+  //     });
+  // }
+  click(id: string) {
+    const temp = new WordWithId('', '', '');
+    temp.id = id;
+    this.translate
+      .getOneWord(id)
+      .pipe(tap((re) => this.wiktion.pushInternalScrape(re)))
+      .subscribe();
+    // this.openD(temp);
+  }
+}

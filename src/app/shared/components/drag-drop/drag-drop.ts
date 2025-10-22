@@ -6,6 +6,8 @@ import {
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import { WiktionService } from '../../../services/wiktion-service/wiktion-service';
+import { DisplayBoxService } from '../../../services/display-box-service/display-box-service';
+import { wordDefinitions } from '../../../utils/interfaces/WordDefinitions';
 @Component({
   selector: 'app-drag-drop',
   imports: [CdkDropList, CdkDrag],
@@ -13,18 +15,21 @@ import { WiktionService } from '../../../services/wiktion-service/wiktion-servic
   styleUrl: './drag-drop.scss',
 })
 export class DragDrop {
-  items = input<string[]>();
-  type = input<string>();
+  public items = input<string[]>();
+  public type = input.required<string>();
 
-  constructor(protected wiktion: WiktionService) {}
+  constructor(
+    protected wiktion: WiktionService,
+    private displayBox: DisplayBoxService
+  ) {}
 
-  drop(event: CdkDragDrop<string[]>) {
+  protected drop(event: CdkDragDrop<string[]>): void {
     const workArray = this.items() as string[];
+
     moveItemInArray(workArray, event.previousIndex, event.currentIndex);
-    if (this.type() === 'exmp') {
-      this.wiktion.updateExampleData(workArray);
-    } else {
-      this.wiktion.updateDefinitionData(workArray);
-    }
+
+    const draggedArray: wordDefinitions = { [this.type()]: workArray };
+
+    this.displayBox.updateDefinitionBox(draggedArray);
   }
 }

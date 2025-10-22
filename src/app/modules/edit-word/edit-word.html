@@ -1,113 +1,13 @@
+<!-- <mat-dialog-content>
+  <app-top-form (sendUp)="saveWord()" />
+  <app-display-box />
+</mat-dialog-content> -->
+
 <mat-dialog-content>
-  <section class="outer">
-    <form [formGroup]="manualForm" class="new-word-form">
-      <!-- <mat-form-field>
-        <mat-label for="original">Original</mat-label>
-        <input
-          autocomplete="off"
-          type="text"
-          formControlName="original"
-          matInput
-        />
-      </mat-form-field> -->
-      <mat-form-field>
-        <mat-label for="original">Original</mat-label>
-        <input
-          autocomplete="off"
-          id="original"
-          type="text"
-          formControlName="original"
-          matInput
-        />
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label for="translation">Translation</mat-label>
-        <input
-          autocomplete="off"
-          id="translation"
-          type="text"
-          formControlName="translation"
-          matInput
-        />
-      </mat-form-field>
-      <div class="speech-row">
-        <mat-form-field class="speech-row__field">
-          <mat-label for="partOfSpeech">Part of Speech</mat-label>
-
-          <mat-select
-            name="partOfSpeech"
-            id="partOfSpeech"
-            formControlName="partOfSpeech"
-          >
-            <mat-option value="Verb">Verb</mat-option>
-            <mat-option value="Adjective">Adjective</mat-option>
-            <mat-option value="Noun">Noun</mat-option>
-            <mat-option value="Other">Other</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <button
-          [hidden]="this.isCaseButtonHidden"
-          (click)="toggleCase()"
-          type="submit"
-          matButton="tonal"
-          class="speech-row__case-button"
-        >
-          Case
-        </button>
-      </div>
-    </form>
-
-    <div [style.display]="isCaseHidden ? 'none' : 'block'">
-      @switch (this.word.partOfSpeech) { @case ("Verb") {
-      <app-edit-imperfect
-        [sendDown]="this.word.case"
-        (sendUp)="onSendUp($event)"
-      />
-
-      } @case ("Noun") {
-      <app-edit-noun [sendDown]="this.word.case" (sendUp)="onSendUp($event)" />
-
-      } @case ("Adjective") {
-      <app-edit-adjective
-        [sendDown]="this.word.case"
-        (sendUp)="onSendUp($event)"
-      />
-      } @default {
-      <p></p>
-      }}
-    </div>
-
-    <div>
-      <p><strong>translations:</strong></p>
-      <app-drag-drop [type]="this.def" [items]="this.defs()" />
-
-      <p><strong>examples:</strong></p>
-      <app-drag-drop [type]="this.exmp" [items]="this.exmps()" />
-    </div>
-
-    <div class="collapsing-example-containers">
-      <mat-accordion multi>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Edit Definitions</mat-panel-title>
-          </mat-expansion-panel-header>
-          <app-definition-edit [definitions]="this.data.word.definitions" />
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>Edit Examples</mat-panel-title>
-          </mat-expansion-panel-header>
-          <app-example-edit [examples]="this.data.word.examples" />
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
-
-    <div class="save-button-row">
-      <button (click)="patchWord($event)" matButton="filled">Edit word</button>
-      <button (click)="reset($event)" matButton="elevated">Reset</button>
-    </div>
-  </section>
+  <app-top-form />
+  <app-display-box />
+  <app-case-component />
+  <div class="save-button-row">
+    <button (click)="saveWord()" matButton="filled">Save word</button>
+  </div>
 </mat-dialog-content>

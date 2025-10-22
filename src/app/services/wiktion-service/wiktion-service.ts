@@ -17,21 +17,13 @@ export class WiktionService {
   public newScrape$ = this.scrapeDelivery.asObservable();
   public newScrapeInternal$ = this.scrapeInternal.asObservable();
 
-  public _definitionData = new Subject<string[]>();
-  public readonly definitionData$: Observable<string[]> =
-    this._definitionData.asObservable();
+  // public _definitionData = new Subject<string[]>();
+  // public readonly definitionData$: Observable<string[]> =
+  //   this._definitionData.asObservable();
 
-  updateDefinitionData(newData: string[]) {
-    this._definitionData.next(newData);
-  }
-
-  public _exampleData = new Subject<string[]>();
-  public readonly exampleData$: Observable<string[]> =
-    this._exampleData.asObservable();
-
-  updateExampleData(newData: string[]) {
-    this._exampleData.next(newData);
-  }
+  // updateDefinitionData(newData: string[]) {
+  //   this._definitionData.next(newData);
+  // }
 
   public pushScrape(word: string) {
     this.scrapeDelivery.next(word);
@@ -51,27 +43,27 @@ export class WiktionService {
     );
   };
 
-  public saveNewWord(word: Word) {
-    return this.http.post<Word>(
-      `${environment.apiBaseUrl}/translate/save`,
-      word
-    );
-  }
-  public getOneWord(id: string) {
-    return this.http.get<Word>(`${environment.apiBaseUrl}/translate/${id}`);
-  }
-  public patchNewWord(word: WordWithId) {
-    const patchWord = new Word(
-      word.original,
-      word.translation,
-      word.partOfSpeech
-    );
-    patchWord.case = word.case;
-    patchWord.examples = word.examples;
-    patchWord.definitions = word.definitions;
-    return this.http.patch<Word>(
-      `${environment.apiBaseUrl}/translate/${word.id}`,
-      patchWord
-    );
-  }
+  // public saveNewWord(word: Word) {
+  //   return this.http.post<Word>(
+  //     `${environment.apiBaseUrl}/translate/save`,
+  //     word
+  //   );
+  // }
+  // public getOneWord(id: string) {
+  //   return this.http.get<Word>(`${environment.apiBaseUrl}/translate/${id}`);
+  // }
+  // public patchNewWord(word: WordWithId) {
+  //   const patchWord = new Word(
+  //     word.original,
+  //     word.translation,
+  //     word.partOfSpeech
+  //   );
+  //   patchWord.case = word.case;
+  //   patchWord.examples = word.examples;
+  //   patchWord.definitions = word.definitions;
+  //   return this.http.patch<Word>(
+  //     `${environment.apiBaseUrl}/translate/${word.id}`,
+  //     patchWord
+  //   );
+  // }
 }

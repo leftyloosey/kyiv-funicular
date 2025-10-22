@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  ContentChild,
+  DestroyRef,
+  inject,
+} from '@angular/core';
 import { Observable, map, scan, startWith, switchMap, tap } from 'rxjs';
 import { TranslateService } from '../../services/translate-service/translate.service';
 import { WordWithId } from '../../utils/classes/word';
@@ -12,6 +18,7 @@ import {
   resetPageLimit,
 } from '../../utils/functions/functions';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { QUIZ } from '../../utils/tokens/quizzable';
 @Component({
   selector: 'app-offset-quiz-fifty',
   imports: [AsyncPipe, BasicQuiz],
@@ -19,7 +26,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './offset-quiz-fifty.scss',
 })
 export class OffsetQuizFifty {
+  private destroyRef = inject(DestroyRef);
   public output$: Observable<WordWithId[]>;
+  // @ContentChild(QUIZ) mood?: BasicQuiz;
 
   constructor(
     private translate: TranslateService,
@@ -31,7 +40,7 @@ export class OffsetQuizFifty {
         switchMap((page) =>
           this.translate.getNextFiftyWordsOffset(page).pipe(
             tap((words) => {
-              this.offset.splength = words.firstQueryResults.length;
+              this.offset.pageContainerLength = words.firstQueryResults.length;
               this.offset.current = getCurrentPage(
                 words,
                 this.offset.page$.value
@@ -47,7 +56,7 @@ export class OffsetQuizFifty {
       )
       .pipe(
         switchMap((initialEmployees) =>
-          this.offset.slobifyEmployees$.pipe(
+          this.offset.offsetActions$.pipe(
             startWith({ word: this.translate.empty, action: 'remove' }),
             scan(
               (acc, curr) => {
@@ -75,23 +84,23 @@ export class OffsetQuizFifty {
       );
   }
 
-  openD(word: WordWithId) {
+  protected openD(word: WordWithId) {
     const dialogRef = this.dialog.open(EditWord, {
       data: { word },
     });
     dialogRef
       .afterClosed()
-      // .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((result: WordWithId) => {
         if (result) {
-          this.offset.slobifyEmployees$.next({
+          this.offset.offsetActions$.next({
             word: result,
             action: 'update',
           });
         }
       });
   }
-  onSendUp($event: WordWithId) {
+  protected openEditModal($event: WordWithId) {
     this.openD($event);
   }
 }

@@ -1,0 +1,12 @@
+<section class="wiktion-div">
+  <form [formGroup]="aheadForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+
+      <input type="text" formControlName="ahead" matInput />
+    </mat-form-field>
+  </form>
+</section>
+@if (this.vals$| async ) {} @for (word of this.output$ | async; track $index) {
+<p (click)="click(word.id)">{{ word.original }}</p>
+}

@@ -5,9 +5,11 @@
     <section class="wordPanel">
       @for (item of this.output$| async; track item.id; let idx = $index) { @if
       (idx===this.offset.count) {
-      <p class="smallCount">{{ $index + 1 }} / {{ this.offset.splength }}</p>
+      <p class="smallCount">
+        {{ $index + 1 }} / {{ this.offset.pageContainerLength }}
+      </p>
       <div class="wordPanel__card">
-        <app-basic-quiz (sendUp)="onSendUp($event)" [word]="item" />
+        <app-basic-quiz (sendUp)="openEditModal($event)" [word]="item" />
       </div>
       } }
     </section>

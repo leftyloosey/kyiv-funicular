@@ -9,6 +9,7 @@
   <ng-container *ngTemplateOutlet="reverseTitleBock"></ng-container>}
 </section>
 
+<!--  -->
 <ng-template #titleBock>
   @if (this.offset.hidelevel <= 2) {
   <div [class]="this.offset.hidelevel > 1 ? 'titleBlock' : ''">
@@ -18,7 +19,7 @@
   </div>
   }
 </ng-template>
-
+<!--  -->
 <ng-template #reverseTitleBock>
   @if (this.offset.hidelevel <= 2) {
   <div class="definitionBlock">
@@ -32,7 +33,7 @@
   </div>
   }</ng-template
 >
-
+<!--  -->
 <ng-template #definitionBlock>
   @if (this.offset.hidelevel >= 1) {
   <div class="definitionBlock">
@@ -44,7 +45,7 @@
   </div>
   }
 </ng-template>
-
+<!--  -->
 <ng-template #reverseDefinitionBlock>
   @if (this.offset.hidelevel >= 1) {
   <div [class]="this.offset.hidelevel > 1 ? 'titleBlock' : ''">
@@ -54,7 +55,7 @@
   </div>
   }</ng-template
 >
-
+<!--  -->
 <ng-template #exampleNCaseBlock>
   @if (this.offset.hidelevel >= 2) {
   <div class="caseBlock">
