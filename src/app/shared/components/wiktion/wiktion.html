@@ -1,4 +1,4 @@
-<section class="wiktion-div">
+<!-- <section class="wiktion-div">
   <form [formGroup]="scrapeForm" (ngSubmit)="submitScrapeWord()">
     <mat-form-field appearance="outline">
       <mat-label
@@ -8,4 +8,8 @@
       <input type="text" formControlName="scrape" matInput />
     </mat-form-field>
   </form>
-</section>
+</section> -->
+<!-- <button (click)="submitScrapeWord()">+</button> -->
+<button class="cloud" mat-icon-button matSuffix (click)="submitScrapeWord()">
+  <mat-icon>cloud_queue</mat-icon>
+</button>

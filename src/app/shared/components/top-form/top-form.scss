@@ -1,45 +1,56 @@
 @media only screen and (max-width: 600px) {
-  .new-word-form {
-    width: 100%;
-  }
-  .definition-example {
-    width: 100%;
-  }
+  // .new-word-form {
+  //   width: 100%;
+  // }
+  // .definition-example {
+  //   width: 100%;
+  // }
 }
 @media only screen and (min-width: 650px) {
-  .new-word-form {
-    width: 100%;
-  }
-  .definition-example {
-    width: 75%;
-  }
+  // .new-word-form {
+  //   width: 100%;
+  // }
+  // .definition-example {
+  //   width: 75%;
+  // }
 }
 @media only screen and (min-width: 992px) {
-  .new-word-form {
-    width: 50%;
-  }
-  .definition-example {
-    width: 50%;
-  }
+  // .new-word-form {
+  //   width: 50%;
+  // }
+  // .definition-example {
+  //   width: 50%;
+  // }
 }
 
-.outer {
-  padding: 1rem;
-}
-.new-word-form {
+.top-form {
   display: flex;
-  flex-direction: column;
-}
 
-.speech-row {
-  display: flex;
-  justify-content: end;
-  &__field {
-    width: 100%;
-  }
-  &__case-button {
-    font-size: 16px;
-    margin-top: 0.5rem;
-    margin-left: 2rem;
+  &__new-word {
+    // display: flex;
+    // flex-direction: column;
   }
 }
+.new-word__wik-row {
+  display: flex;
+}
+// .top-form {
+//   padding: 1rem;
+// }
+// .new-word-form {
+//   display: flex;
+//   flex-direction: column;
+// }
+
+// .speech-row {
+//   display: flex;
+//   justify-content: end;
+//   &__field {
+//     width: 100%;
+//   }
+//   &__case-button {
+//     font-size: 16px;
+//     margin-top: 0.5rem;
+//     margin-left: 2rem;
+//   }
+// }

@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { AheadService } from '../../../services/ahead-service/ahead-service';
 import { WordWithId } from '../../../utils/classes/word';
 import { debounceTime, Observable, switchMap, tap } from 'rxjs';
@@ -6,9 +6,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '../../../services/translate-service/translate.service';
 import { AsyncPipe } from '@angular/common';
 import {
-  MatFormField,
+  // MatFormField,
   MatFormFieldModule,
-  MatLabel,
+  // MatLabel,
 } from '@angular/material/form-field';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -21,8 +21,8 @@ import { WiktionService } from '../../../services/wiktion-service/wiktion-servic
   selector: 'app-search-ahead',
   imports: [
     AsyncPipe,
-    MatFormField,
-    MatLabel,
+    // MatFormField,
+    // MatLabel,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -30,11 +30,20 @@ import { WiktionService } from '../../../services/wiktion-service/wiktion-servic
   templateUrl: './search-ahead.html',
   styleUrl: './search-ahead.scss',
 })
-export class SearchAhead {
+export class SearchAhead implements OnInit {
+  downPut = input<
+    Observable<
+      Partial<{
+        original: string | null;
+        // translation: string | null;
+        // partOfSpeech: string | null;
+      }>
+    >
+  >();
   protected initAhead: Ahead = { ahead: '' };
 
   public output$: Observable<WordWithId[]>;
-  protected vals$: Observable<Partial<Ahead>>;
+  // protected vals$: Observable<Partial<Ahead>>;
   private destroyRef = inject(DestroyRef);
 
   protected aheadForm = new FormGroup({
@@ -56,15 +65,31 @@ export class SearchAhead {
       })
     );
 
-    this.vals$ = this.formValues$.pipe(
-      tap((values) => {
-        const { ahead } = values;
-        if (ahead) {
-          const sub = { ahead: ahead };
-          this.aheadService.updateAheadWord(sub);
-        }
-      })
-    );
+    // this.vals$ = this.formValues$.pipe(
+    //   tap((values) => {
+    //     const { ahead } = values;
+    //     if (ahead) {
+    //       const sub = { ahead: ahead };
+    //       this.aheadService.updateAheadWord(sub);
+    //     }
+    //   })
+    // );
+  }
+  ngOnInit(): void {
+    this.downPut()
+      ?.pipe(
+        tap((word) => {
+          const { original } = word;
+          if (original) {
+            const sub = { ahead: original };
+            this.aheadService.updateAheadWord(sub);
+          } else {
+            const sub = { ahead: ',' };
+            this.aheadService.updateAheadWord(sub);
+          }
+        })
+      )
+      .subscribe();
   }
   // protected openD(word: WordWithId) {
   //   const dialogRef = this.dialog.open(EditWord, {

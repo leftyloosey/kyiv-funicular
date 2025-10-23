@@ -12,6 +12,8 @@ import { WordBuilderService } from '../../../services/word-builder-service/word-
 import { Word } from '../../../utils/classes/word';
 import { AsyncPipe } from '@angular/common';
 import { switchPartSpeech } from '../../../utils/functions/functions';
+import { SearchAhead } from '../search-ahead/search-ahead';
+import { Wiktion } from '../wiktion/wiktion';
 
 @Component({
   selector: 'app-top-form',
@@ -20,9 +22,11 @@ import { switchPartSpeech } from '../../../utils/functions/functions';
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    MatDialogContent,
+    // MatDialogContent,
     ReactiveFormsModule,
+    SearchAhead,
     AsyncPipe,
+    Wiktion,
   ],
   templateUrl: './top-form.html',
   styleUrl: './top-form.scss',

@@ -1,0 +1,11 @@
+.word-builder {
+  display: flex;
+  flex-direction: column;
+}
+.word-builder__save-button-row {
+  width: 6rem;
+}
+.word-builder .buz {
+  display: flex;
+  justify-content: center;
+}/*# sourceMappingURL=word-builder.css.map */

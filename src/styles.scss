@@ -30,6 +30,12 @@ html {
       active-indicator-color: #800000,
     )
   );
+  @include mat.button-overrides(
+    (
+      filled-container-color: black,
+      filled-label-text-color: white,
+    )
+  );
 }
 body {
   // Default the application to a light color theme. This can be changed to

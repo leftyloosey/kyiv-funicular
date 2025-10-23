@@ -4,7 +4,7 @@ import { map, merge, startWith } from 'rxjs';
 import { TopFormService } from '../../services/top-form-service/top-form-service';
 import { Word } from '../../utils/classes/word';
 import { TopForm } from '../../shared/components/top-form/top-form';
-import { Wiktion } from '../../shared/components/wiktion/wiktion';
+// import { Wiktion } from '../../shared/components/wiktion/wiktion';
 import { WiktionService } from '../../services/wiktion-service/wiktion-service';
 import { DisplayBox } from '../../shared/components/display-box/display-box';
 import { DisplayBoxService } from '../../services/display-box-service/display-box-service';
@@ -14,17 +14,9 @@ import { CaseDelivery } from '../../services/case-delivery/case-delivery';
 import { SHUT, SHUT2 } from '../../utils/tokens/closeable';
 import { Closeable } from '../../utils/interfaces/Closeable';
 import { TranslateService } from '../../services/translate-service/translate.service';
-import { SearchAhead } from '../../shared/components/search-ahead/search-ahead';
 @Component({
   selector: 'app-word-builder',
-  imports: [
-    TopForm,
-    Wiktion,
-    DisplayBox,
-    MatButton,
-    CaseComponent,
-    SearchAhead,
-  ],
+  imports: [TopForm, DisplayBox, MatButton, CaseComponent],
   templateUrl: './word-builder.html',
   styleUrl: './word-builder.scss',
 })
@@ -59,13 +51,20 @@ export class WordBuilder {
   protected saveWord(): void {
     const pretty = JSON.stringify(this.empty, null, 2);
     if (window.confirm(pretty)) {
-      this.translate.saveNewWord(this.empty).subscribe({
+      this.translate.upsertWord(this.empty).subscribe({
         error: (err) => window.alert(err),
         complete: () => {
           window.alert('Word saved.');
           this.refreshBuilder();
         },
       });
+      // this.translate.saveNewWord(this.empty).subscribe({
+      //   error: (err) => window.alert(err),
+      //   complete: () => {
+      //     window.alert('Word saved.');
+      //     this.refreshBuilder();
+      //   },
+      // });
     } else {
       console.log('cancelled.');
     }

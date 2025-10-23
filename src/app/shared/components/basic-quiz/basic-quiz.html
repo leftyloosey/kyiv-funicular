@@ -60,8 +60,9 @@
   @if (this.offset.hidelevel >= 2) {
   <div class="caseBlock">
     @for (case of this.rayo; track $index) {
-    <p class="tenseStyle">
-      {{ case.tense }} <span class="caseStyle">{{ case.value }}</span>
+    <p class="caseBlock__tenseStyle">
+      {{ case.tense }}
+      <span class="caseBlock__caseStyle">{{ case.value }}</span>
     </p>
     }
   </div>

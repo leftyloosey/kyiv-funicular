@@ -1,42 +1,55 @@
-<div class="all">
-  <p class="bigCount">{{ this.offset.current }}</p>
+<div class="offset-quiz">
+  <p class="offset-quiz__page-count">{{ this.offset.current }}</p>
 
-  <section class="flexContainer-wordPanel">
-    <section class="wordPanel">
-      @for (item of this.output$| async; track item.id; let idx = $index) { @if
+  <section class="word-panel">
+    <section class="word-panel__sub-panel">
+      @for (word of this.output$| async; track word.id; let idx = $index) { @if
       (idx===this.offset.count) {
-      <p class="smallCount">
+      <p class="word-panel__card-count">
         {{ $index + 1 }} / {{ this.offset.pageContainerLength }}
       </p>
-      <div class="wordPanel__card">
-        <app-basic-quiz (sendUp)="openEditModal($event)" [word]="item" />
+      <div class="word-panel__quiz-holder">
+        <app-basic-quiz (sendUp)="openEditModal($event)" [word]="word" />
       </div>
       } }
     </section>
   </section>
-  <section class="flexContainer-btnPanel">
-    <section class="btnPanel">
-      <p>
-        <i (click)="this.offset.pageChange(-1)" class="bigArrow left"></i>
-      </p>
-      <p>
-        <i (click)="this.offset.returnCount(-1)" class="smallArrow left"></i>
-      </p>
-      <button class="btnPanel__mode--button" (click)="this.offset.moodToggle()">
-        mode
-      </button>
-      <button
-        class="btnPanel__mode--button"
-        (click)="this.offset.toggleHideLevel()"
-      >
-        + / -
-      </button>
-      <p>
-        <i (click)="this.offset.returnCount(1)" class="smallArrow right"></i>
-      </p>
-      <p>
-        <i (click)="this.offset.pageChange(1)" class="bigArrow right"></i>
-      </p>
-    </section>
+
+  <section class="btn-panel">
+    <!-- <section class="btn-panel__sub-panel"> -->
+    <p>
+      <i
+        (click)="this.offset.pageChange(-1)"
+        class="btn-panel__big-arrow left"
+      ></i>
+    </p>
+    <p>
+      <i
+        (click)="this.offset.returnCount(-1)"
+        class="btn-panel__small-arrow left"
+      ></i>
+    </p>
+    <button class="btn-panel__mode-button" (click)="this.offset.moodToggle()">
+      mode
+    </button>
+    <button
+      class="btn-panel__mode-button"
+      (click)="this.offset.toggleHideLevel()"
+    >
+      + / -
+    </button>
+    <p>
+      <i
+        (click)="this.offset.returnCount(1)"
+        class="btn-panel__small-arrow right"
+      ></i>
+    </p>
+    <p>
+      <i
+        (click)="this.offset.pageChange(1)"
+        class="btn-panel__big-arrow right"
+      ></i>
+    </p>
   </section>
+  <!-- </section> -->
 </div>

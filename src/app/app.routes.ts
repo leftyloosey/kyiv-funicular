@@ -6,12 +6,12 @@ import { WordBuilder } from './modules/word-builder/word-builder';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'builder',
+    redirectTo: 'quiz50',
     pathMatch: 'full',
   },
   {
     path: '*',
-    redirectTo: 'builder',
+    redirectTo: 'quiz50',
 
     pathMatch: 'full',
   },

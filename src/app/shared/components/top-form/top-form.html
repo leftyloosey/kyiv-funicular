@@ -1,13 +1,15 @@
 @if (this.vals$| async ) {} @if (this.input$| async ) {}
-<mat-dialog-content>
-  <section class="outer">
-    <form
-      [formGroup]="manualForm"
-      class="new-word-form"
-      (focusout)="submitToBuilder()"
-    >
+<!-- <mat-dialog-content> -->
+<section class="top-form">
+  <form
+    [formGroup]="manualForm"
+    class="top-form__new-word"
+    (focusout)="submitToBuilder()"
+  >
+    <div class="new-word__wik-row">
       <mat-form-field>
         <mat-label for="original">Original</mat-label>
+
         <input
           autocomplete="off"
           type="text"
@@ -15,36 +17,37 @@
           matInput
         />
       </mat-form-field>
+      <app-wiktion [downPut]="this.formValues$" />
+    </div>
+    <mat-form-field>
+      <mat-label for="translation">Translation</mat-label>
+      <input
+        autocomplete="off"
+        type="text"
+        formControlName="translation"
+        matInput
+      />
+    </mat-form-field>
+    <div>
       <mat-form-field>
-        <mat-label for="translation">Translation</mat-label>
-        <input
-          autocomplete="off"
-          id="translation"
-          type="text"
-          formControlName="translation"
-          matInput
-        />
-      </mat-form-field>
-      <div class="speech-row">
-        <mat-form-field class="speech-row__field">
-          <mat-label for="partOfSpeech">Part of Speech</mat-label>
+        <mat-label for="partOfSpeech">Part of Speech</mat-label>
 
-          <mat-select
-            (selectionChange)="speechChanged()"
-            name="partOfSpeech"
-            id="partOfSpeech"
-            formControlName="partOfSpeech"
-          >
-            <mat-option value="Verb">Verb</mat-option>
-            <mat-option value="Adjective">Adjective</mat-option>
-            <mat-option value="Noun">Noun</mat-option>
-            <mat-option value="Other">Other</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </form>
-  </section>
-</mat-dialog-content>
+        <mat-select
+          (selectionChange)="speechChanged()"
+          name="partOfSpeech"
+          formControlName="partOfSpeech"
+        >
+          <mat-option value="Verb">Verb</mat-option>
+          <mat-option value="Adjective">Adjective</mat-option>
+          <mat-option value="Noun">Noun</mat-option>
+          <mat-option value="Other">Other</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+  <app-search-ahead [downPut]="this.formValues$" />
+</section>
+<!-- </mat-dialog-content> -->
 
 <!-- <mat-dialog-content>
   <section class="outer">

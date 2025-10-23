@@ -1,22 +1,41 @@
-<mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side">
-    @if (showFiller) {
-    <p><a routerLink="/quiz50">Quiz</a></p>
+<mat-drawer-container class="drawer-holder" autosize>
+  <mat-drawer #drawer mode="over">
+    <div class="left-drawer">
+      <!-- <div class="innter"> -->
+      <p class="mover">
+        <i
+          (click)="drawer.toggle()"
+          class="left-drawer__toggle-button left"
+        ></i>
+      </p>
+      <app-word-builder />
+      <!-- <app-search-ahead /> -->
+      <!-- </div> -->
+      <!-- <div class="left-drawer__nav-row">
+        <a class="drawer-holder__nav-link" routerLink="/quiz50">Quiz</a>
 
-    <a routerLink="/builder">New</a>
-    <button type="button" matButton (click)="drawer.toggle()">
-      Toggle sidenav
-    </button>
-    }
-    <!-- <button (click)="showFiller = !showFiller" matButton="elevated">
-      Toggle extra text
-    </button> -->
+        <a routerLink="/builder">New</a>
+        <button type="button" matButton (click)="drawer.toggle()">T</button>
+      </div> -->
+
+      <!-- <button type="button" matButton (click)="drawer.toggle()">T</button> -->
+    </div>
   </mat-drawer>
 
-  <div class="example-sidenav-content">
+  <div class="right-drawer">
+    <p>
+      <i
+        (click)="drawer.toggle()"
+        class="right-drawer__toggle-button right"
+      ></i>
+    </p>
+    <!-- <button
+      class="right-drawer__toggle-button"
+      type="button"
+      (click)="drawer.toggle()"
+    >
+      T
+    </button> -->
     <router-outlet />
-    <button type="button" matButton (click)="drawer.toggle()">
-      Toggle sidenav
-    </button>
   </div>
 </mat-drawer-container>

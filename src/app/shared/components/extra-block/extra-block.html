@@ -1,4 +1,4 @@
-<div class="translations-examples-container">
+<div>
   @if (this.defToEdit$ | async; as newDefs ) {
   <!-- @if (this.defToEdit$ | async; as newDefs ) { -->
   <mat-expansion-panel #expansionPanel>
@@ -24,7 +24,7 @@
     [items]="this.sfactory.getRelevantExtraBlock(newDefs, this.type())"
   />
   }
-  <div class="definition-example">
+  <div>
     <mat-accordion multi> </mat-accordion>
   </div>
 </div>
