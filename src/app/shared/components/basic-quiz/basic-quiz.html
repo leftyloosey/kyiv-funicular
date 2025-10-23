@@ -67,9 +67,11 @@
     }
   </div>
   <div class="exampleBlock">
-    @for (example of this.word().examples; track $index) {
+    @for (example of this.word().examples; track $index) { @if (example) {
     <p>{{ example }}</p>
-    }
+    } @else{
+    <div class="blank"></div>
+    } }
   </div>
   }
 </ng-template>
