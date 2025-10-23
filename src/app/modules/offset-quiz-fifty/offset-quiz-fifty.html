@@ -17,17 +17,11 @@
 
   <section class="btn-panel">
     <!-- <section class="btn-panel__sub-panel"> -->
-    <p>
-      <i
-        (click)="this.offset.pageChange(-1)"
-        class="btn-panel__big-arrow left"
-      ></i>
+    <p (click)="this.offset.pageChange(-1)">
+      <i class="btn-panel__big-arrow left"></i>
     </p>
-    <p>
-      <i
-        (click)="this.offset.returnCount(-1)"
-        class="btn-panel__small-arrow left"
-      ></i>
+    <p (click)="this.offset.returnCount(-1)">
+      <i class="btn-panel__small-arrow left"></i>
     </p>
     <button class="btn-panel__mode-button" (click)="this.offset.moodToggle()">
       mode
@@ -38,17 +32,11 @@
     >
       + / -
     </button>
-    <p>
-      <i
-        (click)="this.offset.returnCount(1)"
-        class="btn-panel__small-arrow right"
-      ></i>
+    <p (click)="this.offset.returnCount(1)">
+      <i class="btn-panel__small-arrow right"></i>
     </p>
-    <p>
-      <i
-        (click)="this.offset.pageChange(1)"
-        class="btn-panel__big-arrow right"
-      ></i>
+    <p (click)="this.offset.pageChange(1)">
+      <i class="btn-panel__big-arrow right"></i>
     </p>
   </section>
   <!-- </section> -->
