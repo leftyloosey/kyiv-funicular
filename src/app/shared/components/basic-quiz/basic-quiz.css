@@ -32,8 +32,8 @@
 .titleBlock {
   padding: 1rem;
   position: absolute;
-  left: 1.5vw;
-  bottom: 8vh;
+  left: 2vw;
+  top: 30vh;
 }
 .titleBlock__titleText:hover {
   cursor: pointer;
