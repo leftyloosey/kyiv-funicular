@@ -59,19 +59,19 @@
 <ng-template #exampleNCaseBlock>
   @if (this.offset.hidelevel >= 2) {
   <div class="caseBlock">
-    @for (case of this.rayo; track $index) {
+    @if(this.rayo.length>0) { @for (case of this.rayo; track $index) {
     <p class="caseBlock__tenseStyle">
       {{ case.tense }}
       <span class="caseBlock__caseStyle">{{ case.value }}</span>
     </p>
+    }} @else {
+    <p class="blank">.</p>
     }
   </div>
   <div class="exampleBlock">
-    @for (example of this.word().examples; track $index) { @if (example) {
+    @for (example of this.word().examples; track $index) {
     <p>{{ example }}</p>
-    } @else{
-    <div class="blank">.</div>
-    } }
+    }
   </div>
   }
 </ng-template>

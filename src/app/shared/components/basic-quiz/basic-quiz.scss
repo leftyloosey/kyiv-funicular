@@ -26,11 +26,12 @@
   color: #a0a0a0;
 }
 .titleBlock {
-  padding: 1rem;
+  // padding: 1rem;
+  font-size: larger;
   position: absolute;
-  left: 2vw;
+  left: 21.5px;
   top: 30vh;
-  &__titleText:hover {
+  s &__titleText:hover {
     cursor: pointer;
     color: greenyellow;
   }
@@ -60,7 +61,19 @@
   font-size: small;
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
-// @media only screen and (min-width: 600px) {...}
+@media only screen and (min-width: 600px) {
+  .titleBlock {
+    // padding: 1rem;
+    font-size: larger;
+    position: absolute;
+    left: 40px;
+    top: 30vh;
+    &__titleText:hover {
+      cursor: pointer;
+      color: greenyellow;
+    }
+  }
+}
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
@@ -71,10 +84,28 @@
   //   text-align: right;
   // }
 
-  // .titleBlock {
-  //   padding: 1rem;
-  //   position: fixed;
-  //   left: 23.5vw;
-  //   bottom: 8vh;
-  // }
+  .titleBlock {
+    // padding: 1rem;
+    font-size: larger;
+    position: absolute;
+    left: 50px;
+    top: 30vh;
+    &__titleText:hover {
+      cursor: pointer;
+      color: greenyellow;
+    }
+  }
+  @media only screen and (min-width: 992px) {
+    .titleBlock {
+      font-size: larger;
+      // padding: 1rem;
+      position: absolute;
+      left: 60px;
+      top: 30vh;
+      &__titleText:hover {
+        cursor: pointer;
+        color: greenyellow;
+      }
+    }
+  }
 }
