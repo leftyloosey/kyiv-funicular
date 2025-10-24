@@ -1,24 +1,15 @@
-import {
-  AfterContentInit,
-  Component,
-  ContentChild,
-  DestroyRef,
-  inject,
-} from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { Observable, map, scan, startWith, switchMap, tap } from 'rxjs';
 import { TranslateService } from '../../services/translate-service/translate.service';
 import { WordWithId } from '../../utils/classes/word';
 import { AsyncPipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { EditWord } from '../../modules/edit-word/edit-word';
 import { BasicQuiz } from '../../shared/components/basic-quiz/basic-quiz';
 import { OffsetService } from '../../services/offset-service/offset-service';
 import {
   getCurrentPage,
   resetPageLimit,
 } from '../../utils/functions/functions';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { QUIZ } from '../../utils/tokens/quizzable';
 import { WiktionService } from '../../services/wiktion-service/wiktion-service';
 import { SidenavService } from '../../services/sidenav-service/sidenav-service';
 @Component({
@@ -30,7 +21,6 @@ import { SidenavService } from '../../services/sidenav-service/sidenav-service';
 export class OffsetQuizFifty {
   private destroyRef = inject(DestroyRef);
   public output$: Observable<WordWithId[]>;
-  // @ContentChild(QUIZ) mood?: BasicQuiz;
 
   constructor(
     protected sidenav: SidenavService,
@@ -88,22 +78,22 @@ export class OffsetQuizFifty {
       );
   }
 
-  protected openD(word: WordWithId) {
-    // const dialogRef = this.dialog.open(EditWord, {
-    //   data: { word },
-    // });
-    // dialogRef
-    //   .afterClosed()
-    //   .pipe(takeUntilDestroyed(this.destroyRef))
-    //   .subscribe((result: WordWithId) => {
-    //     if (result) {
-    //       this.offset.offsetActions$.next({
-    //         word: result,
-    //         action: 'update',
-    //       });
-    //     }
-    //   });
-  }
+  // protected openD(word: WordWithId) {
+  // const dialogRef = this.dialog.open(EditWord, {
+  //   data: { word },
+  // });
+  // dialogRef
+  //   .afterClosed()
+  //   .pipe(takeUntilDestroyed(this.destroyRef))
+  //   .subscribe((result: WordWithId) => {
+  //     if (result) {
+  //       this.offset.offsetActions$.next({
+  //         word: result,
+  //         action: 'update',
+  //       });
+  //     }
+  //   });
+  // }
   protected openEditModal($event: WordWithId) {
     this.wiktion.pushInternalScrape($event);
     this.sidenav.open();

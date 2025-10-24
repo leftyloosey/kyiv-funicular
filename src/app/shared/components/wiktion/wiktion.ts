@@ -58,6 +58,7 @@ export class Wiktion implements OnInit {
           this.buildingWord.examples = examples;
           this.buildingWord.translation = definitions[0];
           this.buildingWord.case = {};
+          this.buildingWord.original = this.toSubmit;
           this.wiktion.pushInternalScrape(this.buildingWord);
         })
       )
@@ -78,7 +79,7 @@ export class Wiktion implements OnInit {
 
   protected submitScrapeWord(): void {
     console.log(this.toSubmit);
-    // this.wiktion.pushScrape(this.toSubmit);
+    this.wiktion.pushScrape(this.toSubmit);
 
     // this.scrapeForm.reset();
     // const { scrape } = this.scrapeForm.value;

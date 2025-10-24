@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { WordBuilderService } from '../../../services/word-builder-service/word-builder-service';
 import { DEF, EXMP } from '../../../utils/constants/factory-types';
