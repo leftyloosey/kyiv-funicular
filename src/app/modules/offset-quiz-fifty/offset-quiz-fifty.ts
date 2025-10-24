@@ -19,6 +19,8 @@ import {
 } from '../../utils/functions/functions';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { QUIZ } from '../../utils/tokens/quizzable';
+import { WiktionService } from '../../services/wiktion-service/wiktion-service';
+import { SidenavService } from '../../services/sidenav-service/sidenav-service';
 @Component({
   selector: 'app-offset-quiz-fifty',
   imports: [AsyncPipe, BasicQuiz],
@@ -31,6 +33,8 @@ export class OffsetQuizFifty {
   // @ContentChild(QUIZ) mood?: BasicQuiz;
 
   constructor(
+    protected sidenav: SidenavService,
+    private wiktion: WiktionService,
     private translate: TranslateService,
     private dialog: MatDialog,
     protected offset: OffsetService
@@ -60,9 +64,9 @@ export class OffsetQuizFifty {
             startWith({ word: this.translate.empty, action: 'remove' }),
             scan(
               (acc, curr) => {
-                if (curr.action === 'add') {
-                  return [...acc, curr.word];
-                }
+                // if (curr.action === 'add') {
+                //   return [...acc, curr.word];
+                // }
                 if (curr.action === 'update') {
                   const newArray = [...initialEmployees];
                   newArray.splice(this.offset.count, 0, curr.word);
@@ -85,22 +89,24 @@ export class OffsetQuizFifty {
   }
 
   protected openD(word: WordWithId) {
-    const dialogRef = this.dialog.open(EditWord, {
-      data: { word },
-    });
-    dialogRef
-      .afterClosed()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((result: WordWithId) => {
-        if (result) {
-          this.offset.offsetActions$.next({
-            word: result,
-            action: 'update',
-          });
-        }
-      });
+    // const dialogRef = this.dialog.open(EditWord, {
+    //   data: { word },
+    // });
+    // dialogRef
+    //   .afterClosed()
+    //   .pipe(takeUntilDestroyed(this.destroyRef))
+    //   .subscribe((result: WordWithId) => {
+    //     if (result) {
+    //       this.offset.offsetActions$.next({
+    //         word: result,
+    //         action: 'update',
+    //       });
+    //     }
+    //   });
   }
   protected openEditModal($event: WordWithId) {
-    this.openD($event);
+    this.wiktion.pushInternalScrape($event);
+    this.sidenav.open();
+    // this.openD($event);
   }
 }

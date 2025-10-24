@@ -2,7 +2,7 @@ import { Component, signal, ViewChild } from '@angular/core';
 import { WordBuilderService } from '../../services/word-builder-service/word-builder-service';
 import { map, merge, startWith } from 'rxjs';
 import { TopFormService } from '../../services/top-form-service/top-form-service';
-import { Word } from '../../utils/classes/word';
+import { Word, WordWithId } from '../../utils/classes/word';
 import { TopForm } from '../../shared/components/top-form/top-form';
 // import { Wiktion } from '../../shared/components/wiktion/wiktion';
 import { WiktionService } from '../../services/wiktion-service/wiktion-service';
@@ -14,6 +14,7 @@ import { CaseDelivery } from '../../services/case-delivery/case-delivery';
 import { SHUT, SHUT2 } from '../../utils/tokens/closeable';
 import { Closeable } from '../../utils/interfaces/Closeable';
 import { TranslateService } from '../../services/translate-service/translate.service';
+import { OffsetService } from '../../services/offset-service/offset-service';
 @Component({
   selector: 'app-word-builder',
   imports: [TopForm, DisplayBox, MatButton, CaseComponent],
@@ -32,7 +33,8 @@ export class WordBuilder {
     private wiktion: WiktionService,
     private displayBox: DisplayBoxService,
     private caseDelivery: CaseDelivery,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private offset: OffsetService
   ) {
     builder.wordBuilderObserve$ = merge(
       caseDelivery.caseDeliveryObserve$,
@@ -52,6 +54,10 @@ export class WordBuilder {
     const pretty = JSON.stringify(this.empty, null, 2);
     if (window.confirm(pretty)) {
       this.translate.upsertWord(this.empty).subscribe({
+        next: (item: WordWithId) => {
+          if (item)
+            this.offset.offsetActions$.next({ word: item, action: 'update' });
+        },
         error: (err) => window.alert(err),
         complete: () => {
           window.alert('Word saved.');

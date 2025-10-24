@@ -87,7 +87,7 @@ export class TranslateService {
     upsertWord.case = word.case;
     upsertWord.examples = word.examples;
     upsertWord.definitions = word.definitions;
-    return this.http.post<Word>(
+    return this.http.post<WordWithId>(
       `${environment.apiBaseUrl}/translate/upsert`,
       upsertWord
     );

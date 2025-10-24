@@ -100,6 +100,7 @@ export class Word {
   public definitions: string[] = [];
   public examples: string[] = [];
   public case: WordCase = {};
+  public id: string | undefined;
   constructor(
     public original: string,
     public translation: string,
@@ -107,7 +108,7 @@ export class Word {
   ) {}
 }
 export class WordWithId extends Word {
-  public id: string = '';
+  public override id: string = '';
 }
 export interface WordInterface {
   definitions: string[];

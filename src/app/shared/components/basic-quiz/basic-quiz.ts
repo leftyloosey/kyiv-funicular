@@ -10,6 +10,7 @@ import { CaseDisplay } from '../../../utils/interfaces/CaseDisplay';
 import { NgTemplateOutlet } from '@angular/common';
 // import { QUIZ } from '../../../utils/tokens/quizzable';
 import { OffsetService } from '../../../services/offset-service/offset-service';
+
 @Component({
   selector: 'app-basic-quiz',
   imports: [NgTemplateOutlet],

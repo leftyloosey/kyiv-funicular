@@ -11,10 +11,6 @@ import { CaseFactory } from '../../../services/case-factory/case-factory';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
-// export type rayable = {
-//   key: string;
-//   value: string;
-// };
 @Component({
   selector: 'app-edit-imperfect',
   imports: [ReactiveFormsModule, MatFormField, MatInputModule],

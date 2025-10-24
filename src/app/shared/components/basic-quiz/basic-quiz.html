@@ -13,6 +13,7 @@
 <ng-template #titleBock>
   @if (this.offset.hidelevel <= 2) {
   <div [class]="this.offset.hidelevel > 1 ? 'titleBlock' : ''">
+    <!-- <h1 class="titleBlock__titleText" (click)="this.sidenav.close()"> -->
     <h1 class="titleBlock__titleText" (click)="this.sendUp.emit(this.word())">
       {{ this.word().original }}
     </h1>
