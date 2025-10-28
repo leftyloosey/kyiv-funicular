@@ -34,7 +34,6 @@ import { LanguageToken } from '../../services/language-token/language-token';
 export class OffsetQuizFifty {
   private destroyRef = inject(DestroyRef);
   public output$: Observable<WordWithId[]>;
-  // protected langToken = computed(() => this.token.getToken());
   protected langToken: lngToken = 'uk';
 
   constructor(
@@ -106,6 +105,7 @@ export class OffsetQuizFifty {
   }
 
   protected openEditModal($event: WordWithId) {
+    console.log($event);
     this.wiktion.pushInternalScrape($event);
     this.sidenav.open();
   }

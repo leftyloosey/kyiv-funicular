@@ -1,8 +1,6 @@
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
-// import { translatable } from '../../utils/interfaces/Translatable';
-// import { Subject } from 'rxjs';
 import { FirstFifty, Word, WordWithId } from '../../utils/classes/word';
 import { SkipLoading } from '../../utils/interceptors/basic.interceptor';
 import { lngToken } from '../../utils/tokens/language-token';
@@ -81,17 +79,19 @@ export class TranslateService {
     );
   }
   public upsertWord(word: Word) {
-    const upsertWord = new Word(
-      word.original,
-      word.translation,
-      word.partOfSpeech
-    );
-    upsertWord.case = word.case;
-    upsertWord.examples = word.examples;
-    upsertWord.definitions = word.definitions;
+    // public upsertWord(word: Word) {
+    // const upsertWord = new Word(
+    //   word.original,
+    //   word.translation,
+    //   word.partOfSpeech
+    // );
+    // upsertWord.case = word.case;
+    // upsertWord.examples = word.examples;
+    // upsertWord.definitions = word.definitions;
+
     return this.http.post<WordWithId>(
       `${environment.apiBaseUrl}/translate/upsert`,
-      upsertWord
+      word
     );
   }
 

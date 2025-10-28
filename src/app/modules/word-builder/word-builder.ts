@@ -71,6 +71,7 @@ export class WordBuilder implements Refreshable {
   }
 
   protected saveWord(): void {
+    console.log(this.empty);
     const pretty = JSON.stringify(this.empty, null, 2);
     if (window.confirm(pretty)) {
       this.translate.upsertWord(this.empty).subscribe({

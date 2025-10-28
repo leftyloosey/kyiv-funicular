@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
 import { catchError, EMPTY, ReplaySubject, Subject } from 'rxjs';
 import { Word } from '../../utils/classes/word';
@@ -29,7 +29,6 @@ export class WiktionService {
     this.scrapeInternal.next(word);
   }
   public scrapeOne = (scrape: ScrapeOne) => {
-    console.log('target before scrape', this.target.target());
     const url = `${environment.apiBaseUrl}/translate/scrape`;
     const submit = { text: scrape.word, tag: scrape.tag };
     console.log(submit);

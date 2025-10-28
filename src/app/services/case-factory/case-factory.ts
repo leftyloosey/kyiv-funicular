@@ -10,7 +10,7 @@ import { FormBuilder } from '@angular/forms';
   providedIn: 'root',
 })
 export class CaseFactory {
-  fromCode(code: string, caseInfo: WordCase): CaseEdit {
+  public fromCode(code: string, caseInfo: WordCase): CaseEdit {
     switch (code) {
       case 'Verb':
         return new PracImp(caseInfo, new ImperfClass(''), new FormBuilder());
