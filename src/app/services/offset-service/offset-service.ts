@@ -1,8 +1,10 @@
-import { Injectable, ViewChild } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { BasicQuiz } from '../../shared/components/basic-quiz/basic-quiz';
 import { WordWithId } from '../../utils/classes/word';
-import { Quizzable } from '../../utils/interfaces/Quizzable';
+import { lngToken } from '../../utils/tokens/language-token';
+import { nextPage } from '../../utils/interfaces/NextPage';
+import { LanguageToken } from '../language-token/language-token';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,12 +15,22 @@ export class OffsetService {
   quizMode: boolean = true;
   hidelevel: number = 0;
 
-  public page$ = new BehaviorSubject<number>(0);
   public offsetActions$ = new Subject<{
     word: WordWithId;
     action: 'add' | 'remove' | 'next' | 'update';
   }>();
-  // @ViewChild(BasicQuiz) quizCard!: Quizzable;
+
+  public page$ = new BehaviorSubject<nextPage>({
+    num: 0,
+    token: 'uk',
+  });
+  // public page$ = new BehaviorSubject<number>(0);
+
+  public pageChange(num: number, token: lngToken) {
+    const nextPage: number = this.page$.getValue().num + num;
+    this.page$.next({ num: nextPage, token: token });
+    // this.page$.next(this.page$.getValue() + enter);
+  }
 
   returnCount(enter: number): number {
     this.hidelevel = 0;
@@ -27,9 +39,6 @@ export class OffsetService {
     if (this.count + enter >= this.pageContainerLength) return (this.count = 0);
 
     return (this.count += enter);
-  }
-  public pageChange(enter: number) {
-    this.page$.next(this.page$.getValue() + enter);
   }
 
   toggleHideLevel() {

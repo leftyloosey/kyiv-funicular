@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { Word, WordWithId } from '../../utils/classes/word';
+import { Word, WordWithId } from '../../../utils/classes/word';
 
 @Injectable({
   providedIn: 'root',

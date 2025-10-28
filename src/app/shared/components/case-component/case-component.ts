@@ -2,9 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Word, WordCase } from '../../../utils/classes/word';
 import { CaseFactory } from '../../../services/case-factory/case-factory';
 import { CaseEdit } from '../../../utils/interfaces/CaseEdit';
-import { WordBuilderService } from '../../../services/word-builder-service/word-builder-service';
+import { WordBuilderService } from '../../../services/delivery-services/word-builder-service/word-builder-service';
 import { Observable, tap } from 'rxjs';
-
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -12,7 +11,7 @@ import {
   MatExpansionPanelTitle,
 } from '@angular/material/expansion';
 import { EditImperfect } from '../edit-imperfect/edit-imperfect';
-import { CaseDelivery } from '../../../services/case-delivery/case-delivery';
+import { CaseDelivery } from '../../../services/delivery-services/case-delivery/case-delivery';
 import { Closeable } from '../../../utils/interfaces/Closeable';
 import { SHUT } from '../../../utils/tokens/closeable';
 import { AsyncPipe } from '@angular/common';
@@ -46,20 +45,15 @@ export class CaseComponent implements Closeable {
 
   constructor(
     private builder: WordBuilderService,
-    private prac: CaseFactory,
+    private caseFactory: CaseFactory,
     private caseDelivery: CaseDelivery
   ) {
     this.output$ = this.builder.wordBuilderObserve$.pipe(tap((word) => word));
 
-    // .pipe(
-    //   takeUntilDestroyed(),
-    //   tap((word) => {
-    //     this.partOfSpeech = word.partOfSpeech;
-    //     this.receivedCase = word.case;
-    //   })
-    // )
-    // .subscribe();
-    this.caseService = prac.fromCode(this.partOfSpeech, this.receivedCase);
+    this.caseService = caseFactory.fromCode(
+      this.partOfSpeech,
+      this.receivedCase
+    );
   }
   public shut(): void {
     this.expansionPanel?.close();

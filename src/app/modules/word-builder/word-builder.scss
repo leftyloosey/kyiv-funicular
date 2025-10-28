@@ -1,17 +1,12 @@
 .word-builder {
   display: flex;
   flex-direction: column;
-  // width: 100%;
-
   &__save-button-row {
-    width: 6rem;
-
-    // display: flex;
-    // justify-content: center;
-    // margin-top: 2rem;
-  }
-  .buz {
     display: flex;
     justify-content: center;
+    transform: translateY(2rem);
+    &--button {
+      width: 6rem;
+    }
   }
 }

@@ -1,3 +1,5 @@
+import { lngToken } from '../tokens/language-token';
+
 export interface WordCase {
   [x: string]: any;
 }
@@ -101,12 +103,26 @@ export class Word {
   public examples: string[] = [];
   public case: WordCase = {};
   public id: string | undefined;
+  public tag: lngToken = 'uk';
+  public usersId: string = '';
   constructor(
     public original: string,
     public translation: string,
     public partOfSpeech: string
   ) {}
 }
+// export class Word {
+//   public definitions: string[] = [];
+//   public examples: string[] = [];
+//   public case: WordCase = {};
+//   public id: string | undefined;
+//   public tag?: langToken;
+//   constructor(
+//     public original: string,
+//     public translation: string,
+//     public partOfSpeech: string
+//   ) {}
+// }
 export class WordWithId extends Word {
   public override id: string = '';
 }

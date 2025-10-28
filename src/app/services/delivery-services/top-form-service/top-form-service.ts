@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 // import { WordWithId } from '../../utils/classes/word';
-import { topValues } from '../../utils/interfaces/TopValues';
+import { topValues } from '../../../utils/interfaces/TopValues';
 
 @Injectable({
   providedIn: 'root',

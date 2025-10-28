@@ -1,7 +1,6 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { CaseEdit } from '../../utils/interfaces/CaseEdit';
 import { WordCase } from '../../utils/classes/word';
-import { RayFactory } from '../../utils/functions/rayFactory';
 import { FormBuilder } from '@angular/forms';
 
 export const RECEIVED_CASE = new InjectionToken<WordCase>('Received case');

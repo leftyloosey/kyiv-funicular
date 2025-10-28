@@ -14,7 +14,7 @@ import {
 import { MatFormField } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { DisplayBoxService } from '../../../services/display-box-service/display-box-service';
+import { DisplayBoxService } from '../../../services/delivery-services/display-box-service/display-box-service';
 import { newDefInterface } from '../../../utils/interfaces/NewExtraDetail';
 import { wordDefinitions } from '../../../utils/interfaces/WordDefinitions';
 // import { Word } from '../../../utils/classes/word';

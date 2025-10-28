@@ -1,1 +1,1 @@
-export type SaveWordDto = {};
+// export type SaveWordDto = {};

@@ -11,9 +11,12 @@ import {
 } from '@angular/common/http';
 import { LoadingInterceptor } from './utils/interceptors/basic.interceptor';
 import { routes } from './app.routes';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { LANGUAGE_TOKEN } from './utils/tokens/language-token';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    { provide: LANGUAGE_TOKEN, useValue: new Subject() },
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(

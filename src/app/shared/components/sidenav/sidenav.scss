@@ -7,13 +7,13 @@
     height: 97vh;
     &__toggle-button {
       display: flex;
-      position: absolute;
-      top: 5rem;
-      left: 1rem;
+      // position: absolute;
+      // top: 5rem;
+      // left: 1rem;
       border: solid black;
       border-width: 0 3px 3px 0;
       display: inline-block;
-      padding: 6px;
+      padding: 9px;
       z-index: 7;
       border-color: #a0a0a0;
     }
@@ -32,7 +32,7 @@
       border: solid black;
       border-width: 0 3px 3px 0;
       display: inline-block;
-      padding: 6px;
+      padding: 9px;
       border-color: #a0a0a0;
     }
   }
@@ -46,7 +46,35 @@
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
-.mover {
+.left-toggle-mover {
   // transform: translateX(18rem);
-  transform: translate(20rem, 4rem);
+  transform: translate(20.5rem, 0.26rem);
 }
+.right-toggle-mover {
+  position: absolute;
+  left: 1rem;
+  top: 0.26rem;
+  // transform: translate(0.5rem, 8rem);
+}
+// @media only screen and (min-width: 500px) {
+//   .right-toggle-mover {
+//     position: absolute;
+//     left: 2vw;
+//     bottom: 9rem;
+//   }
+// }
+// @media only screen and (min-width: 600px) {
+//   .right-toggle-mover {
+//     position: absolute;
+//     left: 1rem;
+//     top: 0.25rem;
+//   }
+// }
+
+// @media only screen and (min-width: 768px) {
+//   .right-toggle-mover {
+//     position: absolute;
+//     left: 6vw;
+//     bottom: 9rem;
+//   }
+// }

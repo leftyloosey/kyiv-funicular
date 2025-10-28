@@ -6,7 +6,7 @@ import {
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import { WiktionService } from '../../../services/wiktion-service/wiktion-service';
-import { DisplayBoxService } from '../../../services/display-box-service/display-box-service';
+import { DisplayBoxService } from '../../../services/delivery-services/display-box-service/display-box-service';
 import { wordDefinitions } from '../../../utils/interfaces/WordDefinitions';
 @Component({
   selector: 'app-drag-drop',

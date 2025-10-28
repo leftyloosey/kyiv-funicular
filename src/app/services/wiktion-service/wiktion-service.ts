@@ -1,39 +1,37 @@
 import { HttpClient } from '@angular/common/http';
-
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environments';
-import { catchError, EMPTY, Observable, ReplaySubject, Subject } from 'rxjs';
-import { Word, WordWithId } from '../../utils/classes/word';
+import { catchError, EMPTY, ReplaySubject, Subject } from 'rxjs';
+import { Word } from '../../utils/classes/word';
+import { ScrapeOne } from '../../utils/interfaces/ScrapeOne';
+import { LangTargetService } from '../lang-target-service/lang-target-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WiktionService {
-  http = inject(HttpClient);
-
-  public scrapeDelivery = new Subject<string>();
+  // http = inject(HttpClient);
+  constructor(private http: HttpClient, private target: LangTargetService) {}
+  public scrapeDelivery = new Subject<ScrapeOne>();
+  // public scrapeDelivery = new Subject<string>();
   public scrapeInternal = new ReplaySubject<Word>(1);
 
   public newScrape$ = this.scrapeDelivery.asObservable();
   public newScrapeInternal$ = this.scrapeInternal.asObservable();
 
-  // public _definitionData = new Subject<string[]>();
-  // public readonly definitionData$: Observable<string[]> =
-  //   this._definitionData.asObservable();
-
-  // updateDefinitionData(newData: string[]) {
-  //   this._definitionData.next(newData);
-  // }
-
-  public pushScrape(word: string) {
-    this.scrapeDelivery.next(word);
+  public pushScrape(scrape: ScrapeOne) {
+    this.scrapeDelivery.next(scrape);
   }
+  // public pushScrape(word: string) {
+  //   this.scrapeDelivery.next(word);
+  // }
   public pushInternalScrape(word: Word) {
     this.scrapeInternal.next(word);
   }
-  public scrapeOne = (word: string) => {
+  public scrapeOne = (scrape: ScrapeOne) => {
+    console.log('target before scrape', this.target.target());
     const url = `${environment.apiBaseUrl}/translate/scrape`;
-    const submit = { text: word };
+    const submit = { text: scrape.word, tag: scrape.tag };
     console.log(submit);
     return this.http.post<string>(url, submit).pipe(
       catchError(() => {
@@ -42,28 +40,4 @@ export class WiktionService {
       })
     );
   };
-
-  // public saveNewWord(word: Word) {
-  //   return this.http.post<Word>(
-  //     `${environment.apiBaseUrl}/translate/save`,
-  //     word
-  //   );
-  // }
-  // public getOneWord(id: string) {
-  //   return this.http.get<Word>(`${environment.apiBaseUrl}/translate/${id}`);
-  // }
-  // public patchNewWord(word: WordWithId) {
-  //   const patchWord = new Word(
-  //     word.original,
-  //     word.translation,
-  //     word.partOfSpeech
-  //   );
-  //   patchWord.case = word.case;
-  //   patchWord.examples = word.examples;
-  //   patchWord.definitions = word.definitions;
-  //   return this.http.patch<Word>(
-  //     `${environment.apiBaseUrl}/translate/${word.id}`,
-  //     patchWord
-  //   );
-  // }
 }

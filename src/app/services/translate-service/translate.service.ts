@@ -5,6 +5,7 @@ import { environment } from '../../environments/environments';
 // import { Subject } from 'rxjs';
 import { FirstFifty, Word, WordWithId } from '../../utils/classes/word';
 import { SkipLoading } from '../../utils/interceptors/basic.interceptor';
+import { lngToken } from '../../utils/tokens/language-token';
 
 @Injectable({
   providedIn: 'root',
@@ -51,8 +52,9 @@ export class TranslateService {
     }
   };
 
-  public getNextFiftyWordsOffset = (page: number) => {
-    const submit = { page: page };
+  public getNextFiftyWordsOffset = (page: number, tag: lngToken) => {
+    // public getNextFiftyWordsOffset = (page: number) => {
+    const submit = { page: page, tag: tag };
     const url = `${environment.apiBaseUrl}/translate/nextoffset`;
     return this.http.post<FirstFifty>(url, submit);
   };

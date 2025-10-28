@@ -10,7 +10,7 @@ import {
 import { Observable, tap } from 'rxjs';
 import { DefinitionEdit } from '../definition-edit/definition-edit';
 import { AsyncPipe, TitleCasePipe } from '@angular/common';
-import { WordBuilderService } from '../../../services/word-builder-service/word-builder-service';
+import { WordBuilderService } from '../../../services/delivery-services/word-builder-service/word-builder-service';
 import { Word } from '../../../utils/classes/word';
 import { SextraEdit } from '../../../services/extra-edit/SextraEdit';
 

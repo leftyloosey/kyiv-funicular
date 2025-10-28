@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { WordBuilderService } from '../../../services/word-builder-service/word-builder-service';
+import { WordBuilderService } from '../../../services/delivery-services/word-builder-service/word-builder-service';
 import { DEF, EXMP } from '../../../utils/constants/factory-types';
 import { ExtraBlock } from '../extra-block/extra-block';
 import { Word } from '../../../utils/classes/word';

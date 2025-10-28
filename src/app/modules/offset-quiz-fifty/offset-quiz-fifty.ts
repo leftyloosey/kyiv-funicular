@@ -1,5 +1,13 @@
-import { Component, DestroyRef, inject } from '@angular/core';
-import { Observable, map, scan, startWith, switchMap, tap } from 'rxjs';
+import { Component, computed, DestroyRef, Inject, inject } from '@angular/core';
+import {
+  Observable,
+  Subject,
+  map,
+  scan,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { TranslateService } from '../../services/translate-service/translate.service';
 import { WordWithId } from '../../utils/classes/word';
 import { AsyncPipe } from '@angular/common';
@@ -12,35 +20,59 @@ import {
 } from '../../utils/functions/functions';
 import { WiktionService } from '../../services/wiktion-service/wiktion-service';
 import { SidenavService } from '../../services/sidenav-service/sidenav-service';
+import { LANGUAGE_TOKEN, lngToken } from '../../utils/tokens/language-token';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { nextPage } from '../../utils/interfaces/NextPage';
+import { LanguageToken } from '../../services/language-token/language-token';
 @Component({
   selector: 'app-offset-quiz-fifty',
   imports: [AsyncPipe, BasicQuiz],
   templateUrl: './offset-quiz-fifty.html',
   styleUrl: './offset-quiz-fifty.scss',
+  // providers: [{ provide: LANGUAGE_TOKEN, useValue: new Subject() }],
 })
 export class OffsetQuizFifty {
   private destroyRef = inject(DestroyRef);
   public output$: Observable<WordWithId[]>;
+  // protected langToken = computed(() => this.token.getToken());
+  protected langToken: lngToken = 'uk';
 
   constructor(
+    @Inject(LANGUAGE_TOKEN) private languageToken: Subject<lngToken>,
     protected sidenav: SidenavService,
     private wiktion: WiktionService,
     private translate: TranslateService,
     private dialog: MatDialog,
-    protected offset: OffsetService
+    protected offset: OffsetService,
+    private token: LanguageToken
   ) {
+    languageToken
+      .pipe(
+        takeUntilDestroyed(),
+        tap((value) => {
+          this.langToken = value;
+          console.log(this.langToken);
+        })
+      )
+      .subscribe();
+    // this.langToken = token.getToken();
+
     this.output$ = this.offset.page$
       .pipe(
         switchMap((page) =>
-          this.translate.getNextFiftyWordsOffset(page).pipe(
+          this.translate.getNextFiftyWordsOffset(page.num, this.langToken).pipe(
             tap((words) => {
               this.offset.pageContainerLength = words.firstQueryResults.length;
               this.offset.current = getCurrentPage(
                 words,
-                this.offset.page$.value
+                this.offset.page$.value.num
               );
-              if (resetPageLimit(words, this.offset.page$.value))
-                this.offset.page$.next(0);
+              const token = this.langToken;
+              if (
+                words.firstQueryResults.length &&
+                resetPageLimit(words, this.offset.page$.value.num)
+              )
+                this.offset.page$.next({ num: 0, token });
             }),
             map((words) => {
               return words.firstQueryResults;
@@ -49,54 +81,32 @@ export class OffsetQuizFifty {
         )
       )
       .pipe(
-        switchMap((initialEmployees) =>
+        switchMap((initialWords) =>
           this.offset.offsetActions$.pipe(
             startWith({ word: this.translate.empty, action: 'remove' }),
             scan(
               (acc, curr) => {
-                // if (curr.action === 'add') {
-                //   return [...acc, curr.word];
-                // }
                 if (curr.action === 'update') {
-                  const newArray = [...initialEmployees];
+                  const newArray = [...initialWords];
                   newArray.splice(this.offset.count, 0, curr.word);
                   newArray.splice(this.offset.count + 1, 1);
                   return newArray;
                 }
                 if (curr.action === 'remove') {
-                  return acc.filter((employee) => employee !== curr.word);
+                  return acc.filter((word) => word !== curr.word);
                 } else {
-                  return [...initialEmployees];
+                  return [...initialWords];
                 }
               },
-              [...initialEmployees]
+              [...initialWords]
             )
-            // tap((employees) => console.log('', employees[20]))
           )
         )
-        // tap((employees) => console.log('shala', employees))
       );
   }
 
-  // protected openD(word: WordWithId) {
-  // const dialogRef = this.dialog.open(EditWord, {
-  //   data: { word },
-  // });
-  // dialogRef
-  //   .afterClosed()
-  //   .pipe(takeUntilDestroyed(this.destroyRef))
-  //   .subscribe((result: WordWithId) => {
-  //     if (result) {
-  //       this.offset.offsetActions$.next({
-  //         word: result,
-  //         action: 'update',
-  //       });
-  //     }
-  //   });
-  // }
   protected openEditModal($event: WordWithId) {
     this.wiktion.pushInternalScrape($event);
     this.sidenav.open();
-    // this.openD($event);
   }
 }

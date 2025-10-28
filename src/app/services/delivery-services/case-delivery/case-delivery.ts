@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WordCase } from '../../utils/classes/word';
+import { WordCase } from '../../../utils/classes/word';
 import { Subject, Observable } from 'rxjs';
 export type caseToSend = {
   case: WordCase;

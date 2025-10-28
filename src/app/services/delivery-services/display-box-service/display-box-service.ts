@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 
-import { wordDefinitions } from '../../utils/interfaces/WordDefinitions';
+import { wordDefinitions } from '../../../utils/interfaces/WordDefinitions';
 @Injectable({
   providedIn: 'root',
 })

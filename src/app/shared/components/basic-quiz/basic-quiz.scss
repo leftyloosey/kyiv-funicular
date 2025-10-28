@@ -61,10 +61,8 @@
   color: white;
   font-size: small;
 }
-/* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
   .titleBlock {
-    // padding: 1rem;
     font-size: x-large;
     position: absolute;
     left: 40px;
@@ -76,17 +74,8 @@
   }
 }
 
-/* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-  // .caseBlock {
-  //   overflow-y: auto;
-  //   width: 50vw;
-  //   max-height: 25vh;
-  //   text-align: right;
-  // }
-
   .titleBlock {
-    // padding: 1rem;
     font-size: x-large;
     position: absolute;
     left: 50px;
@@ -99,7 +88,6 @@
   @media only screen and (min-width: 992px) {
     .titleBlock {
       font-size: x-large;
-      // padding: 1rem;
       position: absolute;
       left: 60px;
       top: 30vh;

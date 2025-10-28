@@ -1,7 +1,7 @@
-<mat-drawer-container class="drawer-holder" autosize>
+<mat-drawer-container class="drawer-holder">
   <mat-drawer #drawer mode="over">
     <div class="left-drawer">
-      <p class="mover">
+      <p class="left-toggle-mover">
         <i
           (click)="drawer.toggle()"
           class="left-drawer__toggle-button left"
@@ -9,10 +9,13 @@
       </p>
       <app-word-builder />
     </div>
+    <!-- <button (click)="changeToken('de')">DE</button>
+    <button (click)="changeToken('uk')">YK</button>
+    <button (click)="changeTarget()">HEY</button> -->
   </mat-drawer>
 
   <div class="right-drawer">
-    <p>
+    <p class="right-toggle-mover">
       <i
         (click)="drawer.toggle()"
         class="right-drawer__toggle-button right"

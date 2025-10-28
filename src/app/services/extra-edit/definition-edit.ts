@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { WordWithId } from '../../utils/classes/word';
 import { wordDefinitions } from '../../utils/interfaces/WordDefinitions';
 import { map, Observable } from 'rxjs';
-import { WordBuilderService } from '../word-builder-service/word-builder-service';
+import { WordBuilderService } from '../delivery-services/word-builder-service/word-builder-service';
 
 @Injectable({
   providedIn: 'root',

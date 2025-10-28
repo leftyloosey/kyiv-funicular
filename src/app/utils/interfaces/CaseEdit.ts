@@ -1,6 +1,6 @@
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { WordCase } from '../classes/word';
-import { caseToSend } from '../../services/case-delivery/case-delivery';
+import { caseToSend } from '../../services/delivery-services/case-delivery/case-delivery';
 
 export abstract class CaseEdit {
   public buildingWord: WordCase;
