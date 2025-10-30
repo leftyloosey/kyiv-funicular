@@ -2,9 +2,10 @@
   padding: 1rem;
 }
 .caseBlock {
+  // transform: translateY(-20vh);
   overflow-y: auto;
   width: 90vw;
-  max-height: 25vh;
+  max-height: 20vh;
   text-align: right;
   &__tenseStyle {
     color: #a0a0a0;
@@ -19,26 +20,30 @@
   overflow-y: auto;
   margin-top: 1rem;
   font-style: italic;
-  max-height: 25vh;
+  max-height: 20vh;
 }
 .exampleBlock {
   overflow-y: auto;
-  max-height: 23vh;
+  max-height: 20vh;
   color: #a0a0a0;
+}
+.titleBlockWhileSmall {
+  font-size: larger;
 }
 .titleBlock {
   // padding: 1rem;
+
   font-size: x-large;
-  position: absolute;
-  left: 21.5px;
-  top: 30vh;
-  s &__titleText:hover {
+  // position: absolute;
+  // left: 21.5px;
+  // top: 30vh;
+  &__titleText:hover {
     cursor: pointer;
     color: greenyellow;
   }
 }
 .blank {
-  min-height: 25vh;
+  min-height: 1vh;
   color: black;
 }
 // .titleBlock {
@@ -46,10 +51,10 @@
 //   position: absolute;
 //   left: 1.5vw;
 //   bottom: 8vh;
-//   &__titleText:hover {
-//     cursor: pointer;
-//     color: greenyellow;
-//   }
+// &__titleText:hover {
+//   cursor: pointer;
+//   color: greenyellow;
+// }
 // }
 
 //========
@@ -63,7 +68,7 @@
 }
 @media only screen and (min-width: 600px) {
   .titleBlock {
-    font-size: x-large;
+    font-size: large;
     position: absolute;
     left: 40px;
     top: 30vh;
@@ -76,10 +81,10 @@
 
 @media only screen and (min-width: 768px) {
   .titleBlock {
-    font-size: x-large;
-    position: absolute;
-    left: 50px;
-    top: 30vh;
+    // font-size: large;
+    // position: absolute;
+    // left: 50px;
+    // top: 30vh;
     &__titleText:hover {
       cursor: pointer;
       color: greenyellow;
@@ -87,10 +92,10 @@
   }
   @media only screen and (min-width: 992px) {
     .titleBlock {
-      font-size: x-large;
-      position: absolute;
-      left: 60px;
-      top: 30vh;
+      // font-size: large;
+      // position: absolute;
+      // left: 60px;
+      // top: 30vh;
       &__titleText:hover {
         cursor: pointer;
         color: greenyellow;

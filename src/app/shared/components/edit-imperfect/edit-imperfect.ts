@@ -1,5 +1,5 @@
 import { Component, input, OnInit, output } from '@angular/core';
-import { WordCase } from '../../../utils/classes/word';
+import { Word, WordCase } from '../../../utils/classes/word';
 import {
   FormArray,
   FormBuilder,
@@ -20,17 +20,20 @@ import { MatInputModule } from '@angular/material/input';
 export class EditImperfect implements OnInit {
   public sendUp = output<WordCase>();
   public sendDown = input.required<WordCase>();
-  public partOfSpeech = input.required<string>();
+  public word = input.required<Word>();
   protected imperfectForm!: FormGroup;
   protected keysForForm: string[] = [];
   private caseService!: CaseEdit;
   private fb!: FormBuilder;
 
   constructor(private prac: CaseFactory) {}
-  // constructor(private prac: CaseFactory, private fb: FormBuilder) {}
 
   public ngOnInit(): void {
-    this.caseService = this.prac.fromCode(this.partOfSpeech(), this.sendDown());
+    this.caseService = this.prac.fromCode(
+      this.word().tag,
+      this.word().partOfSpeech,
+      this.sendDown()
+    );
     this.fb = this.caseService.getFb();
     this.imperfectForm = this.fb.group({
       formArray: this.fb.array([]),

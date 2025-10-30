@@ -56,6 +56,10 @@
   top: 0.26rem;
   // transform: translate(0.5rem, 8rem);
 }
+.targets {
+  display: flex;
+  flex-direction: column;
+}
 // @media only screen and (min-width: 500px) {
 //   .right-toggle-mover {
 //     position: absolute;

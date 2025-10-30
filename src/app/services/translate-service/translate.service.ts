@@ -1,7 +1,8 @@
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
-import { FirstFifty, Word, WordWithId } from '../../utils/classes/word';
+import { Word, WordWithId } from '../../utils/classes/word';
+import { FirstFifty } from '../../utils/interfaces/FirstFifty';
 import { SkipLoading } from '../../utils/interceptors/basic.interceptor';
 import { lngToken } from '../../utils/tokens/language-token';
 

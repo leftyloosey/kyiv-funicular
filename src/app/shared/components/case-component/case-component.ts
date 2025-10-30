@@ -15,6 +15,7 @@ import { CaseDelivery } from '../../../services/delivery-services/case-delivery/
 import { Closeable } from '../../../utils/interfaces/Closeable';
 import { SHUT } from '../../../utils/tokens/closeable';
 import { AsyncPipe } from '@angular/common';
+import { lngToken } from '../../../utils/tokens/language-token';
 
 @Component({
   selector: 'app-case-component',
@@ -39,6 +40,7 @@ export class CaseComponent implements Closeable {
   @ViewChild('expansionPanel')
   public expansionPanel?: MatExpansionPanel;
   protected partOfSpeech: string = '';
+  protected tag: lngToken = 'uk';
   protected receivedCase: WordCase = {};
   protected caseService!: CaseEdit;
   protected output$: Observable<Word>;
@@ -51,6 +53,7 @@ export class CaseComponent implements Closeable {
     this.output$ = this.builder.wordBuilderObserve$.pipe(tap((word) => word));
 
     this.caseService = caseFactory.fromCode(
+      this.tag,
       this.partOfSpeech,
       this.receivedCase
     );

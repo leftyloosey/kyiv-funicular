@@ -1,5 +1,25 @@
-import { ImperfCase } from './word';
+import { WordCase } from './word';
+export interface ImperfCase extends WordCase {
+  [x: string]: any;
+  aspect: String;
+  malePast: String;
+  femPast: String;
+  plurPast: String;
 
+  firstPresent: String;
+  InfPresent2nd: String;
+  FormPresent2nd: String;
+  present3rd: String;
+  plurPresent: String;
+  wePresent: String;
+
+  firstFuture: String;
+  InfFuture2nd: String;
+  FormFuture2nd: String;
+  future3rd: String;
+  plurFuture: String;
+  weFuture: String;
+}
 export class ImperfClass implements ImperfCase {
   aspect: string = '';
   malePast: string = '';

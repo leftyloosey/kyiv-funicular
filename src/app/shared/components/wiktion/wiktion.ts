@@ -37,22 +37,22 @@ export class Wiktion implements OnInit {
   public buildingWord: Word = new Word('', '', '');
   protected sendUp = output<any>();
   private toSubmit: string = '';
-  private lngToken: lngToken = 'uk';
+  // private lngToken: lngToken = 'uk';
 
   constructor(
-    @Inject(LANGUAGE_TOKEN) private languageToken: Subject<lngToken>,
+    // @Inject(LANGUAGE_TOKEN) private languageToken: Subject<lngToken>,
     private wiktion: WiktionService,
     private router: Router,
     private token: LanguageToken
   ) {
-    languageToken
-      .pipe(
-        takeUntilDestroyed(),
-        tap((value) => {
-          this.lngToken = value;
-        })
-      )
-      .subscribe();
+    // languageToken
+    //   .pipe(
+    //     takeUntilDestroyed(),
+    //     tap((value) => {
+    //       this.lngToken = value;
+    //     })
+    //   )
+    //   .subscribe();
 
     wiktion.newScrape$
       .pipe(
@@ -66,8 +66,11 @@ export class Wiktion implements OnInit {
           this.sendUp.emit(null);
           const { definitions, partOfSpeech, examples } =
             word as unknown as WordInterface;
+          console.log(definitions);
           this.buildingWord.partOfSpeech = partOfSpeech;
-          this.buildingWord.definitions = definitions;
+          this.buildingWord.definitions =
+            this.wiktion.loopDefsToWord(definitions);
+          // this.buildingWord.definitions = definitions;
           this.buildingWord.examples = examples;
           this.buildingWord.translation = definitions[0];
           this.buildingWord.case = {};
@@ -92,6 +95,7 @@ export class Wiktion implements OnInit {
   }
 
   protected submitScrapeWord(): void {
-    this.wiktion.pushScrape({ word: this.toSubmit, tag: this.lngToken });
+    this.wiktion.pushScrape({ word: this.toSubmit });
+    // this.wiktion.pushScrape({ word: this.toSubmit, tag: this.lngToken });
   }
 }

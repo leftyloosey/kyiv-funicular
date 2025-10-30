@@ -19,6 +19,7 @@ import { LanguageToken } from '../../services/language-token/language-token';
 import { NameService } from '../../services/name-service/name-service';
 import { Refreshable } from '../../utils/interfaces/Refreshable';
 import { REFRESH } from '../../utils/tokens/refresh';
+
 @Component({
   selector: 'app-word-builder',
   imports: [TopForm, DisplayBox, MatButton, CaseComponent],
@@ -35,6 +36,7 @@ export class WordBuilder implements Refreshable {
   @ViewChild(SHUT) cc?: Closeable;
   @ViewChild(SHUT2) cc2?: Closeable;
   protected refresh = signal<boolean>(false);
+  protected formInvalid: boolean = true;
   public empty: Word = new Word('', '', '');
 
   constructor(
@@ -52,6 +54,7 @@ export class WordBuilder implements Refreshable {
     builder.wordBuilderObserve$ = merge(
       caseDelivery.caseDeliveryObserve$,
       displayBox.definitionBoxObserve$,
+      // displayBox.newTranslateObserve$,
       topForm.wordTopFormObserve$,
       wiktion.newScrapeInternal$,
       languageToken$.pipe(
@@ -98,6 +101,10 @@ export class WordBuilder implements Refreshable {
   }
   speechChanged(): void {
     this.cc?.shut();
+  }
+  statusChanged(status: boolean): void {
+    console.log(status);
+    this.formInvalid = status;
   }
   sendUp(): void {
     this.refreshBuilder();

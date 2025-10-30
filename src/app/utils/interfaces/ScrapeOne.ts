@@ -1,4 +1,4 @@
 export interface ScrapeOne {
   word: string;
-  tag: string;
+  // tag: string;
 }

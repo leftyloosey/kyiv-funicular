@@ -1,4 +1,4 @@
-import { FirstFifty, Word } from '../classes/word';
+import { FirstFifty } from '../interfaces/FirstFifty';
 
 // export const switchPartSpeech = (translatedWord: Word): string => {
 export const switchPartSpeech = (translatedWord: string): string => {

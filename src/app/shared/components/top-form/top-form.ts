@@ -4,6 +4,7 @@ import {
   FormControl,
   ReactiveFormsModule,
   Validators,
+  FormControlStatus,
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -36,6 +37,7 @@ import { Wiktion } from '../wiktion/wiktion';
 })
 export class TopForm {
   protected speechChange = output<null>();
+  protected statusChange = output<boolean>();
   private valuesToSend: topValues = {
     original: '',
     translation: '',
@@ -60,8 +62,10 @@ export class TopForm {
 
   protected input$: Observable<Word>;
   protected vals$: Observable<Partial<topValues>>;
+  protected changes$: Observable<Partial<FormControlStatus>>;
 
   protected formValues$ = this.manualForm.valueChanges;
+  protected formChanges$ = this.manualForm.statusChanges;
 
   constructor(
     private topForm: TopFormService,
@@ -87,6 +91,12 @@ export class TopForm {
           translation: translation as string,
           partOfSpeech: partOfSpeech as string,
         };
+      })
+    );
+    this.changes$ = this.formChanges$.pipe(
+      tap((changes) => {
+        if (changes === 'VALID') this.statusChange.emit(false);
+        if (changes === 'INVALID') this.statusChange.emit(true);
       })
     );
   }

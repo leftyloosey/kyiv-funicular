@@ -33,6 +33,7 @@ export class BasicQuiz implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     const { word } = changes;
+
     if (word.currentValue.case) {
       this.kase = new UnpackCase(word.currentValue.case);
       this.rayo = [];

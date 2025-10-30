@@ -12,7 +12,9 @@
 <!--  -->
 <ng-template #titleBock>
   @if (this.offset.hidelevel <= 2) {
-  <div [class]="this.offset.hidelevel > 1 ? 'titleBlock' : ''">
+  <div
+    [class]="this.offset.hidelevel > 1 ? 'titleBlock' : 'titleBlockWhileSmall'"
+  >
     <!-- <h1 class="titleBlock__titleText" (click)="this.sidenav.close()"> -->
     <h1 class="titleBlock__titleText" (click)="this.sendUp.emit(this.word())">
       {{ this.word().original }}
@@ -27,10 +29,9 @@
     {{ this.word().translation }}
 
     @for (definition of this.word().definitions; track $index; let i=$index) {
-    @if(i>=1){
-    <p>{{ definition }}</p>
 
-    } }
+    <p>{{ definition }}</p>
+    }
   </div>
   }</ng-template
 >
@@ -40,16 +41,22 @@
   <div class="definitionBlock">
     {{ this.word().translation }}
     @for (definition of this.word().definitions; track $index; let i=$index) {
-    @if(i>=1){
+
     <p>{{ definition }}</p>
-    } }
+
+    <!-- @if(i>=1){ -->
+    <!-- <p>{{ definition }}</p> -->
+    <!-- }  -->
+    }
   </div>
   }
 </ng-template>
 <!--  -->
 <ng-template #reverseDefinitionBlock>
   @if (this.offset.hidelevel >= 1) {
-  <div [class]="this.offset.hidelevel > 1 ? 'titleBlock' : ''">
+  <div
+    [class]="this.offset.hidelevel > 1 ? 'titleBlock' : 'titleBlockWhileSmall'"
+  >
     <h1 class="titleBlock__titleText" (click)="this.sendUp.emit(this.word())">
       {{ this.word().original }}
     </h1>
@@ -65,13 +72,16 @@
       {{ case.tense }}
       <span class="caseBlock__caseStyle">{{ case.value }}</span>
     </p>
-    }} @else {
+    } } @else {
     <p class="blank">.</p>
     }
   </div>
   <div class="exampleBlock">
-    @for (example of this.word().examples; track $index) {
+    @if (this.word().examples){ @for (example of this.word().examples; track
+    $index) {
     <p>{{ example }}</p>
+    }} @else{
+    <p class="blank">.</p>
     }
   </div>
   }

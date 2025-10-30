@@ -1,6 +1,9 @@
 @if (!this.refresh()) {
 <div class="word-builder">
-  <app-top-form (speechChange)="speechChanged()" />
+  <app-top-form
+    (statusChange)="statusChanged($event)"
+    (speechChange)="speechChanged()"
+  />
 
   <app-display-box />
   <app-case-component />
@@ -9,6 +12,7 @@
       class="word-builder__save-button-row--button"
       (click)="saveWord()"
       matButton="filled"
+      [disabled]="this.formInvalid"
     >
       Save word
     </button>

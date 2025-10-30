@@ -12,9 +12,16 @@ import { LanguageToken } from '../../../services/language-token/language-token';
 import { REFRESH } from '../../../utils/tokens/refresh';
 import { Refreshable } from '../../../utils/interfaces/Refreshable';
 import { LangTargetService } from '../../../services/lang-target-service/lang-target-service';
+import { LangDirection } from '../lang-direction/lang-direction';
 @Component({
   selector: 'app-sidenav',
-  imports: [MatSidenavModule, MatButtonModule, RouterModule, WordBuilder],
+  imports: [
+    MatSidenavModule,
+    MatButtonModule,
+    RouterModule,
+    WordBuilder,
+    LangDirection,
+  ],
   templateUrl: './sidenav.html',
   styleUrl: './sidenav.scss',
   // providers: [{ provide: LANGUAGE_TOKEN, useValue: new Subject() }],
@@ -36,11 +43,11 @@ export class Sidenav implements AfterViewInit {
     private target: LangTargetService
   ) {}
 
-  changeTarget() {
-    this.target.setTarget('uk');
+  private changeTo(target: lngToken) {
+    this.target.setTarget(target);
   }
 
-  changeToken(tag: lngToken) {
+  private changeFrom(tag: lngToken) {
     this.wb?.refreshBuilder();
     this.languageToken.next(tag);
     const sub: nextPage = {
@@ -48,5 +55,14 @@ export class Sidenav implements AfterViewInit {
       token: tag,
     };
     this.offset.page$.next(sub);
+  }
+
+  protected fromLanguage(e: lngToken) {
+    console.log(e);
+    this.changeFrom(e);
+  }
+  protected toLanguage(e: lngToken) {
+    console.log(e);
+    this.changeTo(e);
   }
 }

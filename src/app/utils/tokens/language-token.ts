@@ -1,7 +1,7 @@
 import { InjectionToken } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-export type lngToken = 'de' | 'uk';
+export type lngToken = 'de' | 'uk' | 'en';
 // export interface langToken {
 //   tag: lngToken;
 // }

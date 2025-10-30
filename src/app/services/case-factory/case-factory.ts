@@ -2,24 +2,26 @@ import { Injectable } from '@angular/core';
 import { PracImp } from './prac-imp';
 import { CaseEdit } from '../../utils/interfaces/CaseEdit';
 import { WordCase } from '../../utils/classes/word';
-import { ImperfClass } from '../../utils/classes/Imperf';
-import { NounClass } from '../../utils/classes/Noun';
-import { AdjClass } from '../../utils/classes/AdjClass';
+import { YkHandler, DeHandler } from '../../utils/interfaces/CaseHandler';
 import { FormBuilder } from '@angular/forms';
+import { lngToken } from '../../utils/tokens/language-token';
 @Injectable({
   providedIn: 'root',
 })
 export class CaseFactory {
-  public fromCode(code: string, caseInfo: WordCase): CaseEdit {
-    switch (code) {
-      case 'Verb':
-        return new PracImp(caseInfo, new ImperfClass(''), new FormBuilder());
-      case 'Noun':
-        return new PracImp(caseInfo, new NounClass(), new FormBuilder());
-      case 'Adjective':
-        return new PracImp(caseInfo, new AdjClass(), new FormBuilder());
-      default:
-        return new PracImp(caseInfo, {}, new FormBuilder());
+  public fromCode(
+    tag: lngToken,
+    speechPart: string,
+    caseInfo: WordCase
+  ): CaseEdit {
+    let kase: CaseEdit = new PracImp(caseInfo, {}, new FormBuilder());
+    const handlers = [new DeHandler(), new YkHandler()];
+
+    for (const handler of handlers) {
+      if (handler.getCanProcess(tag)) {
+        return handler.getCase(speechPart, caseInfo);
+      }
     }
+    return kase;
   }
 }

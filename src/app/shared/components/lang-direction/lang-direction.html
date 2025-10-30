@@ -1,0 +1,40 @@
+<mat-expansion-panel #expansionPanel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>Language</mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <form [formGroup]="langDirectForm">
+    <mat-form-field hideRequiredMarker>
+      <mat-label for="fromLanguage">From</mat-label>
+
+      <mat-select
+        (selectionChange)="langFromChanged($event)"
+        name="fromLanguage"
+        formControlName="fromLanguage"
+        required
+      >
+        <mat-option value="de">German</mat-option>
+        <mat-option value="en">English</mat-option>
+        <mat-option value="uk">Ukrainian</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field hideRequiredMarker>
+      <mat-label for="toLanguage">To</mat-label>
+
+      <mat-select
+        (selectionChange)="langToChanged($event)"
+        name="toLanguage"
+        formControlName="toLanguage"
+        required
+      >
+        <mat-option value="de">German</mat-option>
+        <mat-option value="en">English</mat-option>
+        <mat-option value="uk">Ukrainian</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-expansion-panel>
+<div>
+  <mat-accordion multi> </mat-accordion>
+</div>
