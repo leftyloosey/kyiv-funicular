@@ -29,7 +29,6 @@ export class DragDrop {
     moveItemInArray(workArray, event.previousIndex, event.currentIndex);
 
     const draggedArray: wordDefinitions = { [this.type()]: workArray };
-    // this.displayBox.updateNewTranslate({ translation: workArray[0] });
     this.displayBox.updateDefinitionBox(draggedArray);
   }
 }

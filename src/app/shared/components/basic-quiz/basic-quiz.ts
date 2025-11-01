@@ -8,7 +8,6 @@ import {
 import { WordWithId, UnpackCase } from '../../../utils/classes/word';
 import { CaseDisplay } from '../../../utils/interfaces/CaseDisplay';
 import { NgTemplateOutlet } from '@angular/common';
-// import { QUIZ } from '../../../utils/tokens/quizzable';
 import { OffsetService } from '../../../services/offset-service/offset-service';
 
 @Component({
@@ -16,12 +15,6 @@ import { OffsetService } from '../../../services/offset-service/offset-service';
   imports: [NgTemplateOutlet],
   templateUrl: './basic-quiz.html',
   styleUrl: './basic-quiz.scss',
-  // providers: [
-  //   {
-  //     provide: QUIZ,
-  //     useExisting: BasicQuiz,
-  //   },
-  // ],
 })
 export class BasicQuiz implements OnChanges {
   public word = input.required<WordWithId>();

@@ -16,9 +16,9 @@
     [class]="this.offset.hidelevel > 1 ? 'titleBlock' : 'titleBlockWhileSmall'"
   >
     <!-- <h1 class="titleBlock__titleText" (click)="this.sidenav.close()"> -->
-    <h1 class="titleBlock__titleText" (click)="this.sendUp.emit(this.word())">
+    <h2 class="titleBlock__titleText" (click)="this.sendUp.emit(this.word())">
       {{ this.word().original }}
-    </h1>
+    </h2>
   </div>
   }
 </ng-template>

@@ -2,20 +2,17 @@ import {
   Component,
   DestroyRef,
   inject,
-  Inject,
   input,
   OnInit,
   output,
 } from '@angular/core';
-import { map, Observable, Subject, switchMap, tap } from 'rxjs';
+import { map, Observable, switchMap, tap } from 'rxjs';
 import { WiktionService } from '../../../services/wiktion-service/wiktion-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Word, WordInterface } from '../../../utils/classes/word';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-import { LANGUAGE_TOKEN, lngToken } from '../../../utils/tokens/language-token';
-import { LanguageToken } from '../../../services/language-token/language-token';
 
 @Component({
   selector: 'app-wiktion',
@@ -37,23 +34,8 @@ export class Wiktion implements OnInit {
   public buildingWord: Word = new Word('', '', '');
   protected sendUp = output<any>();
   private toSubmit: string = '';
-  // private lngToken: lngToken = 'uk';
 
-  constructor(
-    // @Inject(LANGUAGE_TOKEN) private languageToken: Subject<lngToken>,
-    private wiktion: WiktionService,
-    private router: Router,
-    private token: LanguageToken
-  ) {
-    // languageToken
-    //   .pipe(
-    //     takeUntilDestroyed(),
-    //     tap((value) => {
-    //       this.lngToken = value;
-    //     })
-    //   )
-    //   .subscribe();
-
+  constructor(private wiktion: WiktionService, private router: Router) {
     wiktion.newScrape$
       .pipe(
         takeUntilDestroyed(),
@@ -70,7 +52,6 @@ export class Wiktion implements OnInit {
           this.buildingWord.partOfSpeech = partOfSpeech;
           this.buildingWord.definitions =
             this.wiktion.loopDefsToWord(definitions);
-          // this.buildingWord.definitions = definitions;
           this.buildingWord.examples = examples;
           this.buildingWord.translation = definitions[0];
           this.buildingWord.case = {};
@@ -96,6 +77,5 @@ export class Wiktion implements OnInit {
 
   protected submitScrapeWord(): void {
     this.wiktion.pushScrape({ word: this.toSubmit });
-    // this.wiktion.pushScrape({ word: this.toSubmit, tag: this.lngToken });
   }
 }

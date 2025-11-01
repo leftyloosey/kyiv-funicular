@@ -1,10 +1,4 @@
-import {
-  Component,
-  input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -17,7 +11,6 @@ import { MatInputModule } from '@angular/material/input';
 import { DisplayBoxService } from '../../../services/delivery-services/display-box-service/display-box-service';
 import { newDefInterface } from '../../../utils/interfaces/NewExtraDetail';
 import { wordDefinitions } from '../../../utils/interfaces/WordDefinitions';
-// import { Word } from '../../../utils/classes/word';
 @Component({
   selector: 'app-definition-edit',
   imports: [MatFormField, MatIcon, ReactiveFormsModule, MatInputModule],
@@ -78,9 +71,7 @@ export class DefinitionEdit implements OnChanges {
     });
   }
   protected removeFormGroup(index: number) {
-    // setTimeout(() => {
     this.formArray.removeAt(index);
-    // }, 0);
     this.toEdit();
   }
 
@@ -90,10 +81,7 @@ export class DefinitionEdit implements OnChanges {
   }
 
   protected toEdit() {
-    // protected toEdit(e: Event) {
-    // e.preventDefault();
     const { formArray } = this.dynamicForm.value;
-    // const newDefArray: string[] = [...this.definitions()];
     const newDefArray: string[] = [];
 
     for (const def of formArray) {

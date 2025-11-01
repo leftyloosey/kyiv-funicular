@@ -24,6 +24,15 @@
     >
       Reset
     </button>
+    <button
+      class="word-builder__save-button-row--button"
+      (click)="this.deleteWord()"
+      matButton="filled"
+      color="secondary"
+      [hidden]="!this.deleteVisible"
+    >
+      Delete
+    </button>
   </div>
 </div>
 

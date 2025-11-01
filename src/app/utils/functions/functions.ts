@@ -1,6 +1,5 @@
 import { FirstFifty } from '../interfaces/FirstFifty';
 
-// export const switchPartSpeech = (translatedWord: Word): string => {
 export const switchPartSpeech = (translatedWord: string): string => {
   switch (translatedWord) {
     case 'Noun':
@@ -18,23 +17,18 @@ export const switchPartSpeech = (translatedWord: string): string => {
 };
 
 export const getCurrentPage = (word: FirstFifty, value: number): string => {
-  //   const splength = words.firstQueryResults.length;
   const tp = Math.floor(word.totalWords / word.firstQueryResults.length);
   if (value < 0) {
-    // this.current = tp + (this.page$.value + 1) + ' / ' + tp;
     return tp + (value + 1) + ' / ' + tp;
   } else {
     return value + 1 + ' / ' + tp;
-    // this.current = this.page$.value + 1 + ' / ' + tp;
   }
 };
 
 export const resetPageLimit = (word: FirstFifty, page: number): boolean => {
   if (word.totalWords + 50 * (page - 1) < 0) return true;
-  // if (word.totalWords + 50 * (page - 1) < 0) this.page$.next(0);
   if (word.firstQueryResults.length < 50) return true;
   return false;
-  //   if (word.firstQueryResults.length < 50) this.page$.next(0);
 };
 
 export const returnCount = (

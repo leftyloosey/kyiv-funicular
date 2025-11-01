@@ -17,7 +17,7 @@ export interface CaseHandler {
 export class YkHandler implements CaseHandler {
   public canProcess: boolean = false;
   public getCanProcess(tag: lngToken): boolean {
-    if (tag === 'de') return this.canProcess;
+    if (tag === 'uk') this.canProcess = true;
     return this.canProcess;
   }
 
@@ -36,7 +36,7 @@ export class YkHandler implements CaseHandler {
 export class DeHandler implements CaseHandler {
   public canProcess: boolean = false;
   public getCanProcess(tag: lngToken): boolean {
-    if (tag === 'de') return this.canProcess;
+    if (tag === 'de') this.canProcess = true;
     return this.canProcess;
   }
 

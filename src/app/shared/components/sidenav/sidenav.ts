@@ -8,7 +8,6 @@ import { LANGUAGE_TOKEN, lngToken } from '../../../utils/tokens/language-token';
 import { Subject } from 'rxjs';
 import { OffsetService } from '../../../services/offset-service/offset-service';
 import { nextPage } from '../../../utils/interfaces/NextPage';
-import { LanguageToken } from '../../../services/language-token/language-token';
 import { REFRESH } from '../../../utils/tokens/refresh';
 import { Refreshable } from '../../../utils/interfaces/Refreshable';
 import { LangTargetService } from '../../../services/lang-target-service/lang-target-service';
@@ -39,7 +38,6 @@ export class Sidenav implements AfterViewInit {
     @Inject(LANGUAGE_TOKEN) private languageToken: Subject<lngToken>,
     private sidenav: SidenavService,
     protected offset: OffsetService,
-    private token: LanguageToken,
     private target: LangTargetService
   ) {}
 

@@ -3,7 +3,6 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { WordWithId } from '../../utils/classes/word';
 import { lngToken } from '../../utils/tokens/language-token';
 import { nextPage } from '../../utils/interfaces/NextPage';
-import { LanguageToken } from '../language-token/language-token';
 
 @Injectable({
   providedIn: 'root',
@@ -24,12 +23,10 @@ export class OffsetService {
     num: 0,
     token: 'uk',
   });
-  // public page$ = new BehaviorSubject<number>(0);
 
   public pageChange(num: number, token: lngToken) {
     const nextPage: number = this.page$.getValue().num + num;
     this.page$.next({ num: nextPage, token: token });
-    // this.page$.next(this.page$.getValue() + enter);
   }
 
   returnCount(enter: number): number {

@@ -26,33 +26,26 @@ export class TranslateService {
     });
   };
 
-  // public getAheadWord = (ahead: string) => {
-  //   const submit = { ahead: ahead };
-  //   const url = `${environment.apiBaseUrl}/translate/ahead`;
-  //   return this.http.post<Word[]>(url, submit);
-  // };
-
   public getAllWords = () => {
     const url = `${environment.apiBaseUrl}/translate`;
     return this.http.get<Word[]>(url);
   };
-  public getFiftyWords = () => {
-    const url = `${environment.apiBaseUrl}/translate/firstfifty`;
-    return this.http.get<FirstFifty>(url);
-  };
-  public getNextFiftyWords = (original: string) => {
-    const submit = { original: original };
-    if (!original) {
-      const url = `${environment.apiBaseUrl}/translate/firstfifty`;
-      return this.http.get<FirstFifty>(url);
-    } else {
-      const url = `${environment.apiBaseUrl}/translate/nextfifty`;
-      return this.http.post<FirstFifty>(url, submit);
-    }
-  };
+  // public getFiftyWords = () => {
+  //   const url = `${environment.apiBaseUrl}/translate/firstfifty`;
+  //   return this.http.get<FirstFifty>(url);
+  // };
+  // public getNextFiftyWords = (original: string) => {
+  //   const submit = { original: original };
+  //   if (!original) {
+  //     const url = `${environment.apiBaseUrl}/translate/firstfifty`;
+  //     return this.http.get<FirstFifty>(url);
+  //   } else {
+  //     const url = `${environment.apiBaseUrl}/translate/nextfifty`;
+  //     return this.http.post<FirstFifty>(url, submit);
+  //   }
+  // };
 
   public getNextFiftyWordsOffset = (page: number, tag: lngToken) => {
-    // public getNextFiftyWordsOffset = (page: number) => {
     const submit = { page: page, tag: tag };
     const url = `${environment.apiBaseUrl}/translate/nextoffset`;
     return this.http.post<FirstFifty>(url, submit);
@@ -80,27 +73,14 @@ export class TranslateService {
     );
   }
   public upsertWord(word: Word) {
-    // public upsertWord(word: Word) {
-    // const upsertWord = new Word(
-    //   word.original,
-    //   word.translation,
-    //   word.partOfSpeech
-    // );
-    // upsertWord.case = word.case;
-    // upsertWord.examples = word.examples;
-    // upsertWord.definitions = word.definitions;
-
     return this.http.post<WordWithId>(
       `${environment.apiBaseUrl}/translate/upsert`,
       word
     );
   }
-
-  // public translateOne = (word: string) => {
-  //   console.log(word);
-  //   const url = `${environment.apiBaseUrl}/translate`;
-  //   const submit = { text: word };
-  //   console.log(submit);
-  //   return this.http.post<translatable>(url, submit);
-  // };
+  public deleteWord(id: string) {
+    return this.http.delete<WordWithId>(
+      `${environment.apiBaseUrl}/translate/${id}`
+    );
+  }
 }

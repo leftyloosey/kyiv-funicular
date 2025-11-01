@@ -13,7 +13,6 @@ import { LANGUAGE_TOKEN, lngToken } from '../../utils/tokens/language-token';
 })
 export class WiktionService {
   private lngToken: lngToken = 'uk';
-  // http = inject(HttpClient);
   constructor(
     @Inject(LANGUAGE_TOKEN) private languageToken: Subject<lngToken>,
     private http: HttpClient,
@@ -29,7 +28,6 @@ export class WiktionService {
       .subscribe();
   }
   public scrapeDelivery = new Subject<ScrapeOne>();
-  // public scrapeDelivery = new Subject<string>();
   public scrapeInternal = new ReplaySubject<Word>(1);
 
   public newScrape$ = this.scrapeDelivery.asObservable();
@@ -38,9 +36,7 @@ export class WiktionService {
   public pushScrape(scrape: ScrapeOne) {
     this.scrapeDelivery.next(scrape);
   }
-  // public pushScrape(word: string) {
-  //   this.scrapeDelivery.next(word);
-  // }
+
   public pushInternalScrape(word: Word) {
     this.scrapeInternal.next(word);
   }
@@ -51,8 +47,6 @@ export class WiktionService {
       tag: this.lngToken,
       target: this.target.target(),
     };
-    // const submit = { text: scrape.word, tag: scrape.tag};
-    console.log(submit);
     return this.http.post<string>(url, submit).pipe(
       catchError(() => {
         window.alert('word not found');

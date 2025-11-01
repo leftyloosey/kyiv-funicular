@@ -2,9 +2,6 @@ import { ImperfClass } from '../classes/Imperf';
 import { NounClass } from '../classes/Noun';
 import { WordCase } from '../classes/word';
 
-// export class rayFactory {
-//   constructor(type: WordCase) {}
-// }
 export type NotificationType = 'Verb' | 'Noun';
 
 export class RayFactory {

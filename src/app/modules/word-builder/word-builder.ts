@@ -15,7 +15,6 @@ import { Closeable } from '../../utils/interfaces/Closeable';
 import { TranslateService } from '../../services/translate-service/translate.service';
 import { OffsetService } from '../../services/offset-service/offset-service';
 import { LANGUAGE_TOKEN, lngToken } from '../../utils/tokens/language-token';
-import { LanguageToken } from '../../services/language-token/language-token';
 import { NameService } from '../../services/name-service/name-service';
 import { Refreshable } from '../../utils/interfaces/Refreshable';
 import { REFRESH } from '../../utils/tokens/refresh';
@@ -35,6 +34,7 @@ import { REFRESH } from '../../utils/tokens/refresh';
 export class WordBuilder implements Refreshable {
   @ViewChild(SHUT) cc?: Closeable;
   @ViewChild(SHUT2) cc2?: Closeable;
+  protected deleteVisible: boolean = false;
   protected refresh = signal<boolean>(false);
   protected formInvalid: boolean = true;
   public empty: Word = new Word('', '', '');
@@ -48,13 +48,11 @@ export class WordBuilder implements Refreshable {
     private caseDelivery: CaseDelivery,
     private translate: TranslateService,
     private offset: OffsetService,
-    private token: LanguageToken,
     private name: NameService
   ) {
     builder.wordBuilderObserve$ = merge(
       caseDelivery.caseDeliveryObserve$,
       displayBox.definitionBoxObserve$,
-      // displayBox.newTranslateObserve$,
       topForm.wordTopFormObserve$,
       wiktion.newScrapeInternal$,
       languageToken$.pipe(
@@ -66,6 +64,8 @@ export class WordBuilder implements Refreshable {
       startWith(this.empty),
       map((values) => {
         Object.assign(this.empty, values);
+        if (this.empty.id) this.deleteVisible = true;
+        if (!this.empty.id) this.deleteVisible = false;
         this.empty.usersId = this.name.getUser();
 
         return this.empty;
@@ -79,8 +79,8 @@ export class WordBuilder implements Refreshable {
     if (window.confirm(pretty)) {
       this.translate.upsertWord(this.empty).subscribe({
         next: (item: WordWithId) => {
-          if (item)
-            this.offset.offsetActions$.next({ word: item, action: 'update' });
+          if (item) this.offset.pageChange(0, this.empty.tag);
+          // this.offset.offsetActions$.next({ word: item, action: 'update' });
         },
         error: (err) => window.alert(err),
         complete: () => {
@@ -92,6 +92,28 @@ export class WordBuilder implements Refreshable {
       console.log('cancelled.');
     }
   }
+
+  protected deleteWord() {
+    let deleteID: string = '';
+    if (this.empty.id) deleteID = this.empty.id;
+
+    if (window.confirm('Delete word?')) {
+      this.translate.deleteWord(deleteID).subscribe({
+        next: (item: WordWithId) => {
+          if (item) this.offset.pageChange(0, this.empty.tag);
+          // this.offset.offsetActions$.next({ word: item, action: 'remove' });
+        },
+        error: (err) => window.alert(err),
+        complete: () => {
+          window.alert('Word deleted.');
+          this.refreshBuilder();
+        },
+      });
+    } else {
+      console.log('cancelled.');
+    }
+  }
+
   public refreshBuilder(): void {
     this.speechChanged();
     this.cc2?.shut();
@@ -99,14 +121,13 @@ export class WordBuilder implements Refreshable {
 
     this.wiktion.pushInternalScrape(this.empty);
   }
-  speechChanged(): void {
+  protected speechChanged(): void {
     this.cc?.shut();
   }
-  statusChanged(status: boolean): void {
-    console.log(status);
+  protected statusChanged(status: boolean): void {
     this.formInvalid = status;
   }
-  sendUp(): void {
+  protected sendUp(): void {
     this.refreshBuilder();
   }
 }
