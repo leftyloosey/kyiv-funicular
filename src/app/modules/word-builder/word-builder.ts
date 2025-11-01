@@ -1,8 +1,8 @@
 import { Component, Inject, signal, ViewChild } from '@angular/core';
-import { WordBuilderService } from '../../services/delivery-services/word-builder-service/word-builder-service';
-import { map, merge, startWith, Subject, tap } from 'rxjs';
+import { WordBuilderService } from '../../services/word-builder-service/word-builder-service';
+import { map, merge, startWith, Subject } from 'rxjs';
 import { TopFormService } from '../../services/delivery-services/top-form-service/top-form-service';
-import { Word, WordWithId } from '../../utils/classes/word';
+import { Word } from '../../utils/classes/word';
 import { TopForm } from '../../shared/components/top-form/top-form';
 import { WiktionService } from '../../services/wiktion-service/wiktion-service';
 import { DisplayBox } from '../../shared/components/display-box/display-box';
@@ -56,8 +56,8 @@ export class WordBuilder implements Refreshable {
       topForm.wordTopFormObserve$,
       wiktion.newScrapeInternal$,
       languageToken$.pipe(
-        map((o) => {
-          return { tag: o };
+        map((tag) => {
+          return { tag };
         })
       )
     ).pipe(
@@ -74,57 +74,34 @@ export class WordBuilder implements Refreshable {
   }
 
   protected saveWord(): void {
-    console.log(this.empty);
-    const pretty = JSON.stringify(this.empty, null, 2);
-    if (window.confirm(pretty)) {
-      this.translate.upsertWord(this.empty).subscribe({
-        next: (item: WordWithId) => {
-          if (item) this.offset.pageChange(0, this.empty.tag);
-          // this.offset.offsetActions$.next({ word: item, action: 'update' });
-        },
-        error: (err) => window.alert(err),
-        complete: () => {
-          window.alert('Word saved.');
-          this.refreshBuilder();
-        },
-      });
-    } else {
-      console.log('cancelled.');
-    }
+    const refresh = this.builder
+      .saveWord(this.empty)
+      .then((w) => {
+        if (w.id) this.refreshBuilder();
+      })
+      .catch(() => window.alert('Error saving word.'));
   }
 
-  protected deleteWord() {
-    let deleteID: string = '';
-    if (this.empty.id) deleteID = this.empty.id;
-
-    if (window.confirm('Delete word?')) {
-      this.translate.deleteWord(deleteID).subscribe({
-        next: (item: WordWithId) => {
-          if (item) this.offset.pageChange(0, this.empty.tag);
-          // this.offset.offsetActions$.next({ word: item, action: 'remove' });
-        },
-        error: (err) => window.alert(err),
-        complete: () => {
-          window.alert('Word deleted.');
-          this.refreshBuilder();
-        },
-      });
-    } else {
-      console.log('cancelled.');
-    }
+  protected deleteWord(): void {
+    const refresh = this.builder
+      .deleteWord(this.empty)
+      .then((w) => {
+        if (w.id) this.refreshBuilder();
+      })
+      .catch(() => window.alert('Error deleting word.'));
   }
 
   public refreshBuilder(): void {
-    this.speechChanged();
+    this.partOfSpeechChanged();
     this.cc2?.shut();
     this.empty = new Word('', '', '');
 
     this.wiktion.pushInternalScrape(this.empty);
   }
-  protected speechChanged(): void {
+  public partOfSpeechChanged(): void {
     this.cc?.shut();
   }
-  protected statusChanged(status: boolean): void {
+  protected formStatusChanged(status: boolean): void {
     this.formInvalid = status;
   }
   protected sendUp(): void {

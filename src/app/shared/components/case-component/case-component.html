@@ -1,23 +1,19 @@
 @if (this.output$ | async; as word) {
-<div class="case-container">
+<div>
   <mat-expansion-panel #expansionPanel>
     <mat-expansion-panel-header>
       <mat-panel-title (click)="this.caseService.toggleCase()"
         >Case</mat-panel-title
       >
     </mat-expansion-panel-header>
-    <div>
+    <div class="case-drop-list">
       @if (this.expansionPanel?.expanded) {
       <app-edit-imperfect
         [sendDown]="word.case"
         (sendUp)="onSendUp($event)"
         [word]="word"
       />
-      <!-- <app-edit-imperfect
-        [sendDown]="this.receivedCase"
-        (sendUp)="onSendUp($event)"
-        [partOfSpeech]="this.partOfSpeech"
-      /> -->
+
       }
     </div>
   </mat-expansion-panel>

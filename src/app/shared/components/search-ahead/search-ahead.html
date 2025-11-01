@@ -1,19 +1,8 @@
-<!-- <section class="search-ahead">
-  <form [formGroup]="aheadForm">
-    <mat-form-field class="search-ahead__field" appearance="outline">
-      <mat-label>Search</mat-label>
-
-      <input type="text" formControlName="ahead" matInput />
-    </mat-form-field>
-  </form>
-</section> -->
-<div class="search-ahead__word-container">
+<div class="word-container">
   @if (this.downPut()| async ) {} @for (word of this.output$ | async; track
   $index) {
-  <p (click)="click(word.id)">{{ word.original }}</p>
+  <p class="word-container__titleText" (click)="LoadWordFromList(word.id)">
+    {{ word.original }}
+  </p>
   }
-  <!-- @if (this.vals$| async ) {} @for (word of this.output$ | async; track $index)
-  {
-  <p (click)="click(word.id)">{{ word.original }}</p>
-  } -->
 </div>

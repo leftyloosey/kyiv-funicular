@@ -41,11 +41,11 @@ export class Sidenav implements AfterViewInit {
     private target: LangTargetService
   ) {}
 
-  private changeTo(target: lngToken) {
+  private changeToLanguage(target: lngToken): void {
     this.target.setTarget(target);
   }
 
-  private changeFrom(tag: lngToken) {
+  private changeFromLanguage(tag: lngToken): void {
     this.wb?.refreshBuilder();
     this.languageToken.next(tag);
     const sub: nextPage = {
@@ -55,12 +55,15 @@ export class Sidenav implements AfterViewInit {
     this.offset.page$.next(sub);
   }
 
-  protected fromLanguage(e: lngToken) {
-    console.log(e);
-    this.changeFrom(e);
+  protected drawerToggle() {
+    this.wb?.partOfSpeechChanged();
+    this.drawer.toggle();
   }
-  protected toLanguage(e: lngToken) {
-    console.log(e);
-    this.changeTo(e);
+
+  protected fromLanguage(e: lngToken): void {
+    this.changeFromLanguage(e);
+  }
+  protected toLanguage(e: lngToken): void {
+    this.changeToLanguage(e);
   }
 }

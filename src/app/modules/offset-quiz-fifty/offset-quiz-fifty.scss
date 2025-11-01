@@ -9,7 +9,6 @@
     font-size: x-small;
     align-self: flex-end;
     transform: translate(-1rem, 1rem);
-    // padding-left: 1rem;
   }
 
   .word-panel {
@@ -17,8 +16,8 @@
     justify-content: center;
     align-items: center;
 
-    &__sub-panel {
-    }
+    // &__sub-panel {
+    // }
     &__card-count {
       top: 0;
       right: 1rem;
@@ -26,8 +25,8 @@
       color: #a0a0a0;
       font-size: x-small;
     }
-    &__quiz-holder {
-    }
+    // &__quiz-holder {
+    // }
   }
 }
 .btn-panel {
@@ -58,89 +57,89 @@
     border: none;
     color: #a0a0a0;
   }
-  &__big-arrow:hover {
-  }
-  &__small-arrow:hover {
-  }
-  &__mode-button:hover {
-  }
+  // &__big-arrow:hover {
+  // }
+  // &__small-arrow:hover {
+  // }
+  // &__mode-button:hover {
+  // }
 }
 
-.btnPanel {
-  // display: flex;
-  // width: 100%;
-  // justify-content: space-around;
+// .btnPanel {
+// display: flex;
+// width: 100%;
+// justify-content: space-around;
 
-  // &__nav {
-  // }
-  // &__nav--button {
-  // }
-  // &__mode {
-  // }
-  // &__mode--button {
-  //   background-color: inherit;
-  //   width: 3rem;
-  //   border: none;
-  //   color: #a0a0a0;
-  // }
-  // &__mode--button:hover {
-  //   background-color: inherit;
-  //   width: 3rem;
-  //   border: none;
-  //   color: black;
-  // color: #a0a0a0;
-}
+// &__nav {
 // }
-.all {
-  // display: flex;
-  // flex-direction: column;
-  // height: 100%;
-}
-.flexContainer-wordPanel {
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // height: 100vh;
-  // width: 100vw;
-  //----
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // height: 100%;
-}
-.flexContainer-btnPanel {
-  // margin-top: auto;
-  // margin-bottom: 1rem;
-}
+// &__nav--button {
+// }
+// &__mode {
+// }
+// &__mode--button {
+//   background-color: inherit;
+//   width: 3rem;
+//   border: none;
+//   color: #a0a0a0;
+// }
+// &__mode--button:hover {
+//   background-color: inherit;
+//   width: 3rem;
+//   border: none;
+//   color: black;
+// color: #a0a0a0;
+// }
+// }
+// .all {
+// display: flex;
+// flex-direction: column;
+// height: 100%;
+// }
+// .flexContainer-wordPanel {
+// display: flex;
+// justify-content: center;
+// align-items: center;
+// height: 100vh;
+// width: 100vw;
+//----
+// display: flex;
+// align-items: center;
+// justify-content: center;
+// height: 100%;
+// }
+// .flexContainer-btnPanel {
+// margin-top: auto;
+// margin-bottom: 1rem;
+// }
 
-.bigArrow {
-  // border: solid black;
-  // border-width: 0 3px 3px 0;
-  // display: inline-block;
-  // padding: 6px;
-  // border-color: #a0a0a0;
-}
-.bigArrow:hover {
-  // border: solid black;
-  // border-width: 0 3px 3px 0;
-  // display: inline-block;
-  // padding: 6px;
-  // border-color: black;
-}
-.smallArrow {
-  // border: solid black;
-  // border-width: 0 3px 3px 0;
-  // display: inline-block;
-  // padding: 4.5px;
-  // border-color: #a0a0a0;
-}
-.smallArrow:hover {
-  // border: solid black;
-  // border-width: 0 3px 3px 0;
-  // display: inline-block;
-  // padding: 4.5px;
-  // border-color: black;
-}
+// .bigArrow {
+// border: solid black;
+// border-width: 0 3px 3px 0;
+// display: inline-block;
+// padding: 6px;
+// border-color: #a0a0a0;
+// }
+// .bigArrow:hover {
+// border: solid black;
+// border-width: 0 3px 3px 0;
+// display: inline-block;
+// padding: 6px;
+// border-color: black;
+// }
+// .smallArrow {
+// border: solid black;
+// border-width: 0 3px 3px 0;
+// display: inline-block;
+// padding: 4.5px;
+// border-color: #a0a0a0;
+// }
+// .smallArrow:hover {
+// border: solid black;
+// border-width: 0 3px 3px 0;
+// display: inline-block;
+// padding: 4.5px;
+// border-color: black;
+// }
 
 .right {
   transform: rotate(-45deg);
@@ -152,131 +151,13 @@
   -webkit-transform: rotate(135deg);
 }
 
-.smallCount {
-  // color: #a0a0a0;
-  // font-size: x-small;
-  // position: absolute;
-  // padding-right: 1rem;
-  // top: 0;
-  // right: 0;
-}
-
-@media only screen and (max-width: 600px) {
-}
-@media only screen and (min-width: 650px) {
-}
-@media only screen and (min-width: 992px) {
-}
-// .wordPanel {
-//   overflow-y: auto;
-//   &__card {
-//   }
-//   &__edit {
-//   }
-//   &__edit--button {
-//   }
-// }
-
-// .pageBtnPanel {
-//   &__pageBtn {
-//   }
-// }
-
-// .btnPanel {
-//   display: flex;
-//   width: 100%;
-//   justify-content: space-around;
-
-//   &__nav {
-//   }
-//   &__nav--button {
-//   }
-//   &__mode {
-//   }
-//   &__mode--button {
-//     background-color: inherit;
-//     width: 3rem;
-//     border: none;
-//     color: #a0a0a0;
-//   }
-//   &__mode--button:hover {
-//     background-color: inherit;
-//     width: 3rem;
-//     border: none;
-//     color: black;
-//     // color: #a0a0a0;
-//   }
-// }
-// .all {
-//   display: flex;
-//   flex-direction: column;
-//   height: 100%;
-// }
-// .flexContainer-wordPanel {
-//   display: flex;
-//   justify-content: center; /* Center horizontally */
-//   align-items: center; /* Center vertically */
-//   height: 100vh; /* Full viewport height */
-//   width: 100vw;
-//   // display: flex;
-//   // align-items: center;
-//   // justify-content: center;
-//   // height: 100%;
-// }
-// .flexContainer-btnPanel {
-//   margin-top: auto;
-//   margin-bottom: 1rem;
-// }
-
-// .bigArrow {
-//   border: solid black;
-//   border-width: 0 3px 3px 0;
-//   display: inline-block;
-//   padding: 6px;
-//   // border-color: white;
-//   border-color: #a0a0a0;
-// }
-// .bigArrow:hover {
-//   border: solid black;
-//   border-width: 0 3px 3px 0;
-//   display: inline-block;
-//   padding: 6px;
-//   border-color: black;
-//   // border-color: #a0a0a0;
-// }
-// .smallArrow {
-//   border: solid black;
-//   border-width: 0 3px 3px 0;
-//   display: inline-block;
-//   padding: 4.5px;
-//   border-color: #a0a0a0;
-// }
-// .smallArrow:hover {
-//   border: solid black;
-//   border-width: 0 3px 3px 0;
-//   display: inline-block;
-//   padding: 4.5px;
-//   // border-color: #a0a0a0;
-//   border-color: black;
-// }
-
-// .right {
-//   transform: rotate(-45deg);
-//   -webkit-transform: rotate(-45deg);
-// }
-
-// .left {
-//   transform: rotate(135deg);
-//   -webkit-transform: rotate(135deg);
-// }
-
 // .smallCount {
-//   color: #a0a0a0;
-//   font-size: x-small;
-//   position: absolute;
-//   padding-right: 1rem;
-//   top: 0;
-//   right: 0;
+// color: #a0a0a0;
+// font-size: x-small;
+// position: absolute;
+// padding-right: 1rem;
+// top: 0;
+// right: 0;
 // }
 
 // @media only screen and (max-width: 600px) {

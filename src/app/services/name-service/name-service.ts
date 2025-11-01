@@ -11,11 +11,4 @@ export class NameService {
   public setUser(receivedId: string): void {
     this.userId = receivedId;
   }
-  // public _langToken = new BehaviorSubject<langToken>({ lang: 'uk' });
-  // // public _langToken = new Subject<langToken>();
-  // public lang$: Observable<langToken> = this._langToken.asObservable();
-
-  // updateLangToken(newData: langToken) {
-  //   this._langToken.next(newData);
-  // }
 }

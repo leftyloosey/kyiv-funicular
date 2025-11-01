@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Word, WordCase } from '../../../utils/classes/word';
 import { CaseFactory } from '../../../services/case-factory/case-factory';
 import { CaseEdit } from '../../../utils/interfaces/CaseEdit';
-import { WordBuilderService } from '../../../services/delivery-services/word-builder-service/word-builder-service';
+import { WordBuilderService } from '../../../services/word-builder-service/word-builder-service';
 import { Observable, tap } from 'rxjs';
 import {
   MatAccordion,
@@ -62,12 +62,12 @@ export class CaseComponent implements Closeable {
     this.expansionPanel?.close();
   }
 
-  protected onSendUp($event: WordCase) {
+  protected onSendUp($event: WordCase): void {
     const send = this.caseService.prepareForSend($event);
     this.caseDelivery.updateCaseDelivery(send);
   }
 
-  public closePanelManually() {
+  public closePanelManually(): void {
     if (this.expansionPanel) {
       this.caseService.isCaseHidden = true;
       this.expansionPanel.close();

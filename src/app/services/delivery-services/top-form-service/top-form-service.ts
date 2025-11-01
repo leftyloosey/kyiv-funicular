@@ -11,7 +11,22 @@ export class TopFormService {
   public wordTopFormObserve$: Observable<topValues> =
     this._topForm.asObservable();
 
-  public updateTopForm(newData: topValues) {
+  public updateTopForm(newData: topValues): void {
     this._topForm.next(newData);
+  }
+  public switchPartSpeech(translatedWord: string): string {
+    switch (translatedWord) {
+      case 'Noun':
+        return 'Noun';
+
+      case 'Adjective':
+        return 'Adjective';
+
+      case 'Verb':
+        return 'Verb';
+
+      default:
+        return 'Other';
+    }
   }
 }

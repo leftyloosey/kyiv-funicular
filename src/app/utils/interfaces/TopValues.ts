@@ -3,8 +3,3 @@ export interface topValues {
   translation: string | null;
   partOfSpeech: string | null;
 }
-// export interface topValues {
-//   original: string;
-//   translation: string;
-//   partOfSpeech: string;
-// }

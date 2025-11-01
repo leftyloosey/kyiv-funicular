@@ -5,6 +5,7 @@ import { Word, WordWithId } from '../../utils/classes/word';
 import { FirstFifty } from '../../utils/interfaces/FirstFifty';
 import { SkipLoading } from '../../utils/interceptors/basic.interceptor';
 import { lngToken } from '../../utils/tokens/language-token';
+import { catchError, EMPTY, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,51 +15,46 @@ export class TranslateService {
 
   constructor(private http: HttpClient) {}
 
-  public getOneWord(id: string) {
+  public getOneWord(id: string): Observable<Word> {
     return this.http.get<Word>(`${environment.apiBaseUrl}/translate/${id}`);
   }
 
-  public getAheadWord = (ahead: string) => {
+  public getAheadWord = (ahead: string): Observable<WordWithId[]> => {
     const submit = { ahead: ahead };
     const url = `${environment.apiBaseUrl}/translate/ahead`;
-    return this.http.post<WordWithId[]>(url, submit, {
-      context: new HttpContext().set(SkipLoading, true),
-    });
+    return this.http
+      .post<WordWithId[]>(url, submit, {
+        context: new HttpContext().set(SkipLoading, true),
+      })
+      .pipe(
+        catchError(() => {
+          return EMPTY;
+        })
+      );
   };
 
-  public getAllWords = () => {
+  public getAllWords = (): Observable<Word[]> => {
     const url = `${environment.apiBaseUrl}/translate`;
     return this.http.get<Word[]>(url);
   };
-  // public getFiftyWords = () => {
-  //   const url = `${environment.apiBaseUrl}/translate/firstfifty`;
-  //   return this.http.get<FirstFifty>(url);
-  // };
-  // public getNextFiftyWords = (original: string) => {
-  //   const submit = { original: original };
-  //   if (!original) {
-  //     const url = `${environment.apiBaseUrl}/translate/firstfifty`;
-  //     return this.http.get<FirstFifty>(url);
-  //   } else {
-  //     const url = `${environment.apiBaseUrl}/translate/nextfifty`;
-  //     return this.http.post<FirstFifty>(url, submit);
-  //   }
-  // };
 
-  public getNextFiftyWordsOffset = (page: number, tag: lngToken) => {
+  public getNextFiftyWordsOffset = (
+    page: number,
+    tag: lngToken
+  ): Observable<FirstFifty> => {
     const submit = { page: page, tag: tag };
     const url = `${environment.apiBaseUrl}/translate/nextoffset`;
     return this.http.post<FirstFifty>(url, submit);
   };
 
-  public saveNewWord(word: Word) {
+  public saveNewWord(word: Word): Observable<Word> {
     return this.http.post<Word>(
       `${environment.apiBaseUrl}/translate/save`,
       word
     );
   }
 
-  public patchNewWord(word: WordWithId) {
+  public patchNewWord(word: WordWithId): Observable<Word> {
     const patchWord = new Word(
       word.original,
       word.translation,
@@ -72,13 +68,14 @@ export class TranslateService {
       patchWord
     );
   }
-  public upsertWord(word: Word) {
+
+  public upsertWord(word: Word): Observable<WordWithId> {
     return this.http.post<WordWithId>(
       `${environment.apiBaseUrl}/translate/upsert`,
       word
     );
   }
-  public deleteWord(id: string) {
+  public deleteWord(id: string): Observable<WordWithId> {
     return this.http.delete<WordWithId>(
       `${environment.apiBaseUrl}/translate/${id}`
     );

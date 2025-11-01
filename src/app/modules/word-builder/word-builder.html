@@ -1,8 +1,8 @@
 @if (!this.refresh()) {
 <div class="word-builder">
   <app-top-form
-    (statusChange)="statusChanged($event)"
-    (speechChange)="speechChanged()"
+    (statusChange)="formStatusChanged($event)"
+    (speechChange)="partOfSpeechChanged()"
   />
 
   <app-display-box />

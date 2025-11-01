@@ -1,4 +1,4 @@
-<div (focusout)="sendToCaseComponent()" class="imperfect-container">
+<div (focusout)="sendToCaseComponent()">
   <form [formGroup]="imperfectForm">
     <div formArrayName="formArray">
       @for (group of this.keysForForm; track group; let index = $index) {

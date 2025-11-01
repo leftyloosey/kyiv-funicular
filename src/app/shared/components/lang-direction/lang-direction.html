@@ -28,9 +28,9 @@
         formControlName="toLanguage"
         required
       >
-        <mat-option value="de">German</mat-option>
-        <mat-option value="en">English</mat-option>
-        <mat-option value="uk">Ukrainian</mat-option>
+        <mat-option [value]="this.DE">German</mat-option>
+        <mat-option [value]="this.EN">English</mat-option>
+        <mat-option [value]="this.UK">Ukrainian</mat-option>
       </mat-select>
     </mat-form-field>
   </form>

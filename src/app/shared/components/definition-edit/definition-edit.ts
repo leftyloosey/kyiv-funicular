@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DisplayBoxService } from '../../../services/delivery-services/display-box-service/display-box-service';
 import { newDefInterface } from '../../../utils/interfaces/NewExtraDetail';
 import { wordDefinitions } from '../../../utils/interfaces/WordDefinitions';
+import { DefinitionEditService } from '../../../services/definition-edit-service/definition-edit-service';
 @Component({
   selector: 'app-definition-edit',
   imports: [MatFormField, MatIcon, ReactiveFormsModule, MatInputModule],
@@ -22,65 +23,36 @@ export class DefinitionEdit implements OnChanges {
   public definitions = input.required<string[]>();
   public type = input.required<string>();
 
-  constructor(private fb: FormBuilder, private displayBox: DisplayBoxService) {}
+  constructor(
+    private fb: FormBuilder,
+    protected defEdit: DefinitionEditService,
+    private displayBox: DisplayBoxService
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.dynamicForm = this.fb.group({
-      formArray: this.fb.array([this.createFormGroup1(this.definitions())]),
+      formArray: this.fb.array([
+        this.defEdit.createFormGroup1(this.definitions()),
+      ]),
     });
-    this.addAllGroups();
+    this.defEdit.addAllGroups(this.definitions(), this.formArray);
   }
 
   get formArray() {
     return this.dynamicForm.get('formArray') as FormArray;
   }
 
-  private createFormGroup1(defs: string[]): FormGroup {
-    if (defs[0]) {
-      return this.fb.group({
-        definition: [defs[0]],
-      });
-    } else {
-      return this.fb.group({
-        definition: [''],
-      });
-    }
-  }
-  private createSpecific(definition: string): FormGroup {
-    return this.fb.group({
-      definition: [definition],
-    });
-  }
-
-  private populateGroup(definitions: string[]) {
-    for (let index = 1; index < definitions.length; index++) {
-      this.formArray.push(this.createSpecific(definitions[index]));
-    }
-  }
-
-  private addAllGroups() {
-    this.populateGroup(this.definitions());
-  }
-
-  protected addFormGroup() {
-    this.formArray.push(this.createBlankFormGroup());
-  }
-  protected createBlankFormGroup(): FormGroup {
-    return this.fb.group({
-      definition: [''],
-    });
-  }
-  protected removeFormGroup(index: number) {
+  protected removeFormGroup(index: number): void {
     this.formArray.removeAt(index);
     this.toEdit();
   }
 
-  public reset() {
+  public reset(): void {
     this.dynamicForm.reset();
     this.formArray.clear();
   }
 
-  protected toEdit() {
+  protected toEdit(): void {
     const { formArray } = this.dynamicForm.value;
     const newDefArray: string[] = [];
 

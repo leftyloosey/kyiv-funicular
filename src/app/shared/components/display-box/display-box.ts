@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { WordBuilderService } from '../../../services/delivery-services/word-builder-service/word-builder-service';
+import { WordBuilderService } from '../../../services/word-builder-service/word-builder-service';
 import { DEF, EXMP } from '../../../utils/constants/factory-types';
 import { ExtraBlock } from '../extra-block/extra-block';
 import { Word } from '../../../utils/classes/word';
@@ -19,7 +19,6 @@ import { Closeable } from '../../../utils/interfaces/Closeable';
     },
   ],
 })
-// export class DisplayBox {
 export class DisplayBox implements Closeable {
   @ViewChild('xtra1')
   public xtra1?: ExtraBlock;
@@ -30,7 +29,6 @@ export class DisplayBox implements Closeable {
   output$: Observable<Word>;
 
   constructor(private builder: WordBuilderService) {
-    // this.builder.wordBuilderObserve$.pipe(takeUntilDestroyed()).subscribe();
     this.output$ = this.builder.wordBuilderObserve$;
   }
   shut(): void {

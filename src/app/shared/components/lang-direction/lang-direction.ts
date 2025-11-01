@@ -16,6 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { lngToken } from '../../../utils/tokens/language-token';
+import { DE, EN, UK } from '../../../utils/constants/lang-types';
 
 @Component({
   selector: 'app-lang-direction',
@@ -34,22 +35,22 @@ import { lngToken } from '../../../utils/tokens/language-token';
   styleUrl: './lang-direction.scss',
 })
 export class LangDirection {
+  protected DE: lngToken = DE;
+  protected UK: lngToken = UK;
+  protected EN: lngToken = EN;
+
   public fromLanguage = output<lngToken>();
   public toLanguage = output<lngToken>();
 
   protected langDirectForm = new FormGroup({
-    fromLanguage: new FormControl('uk', Validators.required),
-    toLanguage: new FormControl('en', Validators.required),
+    fromLanguage: new FormControl(this.UK, Validators.required),
+    toLanguage: new FormControl(this.EN, Validators.required),
   });
 
-  // get original() {
-  //   return this.langDirectForm.get('original');
-  // }
-
-  langFromChanged(e: MatSelectChange) {
+  langFromChanged(e: MatSelectChange): void {
     this.fromLanguage.emit(e.value);
   }
-  langToChanged(e: MatSelectChange) {
+  langToChanged(e: MatSelectChange): void {
     this.toLanguage.emit(e.value);
   }
 }

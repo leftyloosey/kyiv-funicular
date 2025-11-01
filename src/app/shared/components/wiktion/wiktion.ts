@@ -9,7 +9,7 @@ import {
 import { map, Observable, switchMap, tap } from 'rxjs';
 import { WiktionService } from '../../../services/wiktion-service/wiktion-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Word, WordInterface } from '../../../utils/classes/word';
+import { Word } from '../../../utils/classes/word';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
@@ -46,9 +46,7 @@ export class Wiktion implements OnInit {
       .pipe(
         map((word) => {
           this.sendUp.emit(null);
-          const { definitions, partOfSpeech, examples } =
-            word as unknown as WordInterface;
-          console.log(definitions);
+          const { definitions, partOfSpeech, examples } = word;
           this.buildingWord.partOfSpeech = partOfSpeech;
           this.buildingWord.definitions =
             this.wiktion.loopDefsToWord(definitions);

@@ -13,10 +13,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { TopFormService } from '../../../services/delivery-services/top-form-service/top-form-service';
 import { Observable, startWith, tap } from 'rxjs';
 import { topValues } from '../../../utils/interfaces/TopValues';
-import { WordBuilderService } from '../../../services/delivery-services/word-builder-service/word-builder-service';
+import { WordBuilderService } from '../../../services/word-builder-service/word-builder-service';
 import { Word } from '../../../utils/classes/word';
 import { AsyncPipe } from '@angular/common';
-import { switchPartSpeech } from '../../../utils/functions/functions';
 import { SearchAhead } from '../search-ahead/search-ahead';
 import { Wiktion } from '../wiktion/wiktion';
 
@@ -73,7 +72,7 @@ export class TopForm {
   ) {
     this.input$ = builder.wordBuilderObserve$.pipe(
       tap((items) => {
-        const switched = switchPartSpeech(items.partOfSpeech);
+        const switched = topForm.switchPartSpeech(items.partOfSpeech);
         this.manualForm.patchValue({
           original: items.original,
           partOfSpeech: switched,

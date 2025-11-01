@@ -1,5 +1,5 @@
 <div class="offset-quiz">
-  <p class="offset-quiz__page-count">{{ this.offset.current }}</p>
+  <p class="offset-quiz__page-count">{{ this.offset.pageDisplayString }}</p>
 
   <section class="word-panel">
     <section class="word-panel__sub-panel">
@@ -16,12 +16,10 @@
   </section>
 
   <section class="btn-panel">
-    <!-- <section class="btn-panel__sub-panel"> -->
-    <!-- <p (click)="this.offset.pageChange(-1)"> -->
     <p (click)="this.offset.pageChange(-1, this.langToken)">
       <i class="btn-panel__big-arrow left"></i>
     </p>
-    <p (click)="this.offset.returnCount(-1)">
+    <p (click)="this.offset.navigateLeftRight(-1)">
       <i class="btn-panel__small-arrow left"></i>
     </p>
     <button class="btn-panel__mode-button" (click)="this.offset.moodToggle()">
@@ -33,13 +31,11 @@
     >
       + / -
     </button>
-    <p (click)="this.offset.returnCount(1)">
+    <p (click)="this.offset.navigateLeftRight(1)">
       <i class="btn-panel__small-arrow right"></i>
     </p>
-    <!-- <p (click)="this.offset.pageChange(1)"> -->
     <p (click)="this.offset.pageChange(1, this.langToken)">
       <i class="btn-panel__big-arrow right"></i>
     </p>
   </section>
-  <!-- </section> -->
 </div>
