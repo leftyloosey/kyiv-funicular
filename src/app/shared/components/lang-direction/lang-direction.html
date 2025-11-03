@@ -4,35 +4,37 @@
   </mat-expansion-panel-header>
 
   <form [formGroup]="langDirectForm">
-    <mat-form-field hideRequiredMarker>
-      <mat-label for="fromLanguage">From</mat-label>
+    <div class="translation-row">
+      <mat-form-field hideRequiredMarker>
+        <mat-label for="fromLanguage">From</mat-label>
 
-      <mat-select
-        (selectionChange)="langFromChanged($event)"
-        name="fromLanguage"
-        formControlName="fromLanguage"
-        required
-      >
-        <mat-option value="de">German</mat-option>
-        <mat-option value="en">English</mat-option>
-        <mat-option value="uk">Ukrainian</mat-option>
-      </mat-select>
-    </mat-form-field>
+        <mat-select
+          (selectionChange)="langFromChanged($event)"
+          name="fromLanguage"
+          formControlName="fromLanguage"
+          required
+        >
+          <mat-option [value]="this.DE">German</mat-option>
+          <mat-option [value]="this.EN">English</mat-option>
+          <mat-option [value]="this.UK">Ukrainian</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field hideRequiredMarker>
-      <mat-label for="toLanguage">To</mat-label>
+      <mat-form-field hideRequiredMarker>
+        <mat-label for="toLanguage">To</mat-label>
 
-      <mat-select
-        (selectionChange)="langToChanged($event)"
-        name="toLanguage"
-        formControlName="toLanguage"
-        required
-      >
-        <mat-option [value]="this.DE">German</mat-option>
-        <mat-option [value]="this.EN">English</mat-option>
-        <mat-option [value]="this.UK">Ukrainian</mat-option>
-      </mat-select>
-    </mat-form-field>
+        <mat-select
+          (selectionChange)="langToChanged($event)"
+          name="toLanguage"
+          formControlName="toLanguage"
+          required
+        >
+          <mat-option [value]="this.DE">German</mat-option>
+          <mat-option [value]="this.EN">English</mat-option>
+          <mat-option [value]="this.UK">Ukrainian</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </form>
 </mat-expansion-panel>
 <div>

@@ -23,7 +23,6 @@ import { LangDirection } from '../lang-direction/lang-direction';
   ],
   templateUrl: './sidenav.html',
   styleUrl: './sidenav.scss',
-  // providers: [{ provide: LANGUAGE_TOKEN, useValue: new Subject() }],
 })
 export class Sidenav implements AfterViewInit {
   @ViewChild('drawer') drawer!: MatDrawer;

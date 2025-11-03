@@ -1,0 +1,41 @@
+<!-- <app-lang-direction
+  (fromLanguage)="fromLanguage($event)"
+  (toLanguage)="toLanguage($event)"
+/>
+<mat-dialog-content>
+  <input [(ngModel)]="inputValue" />
+  <button (click)="submitToGoogle()">click</button>
+</mat-dialog-content> -->
+<mat-dialog-content>
+  <app-lang-direction
+    (fromLanguage)="fromLanguage($event)"
+    (toLanguage)="toLanguage($event)"
+  />
+  <form [formGroup]="translateForm" (submit)="submitToGoogle()">
+    <mat-form-field class="submission-field">
+      <mat-label for="translate">translate</mat-label>
+
+      <input
+        autocomplete="off"
+        type="text"
+        formControlName="translate"
+        matInput
+        appSelectOnFocus
+      />
+    </mat-form-field>
+
+    <mat-dialog-actions align="center">
+      <button class="submission-field__button" cdkFocusInitial matButton>
+        submit
+      </button>
+      <button
+        class="submission-field__button"
+        (click)="keepAndClose($event)"
+        matButton
+      >
+        keep
+      </button>
+      <!-- <button matButton [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

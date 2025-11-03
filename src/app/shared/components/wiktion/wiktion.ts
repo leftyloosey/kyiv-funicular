@@ -55,6 +55,7 @@ export class Wiktion implements OnInit {
           this.buildingWord.case = {};
           this.buildingWord.original = this.toSubmit;
           this.wiktion.pushInternalScrape(this.buildingWord);
+          this.buildingWord = new Word('', '', '');
         })
       )
       .subscribe();

@@ -15,6 +15,7 @@ async ) {}
           type="text"
           formControlName="original"
           matInput
+          appSelectOnFocus
           required
         />
         @if (original?.invalid && (original?.dirty)) {
@@ -35,6 +36,7 @@ async ) {}
         type="text"
         formControlName="translation"
         matInput
+        appSelectOnFocus
         required
       />
 

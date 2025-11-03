@@ -12,16 +12,24 @@ import { DisplayBoxService } from '../../../services/delivery-services/display-b
 import { newDefInterface } from '../../../utils/interfaces/NewExtraDetail';
 import { wordDefinitions } from '../../../utils/interfaces/WordDefinitions';
 import { DefinitionEditService } from '../../../services/definition-edit-service/definition-edit-service';
+import { TranslateModalG } from '../translate-modal-g/translate-modal-g';
+import { extraDisplayType } from '../../../utils/constants/factory-types';
 @Component({
   selector: 'app-definition-edit',
-  imports: [MatFormField, MatIcon, ReactiveFormsModule, MatInputModule],
+  imports: [
+    MatFormField,
+    MatIcon,
+    ReactiveFormsModule,
+    MatInputModule,
+    TranslateModalG,
+  ],
   templateUrl: './definition-edit.html',
   styleUrl: './definition-edit.scss',
 })
 export class DefinitionEdit implements OnChanges {
   protected dynamicForm!: FormGroup;
   public definitions = input.required<string[]>();
-  public type = input.required<string>();
+  public type = input.required<extraDisplayType>();
 
   constructor(
     private fb: FormBuilder,
@@ -47,6 +55,11 @@ export class DefinitionEdit implements OnChanges {
     this.toEdit();
   }
 
+  protected setFormGroupValue(index: number, text: string): void {
+    this.formArray.at(index).setValue({ definition: text });
+    this.toEdit();
+  }
+
   public reset(): void {
     this.dynamicForm.reset();
     this.formArray.clear();
@@ -61,8 +74,6 @@ export class DefinitionEdit implements OnChanges {
       newDefArray.push(definition);
     }
     const modifiedArray: wordDefinitions = { [this.type()]: newDefArray };
-    setTimeout(() => {
-      this.displayBox.updateDefinitionBox(modifiedArray);
-    }, 0);
+    this.displayBox.updateDefinitionBox(modifiedArray);
   }
 }

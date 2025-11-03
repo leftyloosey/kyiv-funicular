@@ -12,6 +12,14 @@
           (keydown.enter)="toEdit()"
         />
       </mat-form-field>
+      <app-translate-modal-g
+        (mouseup)="this.toEdit()"
+        [inputForTranslate]="{
+          definition: this.formArray.at(index).value.definition,
+          index,
+          type: this.type()
+        }"
+      />
       <button
         mat-icon-button
         type="button"

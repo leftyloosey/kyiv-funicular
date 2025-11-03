@@ -1,6 +1,6 @@
 import { Component, Inject, signal, ViewChild } from '@angular/core';
 import { WordBuilderService } from '../../services/word-builder-service/word-builder-service';
-import { map, merge, startWith, Subject } from 'rxjs';
+import { map, merge, mergeMap, startWith, Subject, switchMap, tap } from 'rxjs';
 import { TopFormService } from '../../services/delivery-services/top-form-service/top-form-service';
 import { Word } from '../../utils/classes/word';
 import { TopForm } from '../../shared/components/top-form/top-form';
@@ -34,7 +34,7 @@ import { REFRESH } from '../../utils/tokens/refresh';
 export class WordBuilder implements Refreshable {
   @ViewChild(SHUT) cc?: Closeable;
   @ViewChild(SHUT2) cc2?: Closeable;
-  protected deleteVisible: boolean = false;
+  protected deleteButtonVisible: boolean = false;
   protected refresh = signal<boolean>(false);
   protected formInvalid: boolean = true;
   public empty: Word = new Word('', '', '');
@@ -53,6 +53,17 @@ export class WordBuilder implements Refreshable {
     builder.wordBuilderObserve$ = merge(
       caseDelivery.caseDeliveryObserve$,
       displayBox.definitionBoxObserve$,
+      displayBox.definitionBoxObserve$.pipe(
+        mergeMap((wd) =>
+          displayBox.definitionStringObserve$.pipe(
+            map((ds) => {
+              const combined = this.builder.defCombiner(ds.type, wd, ds);
+
+              return combined;
+            })
+          )
+        )
+      ),
       topForm.wordTopFormObserve$,
       wiktion.newScrapeInternal$,
       languageToken$.pipe(
@@ -64,8 +75,8 @@ export class WordBuilder implements Refreshable {
       startWith(this.empty),
       map((values) => {
         Object.assign(this.empty, values);
-        if (this.empty.id) this.deleteVisible = true;
-        if (!this.empty.id) this.deleteVisible = false;
+        if (this.empty.id) this.deleteButtonVisible = true;
+        if (!this.empty.id) this.deleteButtonVisible = false;
         this.empty.usersId = this.name.getUser();
 
         return this.empty;
@@ -95,9 +106,9 @@ export class WordBuilder implements Refreshable {
     this.partOfSpeechChanged();
     this.cc2?.shut();
     this.empty = new Word('', '', '');
-
     this.wiktion.pushInternalScrape(this.empty);
   }
+
   public partOfSpeechChanged(): void {
     this.cc?.shut();
   }

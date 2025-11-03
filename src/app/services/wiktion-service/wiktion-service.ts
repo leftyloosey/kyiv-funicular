@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { environment } from '../../environments/environments';
 import {
+  BehaviorSubject,
   catchError,
   EMPTY,
   Observable,
@@ -35,7 +36,8 @@ export class WiktionService {
       .subscribe();
   }
   public scrapeDelivery = new Subject<ScrapeOne>();
-  public scrapeInternal = new ReplaySubject<Word>(1);
+  public scrapeInternal = new BehaviorSubject<Word>(new Word('', '', ''));
+  // public scrapeInternal = new ReplaySubject<Word>(1);
 
   public newScrape$ = this.scrapeDelivery.asObservable();
   public newScrapeInternal$ = this.scrapeInternal.asObservable();

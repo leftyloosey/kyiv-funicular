@@ -68,7 +68,7 @@ export class SearchAhead implements OnInit {
       )
       .subscribe();
   }
-  protected LoadWordFromList(id: string): void {
+  protected loadWordFromList(id: string): void {
     const temp = new WordWithId('', '', '');
     temp.id = id;
     this.translate

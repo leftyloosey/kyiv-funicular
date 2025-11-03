@@ -1,7 +1,7 @@
 <div class="word-container">
   @if (this.downPut()| async ) {} @for (word of this.output$ | async; track
   $index) {
-  <p class="word-container__titleText" (click)="LoadWordFromList(word.id)">
+  <p class="word-container__titleText" (click)="loadWordFromList(word.id)">
     {{ word.original }}
   </p>
   }

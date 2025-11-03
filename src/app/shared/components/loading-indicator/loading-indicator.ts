@@ -14,7 +14,6 @@ import {
 import { Observable, tap } from 'rxjs';
 import { LoadingService } from '../../../services/loading-service/loading-service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-loading-indicator',

@@ -18,6 +18,7 @@ import { Word } from '../../../utils/classes/word';
 import { AsyncPipe } from '@angular/common';
 import { SearchAhead } from '../search-ahead/search-ahead';
 import { Wiktion } from '../wiktion/wiktion';
+import { SelectOnFocus } from '../../../utils/directives/select-on-click';
 
 @Component({
   selector: 'app-top-form',
@@ -30,6 +31,7 @@ import { Wiktion } from '../wiktion/wiktion';
     SearchAhead,
     AsyncPipe,
     Wiktion,
+    SelectOnFocus,
   ],
   templateUrl: './top-form.html',
   styleUrl: './top-form.scss',

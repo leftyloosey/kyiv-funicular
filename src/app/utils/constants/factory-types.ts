@@ -1,2 +1,3 @@
-export const DEF: string = 'definitions';
-export const EXMP: string = 'examples';
+export type extraDisplayType = 'definitions' | 'examples';
+export const DEF: extraDisplayType = 'definitions';
+export const EXMP: extraDisplayType = 'examples';

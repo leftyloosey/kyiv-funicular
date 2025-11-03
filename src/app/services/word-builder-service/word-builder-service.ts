@@ -3,7 +3,10 @@ import { Observable, BehaviorSubject, firstValueFrom, tap } from 'rxjs';
 import { Word, WordWithId } from '../../utils/classes/word';
 import { TranslateService } from '../translate-service/translate.service';
 import { OffsetService } from '../offset-service/offset-service';
-
+import { wordDefinitions } from '../../utils/interfaces/WordDefinitions';
+import { TranslateDialogData } from '../../utils/interfaces/TranslateDialogData';
+import { extraDisplayType } from '../../utils/constants/factory-types';
+import { baseDefCombiner } from '../../utils/classes/BaseDefCombiner';
 @Injectable({
   providedIn: 'root',
 })
@@ -62,5 +65,14 @@ export class WordBuilderService {
       console.log('cancelled.');
     }
     return first;
+  }
+  public defCombiner(
+    type: extraDisplayType,
+    newDefArray: wordDefinitions,
+    newDefString: TranslateDialogData
+  ): wordDefinitions {
+    const combiner = new baseDefCombiner(type, newDefArray, newDefString);
+
+    return combiner.canCombine();
   }
 }

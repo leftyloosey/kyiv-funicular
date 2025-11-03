@@ -1,4 +1,7 @@
-export interface wordDefinitions {}
+export interface wordDefinitions {
+  definitions?: string[];
+  examples?: string[];
+}
 export interface defDefinitions extends wordDefinitions {
   definitions: string[];
 }
