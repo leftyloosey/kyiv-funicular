@@ -1,6 +1,14 @@
 .definition-container {
   &__field {
-    width: 70%;
+    width: 60%;
     margin-right: 0.3rem;
+  }
+}
+@media only screen and (min-width: 650px) {
+  .definition-container {
+    &__field {
+      width: 70%;
+      margin-right: 0.3rem;
+    }
   }
 }
