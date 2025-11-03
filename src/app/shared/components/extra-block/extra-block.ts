@@ -11,6 +11,7 @@ import { TitleCasePipe } from '@angular/common';
 import { WordBuilderService } from '../../../services/word-builder-service/word-builder-service';
 import { Word } from '../../../utils/classes/word';
 import { SextraEdit } from '../../../services/extra-edit/SextraEdit';
+import { extraDisplayType } from '../../../utils/constants/factory-types';
 
 @Component({
   selector: 'app-extra-block',
@@ -28,7 +29,7 @@ import { SextraEdit } from '../../../services/extra-edit/SextraEdit';
 })
 export class ExtraBlock {
   public newDefs = input.required<Word>();
-  public type = input.required<string>();
+  public type = input.required<extraDisplayType>();
   protected empty = new Word('', '', '');
 
   @ViewChild('expansionPanel')
