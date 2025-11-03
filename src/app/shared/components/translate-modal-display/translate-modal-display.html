@@ -25,15 +25,20 @@
     </mat-form-field>
 
     <mat-dialog-actions align="center">
-      <button class="submission-field__button" cdkFocusInitial matButton>
-        submit
+      <button
+        class="submission-field__button"
+        matButton="filled"
+        color="secondary"
+      >
+        Translate
       </button>
       <button
         class="submission-field__button"
         (click)="keepAndClose($event)"
-        matButton
+        matButton="filled"
+        color="secondary"
       >
-        keep
+        Keep
       </button>
       <!-- <button matButton [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
     </mat-dialog-actions>
