@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, ElementRef, output, ViewChild } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { lngToken } from '../../../utils/tokens/language-token';
 import { DE, EN, UK } from '../../../utils/constants/lang-types';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-lang-direction',
@@ -47,10 +48,24 @@ export class LangDirection {
     toLanguage: new FormControl(this.EN, Validators.required),
   });
 
-  langFromChanged(e: MatSelectChange): void {
+  @ViewChild('panelContent') panelContent!: ElementRef;
+
+  constructor(private scroller: ViewportScroller) {}
+
+  protected langFromChanged(e: MatSelectChange): void {
     this.fromLanguage.emit(e.value);
   }
-  langToChanged(e: MatSelectChange): void {
+  protected langToChanged(e: MatSelectChange): void {
     this.toLanguage.emit(e.value);
+  }
+  scrollToPanelBottom(): void {
+    setTimeout(() => {
+      if (this.panelContent && this.panelContent.nativeElement) {
+        this.panelContent.nativeElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'end',
+        });
+      }
+    }, 150);
   }
 }

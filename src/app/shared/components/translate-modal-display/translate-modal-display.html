@@ -12,8 +12,8 @@
     (toLanguage)="toLanguage($event)"
   />
   <form [formGroup]="translateForm" (submit)="submitToGoogle()">
-    <mat-form-field class="submission-field">
-      <mat-label for="translate">translate</mat-label>
+    <mat-form-field class="submission-field" hideRequiredMarker>
+      <mat-label for="translate">Translate</mat-label>
 
       <input
         autocomplete="off"

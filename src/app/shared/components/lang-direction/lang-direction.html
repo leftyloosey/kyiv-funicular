@@ -1,10 +1,10 @@
-<mat-expansion-panel #expansionPanel>
+<mat-expansion-panel #expansionPanel (opened)="scrollToPanelBottom()">
   <mat-expansion-panel-header>
     <mat-panel-title>Language</mat-panel-title>
   </mat-expansion-panel-header>
 
   <form [formGroup]="langDirectForm">
-    <div class="translation-row">
+    <div class="translation-row" #panelContent>
       <mat-form-field hideRequiredMarker>
         <mat-label for="fromLanguage">From</mat-label>
 
