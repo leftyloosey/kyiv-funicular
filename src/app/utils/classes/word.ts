@@ -26,10 +26,11 @@ export class Word {
 export class WordWithId extends Word {
   public override id: string = '';
 }
-export interface WordInterface {
+export interface ReceivedWikiInterface {
   definitions: string[];
   examples: string[];
   partOfSpeech: string;
+  tag: lngToken;
 }
 export interface SendAway {
   id: string;

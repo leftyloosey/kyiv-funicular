@@ -51,6 +51,7 @@ export class Sidenav implements AfterViewInit {
       num: 0,
       token: tag,
     };
+    this.offset.count = 0;
     this.offset.page$.next(sub);
   }
 

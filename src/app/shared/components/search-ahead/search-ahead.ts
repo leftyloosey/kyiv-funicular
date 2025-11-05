@@ -60,9 +60,6 @@ export class SearchAhead implements OnInit {
           if (original) {
             const sub = { ahead: original };
             this.aheadService.updateAheadWord(sub);
-          } else {
-            const sub = { ahead: ',' };
-            this.aheadService.updateAheadWord(sub);
           }
         })
       )

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, tap, catchError, EMPTY } from 'rxjs';
 import { environment } from '../../environments/environments';
-import { WordInterface } from '../../utils/classes/word';
 import { ScrapeOne } from '../../utils/interfaces/ScrapeOne';
 import { HttpClient } from '@angular/common/http';
 import { TranslateSubmit } from '../../utils/interfaces/TranslateSubmit';

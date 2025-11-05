@@ -78,7 +78,6 @@ export class WordBuilder implements Refreshable {
         if (this.empty.id) this.deleteButtonVisible = true;
         if (!this.empty.id) this.deleteButtonVisible = false;
         this.empty.usersId = this.name.getUser();
-
         return this.empty;
       })
     );

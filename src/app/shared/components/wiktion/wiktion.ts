@@ -46,7 +46,7 @@ export class Wiktion implements OnInit {
       .pipe(
         map((word) => {
           this.sendUp.emit(null);
-          const { definitions, partOfSpeech, examples } = word;
+          const { definitions, partOfSpeech, examples, tag } = word;
           this.buildingWord.partOfSpeech = partOfSpeech;
           this.buildingWord.definitions =
             this.wiktion.loopDefsToWord(definitions);
@@ -54,6 +54,11 @@ export class Wiktion implements OnInit {
           this.buildingWord.translation = definitions[0];
           this.buildingWord.case = {};
           this.buildingWord.original = this.toSubmit;
+          this.buildingWord.tag = tag;
+          console.log(
+            'word about to be pushed to builder from wik',
+            this.buildingWord
+          );
           this.wiktion.pushInternalScrape(this.buildingWord);
           this.buildingWord = new Word('', '', '');
         })

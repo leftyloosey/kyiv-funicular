@@ -10,7 +10,7 @@ import {
   Subject,
   tap,
 } from 'rxjs';
-import { Word, WordInterface } from '../../utils/classes/word';
+import { Word, ReceivedWikiInterface } from '../../utils/classes/word';
 import { ScrapeOne } from '../../utils/interfaces/ScrapeOne';
 import { LangTargetService } from '../lang-target-service/lang-target-service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -49,14 +49,16 @@ export class WiktionService {
   public pushInternalScrape(word: Word): void {
     this.scrapeInternal.next(word);
   }
-  public scrapeOne = (scrape: ScrapeOne): Observable<WordInterface> => {
+  public scrapeOne = (scrape: ScrapeOne): Observable<ReceivedWikiInterface> => {
     const url = `${environment.apiBaseUrl}/translate/scrape`;
+    console.log('in scrapeOne, wiktionservice, tag', this.lngToken);
     const submit = {
       text: scrape.word,
       tag: this.lngToken,
       target: this.target.target(),
     };
-    return this.http.post<WordInterface>(url, submit).pipe(
+    console.log('scrapeOne about to submit', submit);
+    return this.http.post<ReceivedWikiInterface>(url, submit).pipe(
       catchError(() => {
         window.alert('word not found');
         return EMPTY;

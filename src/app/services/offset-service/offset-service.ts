@@ -20,21 +20,47 @@ export class OffsetService {
   });
 
   public handlePaginate(words: FirstFifty, langToken: lngToken): void {
-    this.setPageSize(words.firstQueryResults.length);
-    this.pageDisplayString = this.getCurrentPage(words, this.page$.value.num);
+    const receivedWordsTotal = words.firstQueryResults.length;
+    const currentPage = this.page$.value.num;
+
+    this.setPageSize(receivedWordsTotal);
+    this.pageDisplayString = this.getCurrentPageString(words, currentPage);
     const token = langToken;
     if (
       words.firstQueryResults.length &&
-      this.resetPageLimit(words, this.page$.value.num)
+      this.shouldResetPageLimit(words, currentPage, receivedWordsTotal)
     )
       this.page$.next({ num: 0, token });
   }
+
+  public shouldResetPageLimit = (
+    word: FirstFifty,
+    page: number,
+    queryLength: number
+  ): boolean => {
+    if (word.totalWords + queryLength * (page - 1) < 0) return true;
+    if (word.firstQueryResults.length < queryLength) return true;
+    return false;
+  };
+
+  public getCurrentPageString = (
+    word: FirstFifty,
+    currentPage: number
+  ): string => {
+    const tp = Math.floor(word.totalWords / word.firstQueryResults.length);
+    if (currentPage < 0) {
+      return tp + (currentPage + 1) + ' / ' + tp;
+    } else {
+      return currentPage + 1 + ' / ' + tp;
+    }
+  };
 
   public setPageSize(queryLength: number): void {
     this.pageContainerLength = queryLength;
   }
 
   public pageChange(num: number, token: lngToken): void {
+    this.count = 0;
     const nextPage: number = this.page$.getValue().num + num;
     this.page$.next({ num: nextPage, token: token });
   }
@@ -60,19 +86,4 @@ export class OffsetService {
     if (this.hidelevel >= 2) this.hidelevel = 0;
     this.quizMode = !this.quizMode;
   }
-
-  public getCurrentPage = (word: FirstFifty, value: number): string => {
-    const tp = Math.floor(word.totalWords / word.firstQueryResults.length);
-    if (value < 0) {
-      return tp + (value + 1) + ' / ' + tp;
-    } else {
-      return value + 1 + ' / ' + tp;
-    }
-  };
-
-  public resetPageLimit = (word: FirstFifty, page: number): boolean => {
-    if (word.totalWords + 50 * (page - 1) < 0) return true;
-    if (word.firstQueryResults.length < 50) return true;
-    return false;
-  };
 }
