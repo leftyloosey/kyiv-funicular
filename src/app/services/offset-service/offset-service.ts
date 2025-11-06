@@ -9,6 +9,7 @@ import { UK } from '../../utils/constants/lang-types';
 })
 export class OffsetService {
   public count: number = 0;
+  public tempCount: number = 0;
   public pageContainerLength: number = 0;
   public pageDisplayString: string = '';
   public quizMode: boolean = true;

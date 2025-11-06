@@ -31,6 +31,7 @@ export class WordBuilderService {
     let first = new WordWithId('', '', '');
 
     if (window.confirm(pretty)) {
+      this.offset.tempCount = this.offset.count;
       first = await firstValueFrom(
         this.translate.upsertWord(word).pipe(
           tap((word) => {
@@ -39,6 +40,7 @@ export class WordBuilderService {
         )
       );
       window.alert('Word saved.');
+      this.offset.count = this.offset.tempCount;
       return first;
     } else {
       console.log('cancelled.');
@@ -52,6 +54,7 @@ export class WordBuilderService {
     if (word.id) deleteID = word.id;
 
     if (window.confirm('Delete word?')) {
+      this.offset.tempCount = this.offset.count;
       first = await firstValueFrom(
         this.translate.deleteWord(deleteID).pipe(
           tap((word) => {
@@ -60,6 +63,7 @@ export class WordBuilderService {
         )
       );
       window.alert('Word deleted.');
+      this.offset.count = this.offset.tempCount;
       return first;
     } else {
       console.log('cancelled.');
