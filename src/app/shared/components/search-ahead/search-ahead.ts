@@ -1,4 +1,11 @@
-import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  input,
+  OnInit,
+  output,
+} from '@angular/core';
 import { AheadService } from '../../../services/delivery-services/ahead-service/ahead-service';
 import { WordWithId } from '../../../utils/classes/word';
 import { debounceTime, Observable, switchMap, tap } from 'rxjs';
@@ -19,6 +26,7 @@ import { WiktionService } from '../../../services/wiktion-service/wiktion-servic
   styleUrl: './search-ahead.scss',
 })
 export class SearchAhead implements OnInit {
+  protected clearCaseForLoadWord = output<null>();
   downPut = input<
     Observable<
       Partial<{
@@ -70,7 +78,12 @@ export class SearchAhead implements OnInit {
     temp.id = id;
     this.translate
       .getOneWord(id)
-      .pipe(tap((re) => this.wiktion.pushInternalScrape(re)))
+      .pipe(
+        tap((re) => {
+          this.clearCaseForLoadWord.emit(null);
+          this.wiktion.pushInternalScrape(re);
+        })
+      )
       .subscribe();
   }
 }

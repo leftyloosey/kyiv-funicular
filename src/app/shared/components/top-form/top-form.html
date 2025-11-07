@@ -67,5 +67,8 @@ async ) {}
       </mat-form-field>
     </div>
   </form>
-  <app-search-ahead [downPut]="this.formValues$" />
+  <app-search-ahead
+    (clearCaseForLoadWord)="speechChanged()"
+    [downPut]="this.formValues$"
+  />
 </section>
