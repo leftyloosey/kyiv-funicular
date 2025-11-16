@@ -13,6 +13,7 @@ import { LoadingInterceptor } from './utils/interceptors/basic.interceptor';
 import { routes } from './app.routes';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { LANGUAGE_TOKEN } from './utils/tokens/language-token';
+import { SidenavButton } from './utils/interceptors/sidenav-button';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,6 +26,9 @@ export const appConfig: ApplicationConfig = {
         // onSameUrlNavigation: 'reload',
       })
     ),
-    provideHttpClient(withFetch(), withInterceptors([LoadingInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([LoadingInterceptor, SidenavButton])
+    ),
   ],
 };

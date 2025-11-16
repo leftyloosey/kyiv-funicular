@@ -40,9 +40,10 @@ export class TranslateService {
 
   public getNextFiftyWordsOffset = (
     page: number,
-    tag: lngToken
+    tag: lngToken,
+    usersId: string
   ): Observable<FirstFifty> => {
-    const submit = { page: page, tag: tag };
+    const submit = { page, tag, usersId };
     const url = `${environment.apiBaseUrl}/translate/nextoffset`;
     return this.http.post<FirstFifty>(url, submit);
   };

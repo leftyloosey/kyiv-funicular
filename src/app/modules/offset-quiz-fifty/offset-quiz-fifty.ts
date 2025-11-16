@@ -10,6 +10,7 @@ import { WiktionService } from '../../services/wiktion-service/wiktion-service';
 import { SidenavService } from '../../services/sidenav-service/sidenav-service';
 import { LANGUAGE_TOKEN, lngToken } from '../../utils/tokens/language-token';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NameService } from '../../services/name-service/name-service';
 @Component({
   selector: 'app-offset-quiz-fifty',
   imports: [AsyncPipe, BasicQuiz],
@@ -27,7 +28,8 @@ export class OffsetQuizFifty {
     private wiktion: WiktionService,
     private translate: TranslateService,
     private dialog: MatDialog,
-    protected offset: OffsetService
+    protected offset: OffsetService,
+    private name: NameService
   ) {
     languageToken
       .pipe(
@@ -40,14 +42,20 @@ export class OffsetQuizFifty {
 
     this.output$ = this.offset.page$.pipe(
       switchMap((page) =>
-        this.translate.getNextFiftyWordsOffset(page.num, this.langToken).pipe(
-          tap((words) => {
-            this.offset.handlePaginate(words, this.langToken);
-          }),
-          map((words) => {
-            return words.firstQueryResults;
-          })
-        )
+        this.translate
+          .getNextFiftyWordsOffset(
+            page.num,
+            this.langToken,
+            this.name.getUser()
+          )
+          .pipe(
+            tap((words) => {
+              this.offset.handlePaginate(words, this.langToken);
+            }),
+            map((words) => {
+              return words.firstQueryResults;
+            })
+          )
       )
     );
   }

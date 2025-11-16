@@ -11,16 +11,21 @@
         (fromLanguage)="fromLanguage($event)"
         (toLanguage)="toLanguage($event)"
       />
+      <button class="left-drawer__logout-button" (click)="logout()">
+        Logout
+      </button>
     </section>
   </mat-drawer>
 
   <div class="right-drawer">
+    @if(this.sidenav.gotCookie()) {
     <p class="right-toggle-mover">
       <i
         (click)="drawer.toggle()"
         class="right-drawer__toggle-button right"
       ></i>
     </p>
+    }
     <router-outlet />
   </div>
 </mat-drawer-container>
