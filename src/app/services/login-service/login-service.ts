@@ -52,6 +52,7 @@ export class LoginService {
       )
       .subscribe((result) => {
         console.log(result);
+        window.alert(`User "${submit.username}" created`);
       });
   };
   private setUserInNameService(): void {
