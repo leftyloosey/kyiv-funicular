@@ -1,6 +1,6 @@
 # Kyiv-Funicular Language App
 
-It's called Kyiv-Funicular waiting for a train is the perfect time to pull out the app and quiz yourself on the latest batch of words you've added. The Kyiv Funicular is an especially cool place to wait.
+It's called Kyiv-Funicular because waiting for a train is the perfect time to pull out the app and quiz yourself on the latest batch of words you've added. The Kyiv Funicular is an especially cool place to wait.
 
 The idea of the app is to have, as a language learner, a tool with you at all times capable fo
 
