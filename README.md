@@ -9,7 +9,7 @@ The idea of the app is to have, as a language learner, a tool with you at all ti
 - recall words on the fly with a quick-search/autocomplete function
 - quiz yourself on new words as you wait for the bus
 
-Currently, it only supports English to Ukrainian and German (Ukrainian I'm learning, German for testing), but the modular design allows for any new language to be dropped in without causing a ripple of modifications across the codebase.
+Currently, it only supports English to Ukrainian and German (Ukrainian I'm learning, German for testing)--or the reverse of these--but the modular design allows for any new language to be dropped in without causing a ripple of modifications across the codebase.
 
 The basic shape of it: The main module is one RxJS `merge()`, waiting for information from the `Subject()` in each outlying module. As the user adds information (each component of a new word i.e. case and tense information, definitions, examples) it is written to the object waiting to be uploaded. As information is uploaded, it is fetched from the backend and immediately displayed on the front.
 
