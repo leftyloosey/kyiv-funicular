@@ -17,7 +17,7 @@ With the **mode** button you can choose to quiz yourself by definition first or 
 
 Open the sidenav with the arrow at the top left. You can add a word manually, or translate it by clicking the magnifying glass. Typing a partial word will check the extant dictionary for that term, causing it to appear at the side. Add/delete/rearrange definitions and examples as you like.
 
-Change languages at the bottom of the sidenav.
+In the sidenav, scroll to the bottom to change languages.
 
 ## Login
 
